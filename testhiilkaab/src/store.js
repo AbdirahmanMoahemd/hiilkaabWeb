@@ -61,7 +61,24 @@ import {
   settingsCreateReducer,
   settingsUpdateReducer,
 } from "./reducers/settingsReducers";
-import { orderCreateReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMyListReducer, orderPayReducer, orderPayReducer2, orderReducerCount } from "./reducers/orderReducers";
+
+import {
+  discountCreateReducer,
+  discountDeleteReducer,
+  discountDetailsReducer,
+  discountListReducer,
+  discountUpdateReducer,
+} from "./reducers/discountReducers";
+import {
+  orderCreateReducer,
+  orderDeliverReducer,
+  orderDetailsReducer,
+  orderListReducer,
+  orderMyListReducer,
+  orderPayReducer,
+  orderPayReducer2,
+  orderReducerCount,
+} from "./reducers/orderReducers";
 
 const reducer = combineReducers({
   categoryList: categoryListReducer,
@@ -94,6 +111,12 @@ const reducer = combineReducers({
   productReview: productReviewReducer,
   producDistList: producDiscounttListReducer,
   brandList: brandListReducer,
+
+  discountCreate:discountCreateReducer,
+  discountDelete:discountDeleteReducer,
+  discountDetails:discountDetailsReducer,
+  discountList:discountListReducer,
+  discountUpdate:discountUpdateReducer,
 
   cart: cartReducer,
   wishlist: wishlistReducer,

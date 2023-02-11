@@ -33,8 +33,8 @@ const orderSchema = mongoose.Schema(
       },
     ],
     status: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      default: 0,
     },
     shippingAddress: {
       address: { type: String },

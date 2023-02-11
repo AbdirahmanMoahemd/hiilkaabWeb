@@ -16,7 +16,7 @@ export const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       phone: user.phone,
-      street: user.street,
+      address: user.address,
       city: user.city,
       country: user.country,
       token: generateToken(user._id),
@@ -31,7 +31,7 @@ export const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, phone, street, city, country } = req.body;
+  const { name, email, password, phone, address, city, country } = req.body;
   const userExists = await User.findOne({ email });
 
   if (userExists) {
@@ -44,7 +44,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     email,
     password,
     phone,
-    street,
+    address,
     city,
     country,
   });
@@ -55,7 +55,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       phone: user.phone,
-      street: user.street,
+      address: user.address,
       city: user.city,
       country: user.country,
       token: generateToken(user._id),
@@ -79,7 +79,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       phone: user.phone,
-      street: user.street,
+      address: user.address,
       city: user.city,
       country: user.country,
     });
@@ -99,7 +99,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.phone = req.body.phone || user.phone;
-    user.street = req.body.street || user.street;
+    user.address = req.body.address || user.address;
     user.city = req.body.city || user.city;
     user.country = req.body.country || user.country;
 
@@ -115,7 +115,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       phone: updatedUser.phone,
-      street: updatedUser.street,
+      address: updatedUser.address,
       city: updatedUser.city,
       country: updatedUser.country,
       token: generateToken(updatedUser._id),
@@ -143,7 +143,7 @@ export const updateUserPassword = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       phone: user.phone,
-      street: user.street,
+      address: user.address,
       city: user.city,
       country: user.country,
       token: generateToken(user._id)

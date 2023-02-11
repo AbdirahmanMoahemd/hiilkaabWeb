@@ -14,7 +14,8 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { addToWish } from "../../actions/wishlistActions";
 import { getProductsByFilter } from "../../actions/filterActions";
-import { Button } from 'primereact/button';
+import { Button } from "primereact/button";
+import Rating from "../components/Rating";
 
 const Product = () => {
   const [qty, setQty] = useState(1);
@@ -62,13 +63,14 @@ const Product = () => {
     );
   }, [dispatch, successProductReview]);
 
+  
+
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
   };
 
   const addToWishHandler = () => {
     dispatch(addToWish(id));
-    
   };
 
   const submitHandler = (e) => {
@@ -83,7 +85,6 @@ const Product = () => {
 
   return (
     <>
-   
       <Header />
       {/* <!-- product view --> */}
       {loading ? (
@@ -260,13 +261,14 @@ const Product = () => {
               {/* <!-- add to cart button --> */}
               <div class="flex gap-3 border-b border-gray-200 pb-5 mt-6">
                 <button
+                onClick={addToCartHandler}
                   class="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm flex items-center"
                 >
                   <span class="mr-2">
                     <i class="fa fa-shopping-bag"></i>
                   </span>{" "}
-                  <button onClick={addToCartHandler}>Add to cart</button>
+                  Add to cart
                 </button>
                 <button
                   class="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
@@ -345,26 +347,53 @@ const Product = () => {
               </button>
             </div>
             {isReviews ? (
-              <div className="pt-10 grid grid-cols-1 lg:grid-cols-1 gap-4">
-                <p>username</p>
-                <div class="flex gap-1 text-sm text-yellow-400">
-                  <span>
-                    <i class="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="fa fa-star"></i>
-                  </span>
+              <div className="pt-10">
+               <p className="text-primary">{errorProductReview}</p>
+                <form onSubmit={submitHandler}>
+                  <h3 class="text-lg font-medium capitalize mb-4">
+                    Write a Customer Review
+                  </h3>
+                  <div class="space-y-4">
+                    <div>
+                      <select
+                        name="cars"
+                        id="cars"
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                      >
+                        <option value="">Select...</option>
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2 - Fair </option>
+                        <option value="3">3 - Good</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="5">5 - Excellent</option>
+                      </select>
+                    </div>
+                    <div>
+                      <textarea
+                        type="textArea"
+                        style={{ rows: "4", cols: "50" }}
+                        placeholder="write your comment here..."
+                        required
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </div>
+                    <button type="submit"  className="border border-primary text-primary px-8 py-2 font-medium rounded uppercase 
+                    hover:bg-transparent hover:text-primary transition text-sm flex items-center">submit</button>
+                  </div>
+                </form>
+                <div className="pt-10 grid grid-cols-1 lg:grid-cols-1 gap-4">
+                {product.reviews.map((review) => (
+                  <div>
+                  <p>{review.name}</p>
+                  <div class="flex gap-1 text-sm text-yellow-400">
+                    <Rating value={review.rating}/>
+                  </div>
+                  <p>{review.comment}</p>
+                  </div>
+                ))}
                 </div>
-                <p>comment</p>
               </div>
             ) : (
               ""

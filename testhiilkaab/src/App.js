@@ -41,6 +41,8 @@ import TopCategoryScreen from "./admin/screens/TopCategory/TopCategoryScreen";
 import AddTopCategoryScreen from "./admin/screens/TopCategory/AddTopCategoryScreen";
 import UpdateTopCategoryScreen from "./admin/screens/TopCategory/UpdateTopCategoryScreen";
 import PlaceOrderScreen from "./client/screens/placeOrderScreen";
+import DiscountScreen from "./admin/screens/discount/DiscountScreen";
+import AddDiscountScreen from "./admin/screens/discount/AddDiscountScreen";
 
 
 function App() {
@@ -105,6 +107,13 @@ function App() {
         {/* products  */}
         <Route path="/adminproducts" element={<ProductsScreen/> } />
         <Route path="/addproducts" element={<AddProductScreen/> } />
+        <Route path="/updateproduct/:id" element={<UpdateProductsScreen/> } />
+
+
+
+        {/* discounts products  */}
+        <Route path="/discount" element={<DiscountScreen/> } />
+        <Route path="/addproductdiscount" element={<AddDiscountScreen/> } />
         <Route path="/updateproduct/:id" element={<UpdateProductsScreen/> } />
 
 

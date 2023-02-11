@@ -260,7 +260,8 @@ const AddProduct = () => {
                 <option>Select Category here</option>
                 {categories.map((cat) => (
                   <>
-                    <option value={cat.id}>{cat.name}</option>
+                    <option value={cat.id}>{cat.name}<img src={cat.icon}/></option>
+                    
                   </>
                 ))}
               </select>

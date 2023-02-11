@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema({
     phone: {
         type: String,
     },
-    street: {
+    address: {
         type: String,
         default: ''
     },

@@ -6,6 +6,7 @@ import morgan from "morgan";
 import connectDB from "./config/db2.js";
 import { errorHandler, notFound } from "./middlewares/errorMidlleware.js";
 import productRoutes from "./routes/productRoutes.js";
+import discountRoutes from "./routes/discountRoutes.js";
 import categoriesRoutes from "./routes/categoriesRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import subCategoriesRoutes from "./routes/subCategoriesRoutes.js";
@@ -15,7 +16,7 @@ import settingsRoutes from './routes/settingsRoutes.js'
 import filterRoutes from './routes/filter.js'
 import topCategriesRoutes from './routes/topCategriesRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
-
+ 
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.json());
 app.use('/api/products', productRoutes)
+app.use('/api/discount', discountRoutes)
 app.use('/api/category', categoriesRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/subcategory', subCategoriesRoutes)

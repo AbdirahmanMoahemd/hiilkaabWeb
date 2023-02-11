@@ -31,6 +31,7 @@ import TopRanking2 from "../components/TopRanking2";
 import TopRanking3 from "../components/TopRanking3";
 import TopRanking4 from "../components/TopRanking4";
 import { listSlides } from "../../actions/slideActions";
+import { listDiscounts } from "../../actions/discountActions";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,13 @@ const Home = () => {
   const categoryTopList = useSelector((state) => state.categoryTopList);
   const { topcategories } = categoryTopList;
 
+  const discountList = useSelector((state) => state.discountList);
+  const {
+    loading: loadingDiscount,
+    error: errorDiscount,
+    discounts,
+  } = discountList;
+
   useEffect(() => {
     dispatch(listSlides());
   }, [dispatch]);
@@ -91,6 +99,10 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(listTopCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(listDiscounts());
   }, [dispatch]);
 
   return (
@@ -221,14 +233,17 @@ const Home = () => {
       </div>
       {/* <!-- top new arrival end --> */}
 
-      {/* <!-- ad section --> */}
-      <div className="container relative">
-        <img src={offer} className="w-full" />
+      {discounts.map((dis) => (
+        <div className="container relative">
+          <img src={dis.icon} className="w-full" />
 
-        <button className="btn text-base top-1/4  right-1/3  lg:top-1/2 lg:right-1/2  py-2 lg:px-12 px-1 bg-primary text-white border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
-          Shop Now
-        </button>
-      </div>
+          <Link to={`/product/${dis.product._id}`} className="btn text-base top-1/4  right-1/3  lg:top-1/2 lg:right-1/2  py-2 lg:px-12 px-1 bg-primary text-white border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
+            Shop Now
+          </Link>
+        </div>
+      ))}
+      {/* <!-- ad section --> */}
+
       <div className="p-10"></div>
       {/* <!-- ad section end --> */}
 
