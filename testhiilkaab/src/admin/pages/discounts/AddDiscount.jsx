@@ -91,7 +91,7 @@ const AddDiscount = () => {
                 id="icon"
                 type="text"
                 className="input-box"
-                placeholder="Category image"
+                placeholder="Discount image"
                 onChange={(e) => setIcon(e.target.value)}
                 required
               />

@@ -232,16 +232,35 @@ const Home = () => {
         {/* <!-- product wrapper end --> */}
       </div>
       {/* <!-- top new arrival end --> */}
-
+      <Swiper
+          style={{
+            "--swiper-navigation-color": "#E49A38",
+            "--swiper-navigation-size": "35px",
+          }}
+          spaceBetween={100}
+          centeredSlides={true}
+          autoplay={{
+            delay: 4000,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+          className="mySwiper  container"
+        >
       {discounts.map((dis) => (
+        <SwiperSlide>
         <div className="container relative">
           <img src={dis.icon} className="w-full" />
 
           <Link to={`/product/${dis.product._id}`} className="btn text-base top-1/4  right-1/3  lg:top-1/2 lg:right-1/2  py-2 lg:px-12 px-1 bg-primary text-white border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
-            Shop Now
+            Shop Now 
           </Link>
         </div>
+        </SwiperSlide>
       ))}
+      </Swiper>
       {/* <!-- ad section --> */}
 
       <div className="p-10"></div>
