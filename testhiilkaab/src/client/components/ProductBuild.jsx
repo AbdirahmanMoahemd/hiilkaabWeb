@@ -8,10 +8,10 @@ const ProductBuild = ({ product }) => {
     <div className="lg:flex lg:justify-between mt-8">
       <div className="relative">
         <div className="h-28 w-28">
-          <img
+        <Link to={`/product/${product.id}`}><img
             src={product.images && product.images[0]}
             className="w-full h-full"
-          />
+          /></Link>
         </div>
       </div>
       <div className="lg:ml-4 pt-4 pb-3 px-2">

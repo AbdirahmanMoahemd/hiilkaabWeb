@@ -43,6 +43,7 @@ import UpdateTopCategoryScreen from "./admin/screens/TopCategory/UpdateTopCatego
 import PlaceOrderScreen from "./client/screens/placeOrderScreen";
 import DiscountScreen from "./admin/screens/discount/DiscountScreen";
 import AddDiscountScreen from "./admin/screens/discount/AddDiscountScreen";
+import OderComplateScreen from "./client/screens/OderComplateScreen";
 
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
         <Route path="/register" element={<Register/> } />
         <Route path="/about" element={<About/> } />
         <Route path="/login" element={<Login/>} />
+        <Route path="/success" element={<OderComplateScreen/>} />
 
         {/* Dashboard  */}
         <Route path="/dashboard" element={<App2/>} />

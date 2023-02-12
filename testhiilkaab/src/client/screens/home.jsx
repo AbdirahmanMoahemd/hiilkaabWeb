@@ -1,13 +1,8 @@
 import React, { useEffect } from "react";
-import slide from "../../data/images/HIILKAABCOM.png";
-import slide2 from "../../data/images/HIILKAAB4.png";
-import slide3 from "../../data/images/HIILKAAB3.png";
-import offer from "../../data/images/offer.jpg";
 import Header from "../components/Header";
-import product1 from "../../data/product4.jpg";
 import Footer from "../components/footer";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { TbDiscount } from "react-icons/tb";
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -21,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { listCategories } from "../../actions/categoryActions";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
-import CategoriesSlider from "../components/CategoriesSlider";
 import { listDisProducts, listProducts } from "../../actions/prodcutActions";
 import SinglProduct from "../components/SinglProduct";
 import { listSubCategories } from "../../actions/subCategoryActions";

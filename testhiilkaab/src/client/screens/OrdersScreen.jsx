@@ -225,13 +225,13 @@ const OrdersScreen = () => {
                       {/* <!-- cart image end --> */}
                       {/* <!-- cart quantity --> */}
                       <h2 className="col-span-2  text-gray-800 mb-3 xl:text-xl textl-lg font-medium uppercase">
-                        {item.qty}
+                        {item.quantity}
                       </h2>
                       {/* <!-- cart quantity end --> */}
                       <div className="lg:col-span-2 col-span-8 flex gap-2">
                         <p className="lg:hidden text-lg">Total Price</p>
                         <p className="text-primary text-lg font-semibold">
-                          ${item.price * item.qty}
+                          ${item.price * item.quantity}
                         </p>
                       </div>
                     </div>
@@ -310,7 +310,14 @@ const OrdersScreen = () => {
                   Pay through {order.paymentMethod}
                 </button>
               ) : (
-                ""
+                <Link to="/success">
+            <a
+              className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
+             hover:text-primary transition text-sm w-full block text-center"
+            >
+              Complete
+            </a>
+          </Link>
               )}
 
               {/* <!-- checkout end --> */}

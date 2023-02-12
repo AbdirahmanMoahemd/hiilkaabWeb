@@ -9,10 +9,25 @@ const orderSchema = mongoose.Schema(
     },
     products: [
       {
-        name: { type: String },
         images: { type: String },
         price: { type: Number },
-        qty: { type: Number },
+        quantity: { type: Number },
+        sizes: [
+          {
+            type: String,
+          },
+        ],
+        colors: [
+          {
+            type: String,
+          },
+        ],
+        name: { type: String },
+        images: [
+          {
+            type: String,
+          },
+        ],
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
@@ -22,13 +37,16 @@ const orderSchema = mongoose.Schema(
     meals: [
       {
         name: { type: String },
-        images: { type: String },
+        images: [
+          {
+            type: String,
+          },
+        ],
         price: { type: Number },
-        qty: { type: Number },
+        quantity: { type: Number },
         meal: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Meal",
-          required: true,
         },
       },
     ],

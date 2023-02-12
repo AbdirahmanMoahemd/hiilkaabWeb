@@ -15,7 +15,7 @@ const Checkout = () => {
 
   const cart = useSelector((state) => state.cart);
   const { shippingAddress, cartItems } = cart;
-  const itemqty = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const itemqty = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
   const [phoneNumber, setPhoneNumber] = useState(shippingAddress.phoneNumber);

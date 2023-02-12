@@ -13,6 +13,7 @@ const Wishlist = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    
    
   }, [dispatch]);
 

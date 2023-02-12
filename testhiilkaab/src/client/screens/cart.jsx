@@ -13,19 +13,19 @@ const Cart = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  const quantity = location.search ? Number(location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const itemqty = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const itemquantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   useEffect(() => {
     if (id) {
-      dispatch(addToCart(id, qty));
+      dispatch(addToCart(id, quantity));
     }
-  }, [dispatch, id, qty]);
+  }, [dispatch, id, quantity]);
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
@@ -89,7 +89,7 @@ const Cart = () => {
                     <div className="">
                       <InputNumber
                       className="w-20"
-                        value={item.qty}
+                        value={item.quantity}
                         style={{ marginRight: "30px" , width: '6em'}}
                         showButtons
                         buttonLayout="horizontal"
@@ -109,7 +109,7 @@ const Cart = () => {
                     {/* <!-- cart quantity end --> */}
                     <div className="ml-auto md:ml-0">
                       <p className="text-primary text-lg font-semibold">
-                        ${item.price * item.qty}
+                        ${item.price * item.quantity}
                       </p>
                     </div>
                     <div className="text-gray-600 hover:text-primary cursor-pointer">
@@ -134,11 +134,11 @@ const Cart = () => {
           <div className="space-y-1 text-gray-600 pb-3 border-b border-gray-200">
           <div className="flex justify-between">
               <p>Items</p>
-              <p>{itemqty}X</p>
+              <p>{itemquantity}X</p>
             </div>
             <div className="flex justify-between font-medium">
               <p>Subtotal</p>
-              <p>${cartItems.reduce((acc, item) =>  (acc + item.qty * item.price), 0).toFixed(2)}</p>
+              <p>${cartItems.reduce((acc, item) =>  (acc + item.quantity * item.price), 0).toFixed(2)}</p>
             </div>
             <div className="flex justify-between">
               <p>Delivery</p>
@@ -148,7 +148,7 @@ const Cart = () => {
           </div>
           <div className="flex justify-between my-3 text-gray-800 font-semibold uppercase">
             <h4>Total</h4>
-            <h4>${cartItems.reduce((acc, item) =>  (acc + item.qty * item.price), 0).toFixed(2)}</h4>
+            <h4>${cartItems.reduce((acc, item) =>  (acc + item.quantity * item.price), 0).toFixed(2)}</h4>
           </div>
 
           {/* <!-- checkout --> */}

@@ -1,72 +1,62 @@
+import { Message } from "primereact/message";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../../actions/orderActions";
 import { RemoveCartFun } from "../../actions/userActions";
-import { ORDER_DETAILS_REQUEST, ORDER_DETAILS_RESET, ORDER_DETAILS_SUCCESS } from "../../constants/orderConstants";
+import {
+  ORDER_DETAILS_REQUEST,
+  ORDER_DETAILS_RESET,
+  ORDER_DETAILS_SUCCESS,
+} from "../../constants/orderConstants";
 import Header from "../components/Header";
 
 const PlaceOrderScreen = () => {
-  const dispatch = useDispatch() 
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const { cartItems, paymentMethod } = cart;
 
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
 
-
-
-  const orderCreate = useSelector((state) => state.orderCreate)
-  const { order, success, error } = orderCreate
-
-  const itemsPri = cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)
+  const itemsPri = cartItems
+    .reduce((acc, item) => acc + item.quantity * item.price, 0)
+    .toFixed(2);
 
   var today = new Date(),
-    todydate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
-  
-
+    todydate =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
 
   useEffect(() => {
-
-    if (success) { 
-      
-      navigate(`/order/${order._id}`)
-      
+    if (success) {
+      navigate(`/order/${order._id}`);
     }
-  }, [navigate, success])
-
+  }, [navigate, success]);
 
   const placeOrderHandler = () => {
     if (success) {
-       dispatch(
-        { type: ORDER_DETAILS_RESET},
-      )
+      dispatch({ type: ORDER_DETAILS_RESET });
+      dispatch({ type: ORDER_DETAILS_REQUEST });
+      dispatch({ type: ORDER_DETAILS_SUCCESS });
+    } else {
       dispatch(
-        { type: ORDER_DETAILS_REQUEST},
-      )
-       dispatch(
-        { type: ORDER_DETAILS_SUCCESS},
-      ) 
-      
+        createOrder({
+          products: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          shippingPrice: cart.shippingPrice,
+          totalPrice: itemsPri,
+        })
+      );
+
+      dispatch(RemoveCartFun());
     }
-    else{
-    dispatch(
-      createOrder({
-        products: cart.cartItems,
-        shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
-        shippingPrice: cart.shippingPrice,
-        totalPrice: itemsPri,
-        date: todydate
-      })
-     
-       
-      )
-      dispatch(RemoveCartFun()) 
-      } 
-     
-    
-  }
+  };
 
   return (
     <>
@@ -134,13 +124,13 @@ const PlaceOrderScreen = () => {
                   {/* <!-- cart image end --> */}
                   {/* <!-- cart quantity --> */}
                   <h2 className="col-span-2  text-gray-800 mb-3 xl:text-xl textl-lg font-medium uppercase">
-                    {item.qty}
+                    {item.quantity}
                   </h2>
                   {/* <!-- cart quantity end --> */}
                   <div className="lg:col-span-2 col-span-8 flex gap-2">
                     <p className="lg:hidden text-lg">Total Price</p>
                     <p className="text-primary text-lg font-semibold">
-                      ${item.price * item.qty}
+                      ${item.price * item.quantity}
                     </p>
                   </div>
                 </div>
@@ -154,15 +144,13 @@ const PlaceOrderScreen = () => {
           <h4 class="text-gray-800 text-lg mb-4 font-medium uppercase">
             ORDER SUMMARY
           </h4>
-          <div class="space-y-2">
-           
-          </div>
+          <div class="space-y-2"></div>
           <div class="flex justify-between border-b border-gray-200 mt-1">
             <h4 class="text-gray-800 font-medium my-3 uppercase">Subtotal</h4>
             <h4 class="text-gray-800 font-medium my-3 uppercase">
               $
               {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .reduce((acc, item) => acc + item.quantity * item.price, 0)
                 .toFixed(2)}
             </h4>
           </div>
@@ -173,14 +161,13 @@ const PlaceOrderScreen = () => {
           <div class="flex justify-between">
             <h4 class="text-gray-800 font-semibold my-3 uppercase">Total</h4>
             <h4 class="text-gray-800 font-semibold my-3 uppercase">
-              $
-              {itemsPri}
+              ${itemsPri}
             </h4>
           </div>
-
+          {error && <Message severity="error" text={error} />}
           {/* <!-- checkout --> */}
           <button
-          onClick={placeOrderHandler}
+            onClick={placeOrderHandler}
             className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
              hover:text-primary transition text-sm w-full block text-center"
           >
