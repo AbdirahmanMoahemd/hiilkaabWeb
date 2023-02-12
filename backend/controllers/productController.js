@@ -294,3 +294,20 @@ export const createProductReview = asyncHandler(async (req, res) => {
     throw new Error("Product Not Found");
   }
 });
+
+
+// @desc    Fetch all products
+// @route   GET /api/products
+// @access  Public
+export const getProductsCount = asyncHandler(async (req, res) => {
+  const products = await Product.find({ })
+ 
+   let counter = 0;
+   for (let i = 0; i < products.length; i++) {
+      counter++;
+ }
+ 
+  
+   res.json({counter })    
+ 
+})

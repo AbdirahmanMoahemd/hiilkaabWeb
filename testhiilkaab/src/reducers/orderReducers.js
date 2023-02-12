@@ -4,7 +4,7 @@ import {
   ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_RESET,
   ORDER_MY_LIST_REQUEST, ORDER_MY_LIST_SUCCESS, ORDER_MY_LIST_FAIL, ORDER_MY_LIST_RESET,
   ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_LIST_FAIL,
-  ORDER_DELIVER_REQUEST, ORDER_DELIVER_SUCCESS, ORDER_DELIVER_FAIL, ORDER_DELIVER_RESET, ORDER_DETAILS_RESET, ORDER_PAY_REQUEST2, ORDER_PAY_SUCCESS2, ORDER_PAY_RESET2, ORDER_PAY_FAIL2, ORDER_LIST_REQUEST2, ORDER_LIST_SUCCESS2, ORDER_LIST_FAIL2
+  ORDER_DELIVER_REQUEST, ORDER_DELIVER_SUCCESS, ORDER_DELIVER_FAIL, ORDER_DELIVER_RESET, ORDER_DETAILS_RESET, ORDER_PAY_REQUEST2, ORDER_PAY_SUCCESS2, ORDER_PAY_RESET2, ORDER_PAY_FAIL2, ORDER_LIST_REQUEST2, ORDER_LIST_SUCCESS2, ORDER_LIST_FAIL2, RECENTORDER_LIST_REQUEST, RECENTORDER_LIST_SUCCESS, RECENTORDER_LIST_FAIL
 } from '../constants/orderConstants'
 
 
@@ -181,6 +181,30 @@ export const orderListReducer = (state = { orders: [] }, action) => {
     
   }
 }
+
+
+export const recentOrderListReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case RECENTORDER_LIST_REQUEST:
+      return {
+        loading: true,
+      }
+    case RECENTORDER_LIST_SUCCESS:
+      return {
+        loading: false,
+        orders: action.payload
+      }
+    case RECENTORDER_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+    
+  }
+}
+
 
 
 export const orderReducerCount = (state = { counter: {} }, action) => {

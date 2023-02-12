@@ -169,3 +169,15 @@ export const getOrders = asyncHandler(async (req, res) => {
   orders.sort((a, b) => (a._id > b._id) ? -1 : 1);
     res.json(orders)
 })
+
+
+// @desc    Get All orders
+// @route   GET /api/orders
+// @access  Private/admin
+export const getRecentOrders = asyncHandler(async (req, res) => {
+const start = new Date().toDateString();
+
+  const orders = await Order.find({ createdAt: {$gte : start }}).populate('user').populate('products.product')
+  orders.sort((a, b) => (a._id > b._id) ? -1 : 1);
+    res.json(orders)
+})

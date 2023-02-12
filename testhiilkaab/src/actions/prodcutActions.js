@@ -23,6 +23,9 @@ import {
   BRAND_LIST_REQUEST,
   BRAND_LIST_FAIL,
   BRAND_LIST_SUCCESS,
+  CPRODUCT_LIST_REQUEST,
+  CPRODUCT_LIST_SUCCESS,
+  CPRODUCT_LIST_FAIL,
 } from "../constants/productConstants";
 import axios from "axios";
 
@@ -324,3 +327,26 @@ export const createProductReview =
       });
     }
   };
+
+
+  
+export const listProductsCount = () => async (dispatch) => {
+  try {
+      dispatch({ type: CPRODUCT_LIST_REQUEST })
+
+      const { data } = await axios.get('/api/products/count')
+
+      dispatch({
+          type: CPRODUCT_LIST_SUCCESS,
+          payload: data
+      })
+
+  } catch (error) {
+      dispatch({
+          type: CPRODUCT_LIST_FAIL,
+          payload: error.response && error.response.data.message ?
+              error.response.data.message :
+              error.message,
+     })  
+  }
+}

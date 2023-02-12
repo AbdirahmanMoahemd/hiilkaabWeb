@@ -38,6 +38,9 @@ import {
   PRODUCT_LIST_REQUEST1,
   PRODUCT_LIST_SUCCESS1,
   PRODUCT_LIST_FAIL1,
+  CPRODUCT_LIST_REQUEST,
+  CPRODUCT_LIST_SUCCESS,
+  CPRODUCT_LIST_FAIL,
 } from "../constants/productConstants";
 
 export const productListReducer = (
@@ -223,6 +226,25 @@ export const productCreateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+
+export const productListReducerCount = (state = { counter: {} }, action) => {
+  switch (action.type) {
+      case CPRODUCT_LIST_REQUEST:
+          return { loading: true, counter: {} }
+      case CPRODUCT_LIST_SUCCESS:
+          return {
+              loading: false,
+              counter: action.payload,
+          }
+      case CPRODUCT_LIST_FAIL:
+          return { loading: false, error: action.payload }
+      default:
+          return state
+  }
+}
+
+
 
 export const productUpdateReducer = (state = { product: {} }, action) => {
   switch (action.type) {

@@ -13,7 +13,8 @@ import {
   getProductsByTopCategory1,
   getProductsByTopCategory2,
   getProductsByTopCategory3,
-  getProductsByTopCategory4
+  getProductsByTopCategory4,
+  getProductsCount
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -23,6 +24,7 @@ router.route("/").get(getProducts).post(protect, admin, createProduct);
 router.route("/dis", ).get(getDiscProducts);
 router.route("/brands", ).get(getBrands);
 router.route("/category1", ).post(getProductsByTopCategory1);
+router.route('/count').get(getProductsCount); 
 router.route("/category2", ).post(getProductsByTopCategory2);
 router.route("/category3", ).post(getProductsByTopCategory3);
 router.route("/category4", ).post(getProductsByTopCategory4);

@@ -44,6 +44,7 @@ import PlaceOrderScreen from "./client/screens/placeOrderScreen";
 import DiscountScreen from "./admin/screens/discount/DiscountScreen";
 import AddDiscountScreen from "./admin/screens/discount/AddDiscountScreen";
 import OderComplateScreen from "./client/screens/OderComplateScreen";
+import MyOrdersScreen from "./client/screens/MyOrdersScreen";
 
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
         <Route path="/about" element={<About/> } />
         <Route path="/login" element={<Login/>} />
         <Route path="/success" element={<OderComplateScreen/>} />
+        <Route path="/myorders" element={<MyOrdersScreen/>} />
 
         {/* Dashboard  */}
         <Route path="/dashboard" element={<App2/>} />
