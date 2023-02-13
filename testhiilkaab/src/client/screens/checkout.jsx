@@ -7,7 +7,14 @@ import {
 } from "../../actions/cartActions";
 import Footer from "../components/footer";
 import Header from "../components/Header";
-import { getUserDetails } from "../../actions/userActions";
+import { getUserDetails, RemoveCartFun } from "../../actions/userActions";
+import {
+  ORDER_DETAILS_REQUEST,
+  ORDER_DETAILS_RESET,
+  ORDER_DETAILS_SUCCESS,
+} from "../../constants/orderConstants";
+import { createOrderByEvc } from "../../actions/orderActions";
+import { Message } from "primereact/message";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState();
@@ -29,6 +36,20 @@ const Checkout = () => {
   const { loading, error, user } = userDetails;
 
   const dispatch = useDispatch();
+
+  const orderCreateEvc = useSelector((state) => state.orderCreateEvc);
+  const {
+    order: ordersCreateEvc,
+    success: successOrderCreateEvc,
+    error: errorOrderCreateEvc,
+  } = orderCreateEvc;
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error:errorCreate } = orderCreate;
+
+  const itemsPri = cartItems
+    .reduce((acc, item) => acc + item.quantity * item.price, 0)
+    .toFixed(2);
 
   const paymentList = [
     { value: "EVC-PLUS", indx: 1 },
@@ -53,11 +74,65 @@ const Checkout = () => {
     }
   }, [dispatch, navigate, userInfo, user]);
 
+
+
+  useEffect(() => {
+    if (successOrderCreateEvc) {
+      navigate(`/order/${ordersCreateEvc._id}`);
+    }
+  }, [navigate, successOrderCreateEvc, orderCreateEvc]);
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+  }, [navigate, success, order]);
+
+  const placeOrderHandler = (e) => {
+    e.preventDefault();
+    dispatch(saveShippingAddress({ address, city, phoneNumber, country }));
+    dispatch(savePaymentMethod(paymentMethod));
+    if (successOrderCreateEvc) {
+      dispatch({ type: ORDER_DETAILS_RESET });
+      dispatch({ type: ORDER_DETAILS_REQUEST });
+      dispatch({ type: ORDER_DETAILS_SUCCESS });
+    } else {
+      dispatch(
+        createOrderByEvc({
+          products: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          shippingPrice: cart.shippingPrice,
+          totalPrice: itemsPri,
+        })
+      );
+
+      dispatch(RemoveCartFun());
+    }
+  };
+
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, phoneNumber, country }));
     dispatch(savePaymentMethod(paymentMethod));
-    navigate('/placeorder')
+    if (successOrderCreateEvc) {
+      dispatch({ type: ORDER_DETAILS_RESET });
+      dispatch({ type: ORDER_DETAILS_REQUEST });
+      dispatch({ type: ORDER_DETAILS_SUCCESS });
+    } else {
+      dispatch(
+        createOrderByEvc({
+          products: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          shippingPrice: cart.shippingPrice,
+          totalPrice: itemsPri,
+        })
+      );
+
+      dispatch(RemoveCartFun());
+    }
   };
 
   return (
@@ -65,24 +140,28 @@ const Checkout = () => {
       <Header />
       {/* <!-- checkout wrapper --> */}
       {/* <!-- breadcrum --> */}
-    <div class="py-4 container flex gap-3 items-center">
+      <div class="py-4 container flex gap-3 items-center">
         <Link to="/" class="text-primary text-base">
-            <i class="fa fa-home"></i>
+          <i class="fa fa-home"></i>
         </Link>
-        <span class="text-sm text-gray-400"><i class="fa fa-chevron-right"></i></span>
+        <span class="text-sm text-gray-400">
+          <i class="fa fa-chevron-right"></i>
+        </span>
         <p class="text-gray-600 font-medium uppercase">checkout</p>
-    </div>
-    {/* <!-- breadcrum end --> */}
+      </div>
+      {/* <!-- breadcrum end --> */}
       <div class="container  pb-16 pt-4">
         {/* <!-- checkout form --> */}
         <div class="border border-gray-200 px-4 py-4 rounded">
-          <form onSubmit={submitHandler}>
+          <form
+            onSubmit={index === 1 || 2 || 3 ? placeOrderHandler : submitHandler}
+          >
             <h3 class="text-lg font-medium capitalize mb-4">
               Shipping Address
             </h3>
 
             <div class="space-y-4">
-              <div >
+              <div>
                 <div>
                   <label class="text-gray-600 mb-2 block">
                     Address <span class="text-primary">*</span>
@@ -161,12 +240,21 @@ const Checkout = () => {
                         setIndex(pay.indx);
                       }}
                     />
-                    <span className="pl-2">{pay.value}</span>
+                    <span className="pl-2">{pay.value}qsdaf</span>
                   </div>
                 ))}
               </div>
-              <button className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
-             hover:text-primary transition text-sm w-full block text-center">Place Order</button>
+              <br />
+              <br />
+              {error && <Message severity="error" text={errorOrderCreateEvc} />}
+              {error && <Message severity="error" text={errorCreate} />}
+              <button
+              type="submit"
+                className="bg-primary border border-primary text-primary px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
+             hover:text-primary transition text-sm w-full block text-center"
+              >
+                Place Order
+              </button>
             </div>
           </form>
         </div>

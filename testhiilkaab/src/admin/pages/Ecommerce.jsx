@@ -5,7 +5,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 import { FaProductHunt } from "react-icons/fa";
 import { BiCategoryAlt } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { listOrdersCount, recentOrders } from "../../actions/orderActions";
@@ -145,6 +145,9 @@ const Ecommerce = () => {
                             style={{ color: "red" }}
                           ></i>
                         )}
+                      </td>
+                      <td>
+                        <Link to={`/order/${order._id}`}>Details</Link>
                       </td>
                     </tr>
                   ))}

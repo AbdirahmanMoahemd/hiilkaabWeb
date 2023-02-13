@@ -7,7 +7,6 @@ import Wishlist from "./client/screens/wishlist";
 import Account from "./client/screens/account";
 import Checkout from "./client/screens/checkout";
 import ProfileInfo from "./client/screens/profile-info";
-import Order from "./client/screens/order";
 import ManageAddress from "./client/screens/managed";
 import ChangePassword from "./client/screens/change-password";
 import Product from "./client/screens/product";
@@ -33,7 +32,6 @@ import AddUserScreen from "./admin/screens/AddUserScreen";
 import UpdateCategoryScreen from "./admin/screens/UpdateCategoryScreen";
 import UpdateSubCategoryScreen from "./admin/screens/UpdateSubCategoryScreen";
 import UpdateProductsScreen from "./admin/screens/UpdateProductsScreen";
-import UpdateSlider from "./admin/pages/Sliders/UpdateSlider";
 import SliderUpdateScreen from "./admin/screens/SliderUpdateScreen";
 import UpdateSettingsScreen from "./admin/screens/UpdateSettingsScreen";
 import About from "./client/screens/About";
@@ -45,6 +43,7 @@ import DiscountScreen from "./admin/screens/discount/DiscountScreen";
 import AddDiscountScreen from "./admin/screens/discount/AddDiscountScreen";
 import OderComplateScreen from "./client/screens/OderComplateScreen";
 import MyOrdersScreen from "./client/screens/MyOrdersScreen";
+import ScrollToTop from "./client/components/ScrollToTop";
 
 
 function App() {
@@ -78,10 +77,11 @@ function App() {
         <Route path="/placeorder" element={<PlaceOrderScreen/> } />
         <Route path="/order/:id" element={<OrdersScreen2/> } />
         <Route path="/profile" element={<ProfileInfo/> } />
-        <Route path="/order-complete" element={<Order/>} />
         <Route path="/manag-address" element={<ManageAddress/>} />
         <Route path="/change-password" element={<ChangePassword/> } />
-        <Route path="/product/:id" element={<Product/> } />
+        
+        <Route path="/product/:id" element={<ScrollToTop><Product/></ScrollToTop> } />
+        
         <Route path="/register" element={<Register/> } />
         <Route path="/about" element={<About/> } />
         <Route path="/login" element={<Login/>} />

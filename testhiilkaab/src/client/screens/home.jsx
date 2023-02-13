@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listCategories } from "../../actions/categoryActions";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
-import { listDisProducts, listProducts } from "../../actions/prodcutActions";
+import { listDisProducts, listProducts, listTopProducts } from "../../actions/prodcutActions";
 import SinglProduct from "../components/SinglProduct";
 import { listSubCategories } from "../../actions/subCategoryActions";
 import TopRanking from "../components/TopRanking";
@@ -44,8 +44,9 @@ const Home = () => {
     slides,
   } = slideList;
 
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+
+  const productTop = useSelector((state) => state.productTop);
+  const { loading:loadingTopProducts, error:errorTopProducts, products:topProducts } = productTop;
 
   const producDistList = useSelector((state) => state.producDistList);
   const {
@@ -84,11 +85,11 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword]);
+    dispatch(listSubCategories());
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(listSubCategories());
+    dispatch(listTopProducts());
   }, [dispatch]);
 
   useEffect(() => {
@@ -206,7 +207,7 @@ const Home = () => {
           Discounted Products
         </h2>
         {/* <!-- product wrapper --> */}
-        {loading ? (
+        {loadingDis ? (
           <center>
             {" "}
             <ProgressSpinner
@@ -216,8 +217,8 @@ const Home = () => {
               animationDuration=".5s"
             />
           </center>
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
+        ) : errorDis ? (
+          <Message variant="danger">{errorDis}</Message>
         ) : (
           <>
             <SinglProduct products={productsDis} />
@@ -266,18 +267,18 @@ const Home = () => {
           recomended for you
         </h2>
         {/* <!-- product wrapper --> */}
-        {loadingcategory ? (
+        {loadingTopProducts ? (
           <ProgressSpinner
             style={{ width: "20px", height: "20px" }}
             strokeWidth="6"
             fill="var(--surface-ground)"
             animationDuration=".5s"
           />
-        ) : errorcategory ? (
-          <Message variant="danger">{errorcategory}</Message>
+        ) : errorTopProducts ? (
+          <Message variant="danger">{errorTopProducts}</Message>
         ) : (
           <>
-            <SinglProduct products={products} />
+            <SinglProduct products={topProducts} />
           </>
         )}
       </div>

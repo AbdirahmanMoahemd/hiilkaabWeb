@@ -24,19 +24,13 @@ const PlaceOrderScreen = () => {
     .reduce((acc, item) => acc + item.quantity * item.price, 0)
     .toFixed(2);
 
-  var today = new Date(),
-    todydate =
-      today.getFullYear() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getDate();
+ 
 
   useEffect(() => {
     if (success) {
       navigate(`/order/${order._id}`);
     }
-  }, [navigate, success]);
+  }, [navigate, success, order]);
 
   const placeOrderHandler = () => {
     if (success) {

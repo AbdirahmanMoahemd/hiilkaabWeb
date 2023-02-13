@@ -22,6 +22,18 @@ export const getProducts = asyncHandler(async (req, res) => {
   res.json({ products });
 });
 
+
+// @desc    Get top rated products
+// @route   POST /api/products/top
+// @access  Public
+export const getTopProducts = asyncHandler (async (req, res) => {
+  
+  const products = await Product.find({}).populate("category")
+  .populate("subcategory").sort({ rating: -1 }).limit(16)
+  products.sort((a, b) => (a._id > b._id) ? -1 : 1)
+  res.json({ products })
+})
+
 export const getBrands = asyncHandler(async (req, res) => {
   
  

@@ -36,6 +36,7 @@ import {
   brandListReducer,
   productListReducer1,
   productListReducerCount,
+  productTopReducer,
 } from "./reducers/productReducers";
 import {
   userDeleteReducer,
@@ -72,6 +73,7 @@ import {
 } from "./reducers/discountReducers";
 import {
   orderCreateReducer,
+  orderCreateReducerEvc,
   orderDeliverReducer,
   orderDetailsReducer,
   orderListReducer,
@@ -113,13 +115,14 @@ const reducer = combineReducers({
   productReview: productReviewReducer,
   producDistList: producDiscounttListReducer,
   brandList: brandListReducer,
-  productCount:productListReducerCount,
+  productCount: productListReducerCount,
+  productTop: productTopReducer,
 
-  discountCreate:discountCreateReducer,
-  discountDelete:discountDeleteReducer,
-  discountDetails:discountDetailsReducer,
-  discountList:discountListReducer,
-  discountUpdate:discountUpdateReducer,
+  discountCreate: discountCreateReducer,
+  discountDelete: discountDeleteReducer,
+  discountDetails: discountDetailsReducer,
+  discountList: discountListReducer,
+  discountUpdate: discountUpdateReducer,
 
   cart: cartReducer,
   wishlist: wishlistReducer,
@@ -140,8 +143,8 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   orderDeliver: orderDeliverReducer,
   orderCount: orderReducerCount,
+  orderCreateEvc: orderCreateReducerEvc,
   recentOrderList: recentOrderListReducer,
-
 
   slideList: slideListReducer,
   // slideDelete: slideDeleteReducer,

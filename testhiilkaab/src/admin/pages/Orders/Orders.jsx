@@ -2,7 +2,7 @@ import { Message } from "primereact/message";
 import { ProgressSpinner } from "primereact/progressspinner";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { listOrders } from "../../../actions/orderActions";
 import { Header } from "../../components";
 
@@ -74,6 +74,11 @@ const Orders = () => {
                                                 ) : (
                                                     <i className='fa fa-times' style={{ color: 'red' }}></i>
                                                 )}
+                                                </td>
+                                                <td>
+                                                    <Link to={`/order/${order._id}`}> 
+                                                        Details
+                                                    </Link>
                                                 </td>
                   </tr>
                 ))}

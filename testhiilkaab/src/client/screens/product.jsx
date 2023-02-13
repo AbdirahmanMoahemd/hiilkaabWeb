@@ -244,19 +244,7 @@ const Product = () => {
                 </div>
               )}
               {/* <!-- color end --> */}
-              {/* <!-- quantity --> */}
-              <div class="mt-4">
-                <h3 class="text-base text-gray-800 mb-1">Quantity</h3>
-                <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
-                  <div class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
-                    -
-                  </div>
-                  <div class="h-8 w-10 flex items-center justify-center">4</div>
-                  <div class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">
-                    +
-                  </div>
-                </div>
-              </div>
+              
               {/* <!-- color end --> */}
               {/* <!-- add to cart button --> */}
               <div class="flex gap-3 border-b border-gray-200 pb-5 mt-6">

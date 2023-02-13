@@ -38,6 +38,48 @@ export const addOrderItems = asyncHandler(async (req, res) => {
   }
 })
 
+
+
+// @desc    Create new order
+// @route   POST /api/orders
+// @access  Private
+export const addOrderItemsEvc = asyncHandler(async (req, res) => {
+  const {
+    products,
+    shippingAddress,
+    paymentMethod,
+    shippingPrice,
+    totalPrice,
+  } = req.body
+
+  if (products && products.length === 0) {
+    res.status(400)
+    throw new Error('No order items')
+     return
+  } else {
+    let meals=[]
+    const order = new Order({
+      products,
+      meals,
+      user: req.user._id,
+      shippingAddress,
+      paymentMethod,
+      status:1,
+      shippingPrice, 
+      totalPrice,
+      status:1,
+      isPaid:true,
+      paidAt:Date.now(),
+      orderedAt: new Date().getTime()
+    })
+
+    const createdOrder = await order.save()
+
+    res.status(201).json(createdOrder)
+  }
+})
+
+
 // @desc    Get order by ID
 // @route   GET /api/orders/:id
 // @access  Private

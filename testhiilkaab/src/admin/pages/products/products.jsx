@@ -96,6 +96,7 @@ const Products = () => {
                 <div className="mt-2">
                   <p>category: {product.category.name}</p>
                   <p>subcategory: {product.subcategory.name}</p>
+                  <p>CountInStock: {product.countInStock}</p>
                   <p>price: ${product.price}</p>
                   <p>isDiscounted: {product.isDiscounted ? "yes" : "No"}</p>
 

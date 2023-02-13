@@ -14,7 +14,7 @@ import {
   ORDER_PAY_RESET2,
 } from "../../constants/orderConstants";
 import Header from "../components/Header";
-import { Toast } from 'primereact/toast';
+import { Toast } from "primereact/toast";
 
 const OrdersScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState();
@@ -169,7 +169,10 @@ const OrdersScreen = () => {
                 </h3>
                 <p>
                   {order.isPaid ? (
-                    <Message severity="success">Paid on {order.paidAt}</Message>
+                    <Message
+                      severity="success"
+                      text={` Paid on ${order.paidAt.substring(0, 10)}`}
+                    />
                   ) : (
                     <Message severity="error" text="Not Paid"></Message>
                   )}
@@ -177,9 +180,10 @@ const OrdersScreen = () => {
                 <br />
                 <p>
                   {order.isDelivered ? (
-                    <Message severity="success">
-                      Delivered on {order.deliveredAt}
-                    </Message>
+                    <Message
+                      severity="success"
+                      text={` Paid on ${order.deliveredAt.substring(0, 10)}`}
+                    />
                   ) : (
                     <Message severity="error" text="Not Delivered"></Message>
                   )}
@@ -256,68 +260,55 @@ const OrdersScreen = () => {
                 </h4>
               </div>
 
-              {/* <!-- checkout --> */}
-              {order.paymentMethod == "EVC-PLUS" ? (
-                <>
-                  <div className="py-4">
-                    <input
-                      type="number"
-                      className="input-box"
-                      value={phoneNumber}
-                      placeholder="2526XXXXXXXX"
-                      name="phoneNumber"
-                      required
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                  </div>
-
-                  <button
-                    onClick={evcpayment}
-                    className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
-             hover:text-primary transition text-sm w-full block text-center"
-                  >
-                    Pay through {order.paymentMethod}
-                  </button>
-                </>
-              ) : order.paymentMethod == "ZAAD SERVICES" ? (
-                <>
-                  <div className="py-4">
-                    <input
-                      type="number"
-                      className="input-box"
-                      value={phoneNumber}
-                      placeholder="2526XXXXXXXX"
-                      name="phoneNumber"
-                      required
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                  </div>
-
-                  <button
-                    onClick={evcpayment}
-                    className="bg-primary border  border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
-             hover:text-primary transition text-sm w-full block text-center"
-                  >
-                    Pay through {order.paymentMethod}
-                  </button>
-                </>
-              ) : order.paymentMethod == "SAHAL" ? (
+              {/* <!-- Update Order to Paid --> */}
+              {loadingDeliver && (
+                <ProgressSpinner
+                  style={{ width: "20px", height: "20px" }}
+                  strokeWidth="6"
+                  fill="var(--surface-ground)"
+                  animationDuration=".5s"
+                />
+              )}
+              {userInfo && userInfo.isAdmin && !order.isPaid && (
                 <button
-                  onClick={evcpayment}
+                  onClick={successPaymentHandler}
                   className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
-         hover:text-primary transition text-sm w-full block text-center"
+                   hover:text-primary transition text-sm w-full block text-center"
                 >
-                  Pay through {order.paymentMethod}
+                  Update Order to Paid
                 </button>
-              ) : (
-                <Link to="/success">
-            <a
-              className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
+              )}
+
+              {/* <!-- Update Order to Delivered --> */}
+              {loadingDeliver && (
+                <ProgressSpinner
+                  style={{ width: "20px", height: "20px" }}
+                  strokeWidth="6"
+                  fill="var(--surface-ground)"
+                  animationDuration=".5s"
+                />
+              )}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <button
+                    onClick={deliverHandler}
+                    className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
+                   hover:text-primary transition text-sm w-full block text-center"
+                  >
+                    Update Order to Delivered
+                  </button>
+                )}
+
+              {userInfo && !userInfo.isAdmin && (
+                <Link
+                  to="/success"
+                  className="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
              hover:text-primary transition text-sm w-full block text-center"
-            >
-              Complete
-            </a>
-          </Link>
+                >
+                  Complete
+                </Link>
               )}
 
               {/* <!-- checkout end --> */}

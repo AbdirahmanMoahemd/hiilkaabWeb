@@ -41,6 +41,9 @@ import {
   CPRODUCT_LIST_REQUEST,
   CPRODUCT_LIST_SUCCESS,
   CPRODUCT_LIST_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS,
+  PRODUCT_TOP_FAIL,
 } from "../constants/productConstants";
 
 export const productListReducer = (
@@ -275,3 +278,17 @@ export const productReviewReducer = (state = {}, action) => {
       return state;
   }
 };
+
+
+export const productTopReducer = (state = { products: [{ category: [], subcategory: [] }] } , action) => {
+  switch (action.type) {
+      case PRODUCT_TOP_REQUEST:
+          return { loading: true, products: []}
+      case PRODUCT_TOP_SUCCESS:
+          return { loading: false, products: action.payload.products }
+      case PRODUCT_TOP_FAIL:
+          return { loading: false, error: action.payload }
+      default:
+          return state
+  }
+}

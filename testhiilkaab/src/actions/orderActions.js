@@ -3,7 +3,7 @@ import {
   ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL,
   ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL,
   ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL,
-  ORDER_MY_LIST_REQUEST, ORDER_MY_LIST_SUCCESS, ORDER_MY_LIST_FAIL, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_LIST_FAIL, ORDER_DELIVER_REQUEST, ORDER_DELIVER_SUCCESS, ORDER_DELIVER_FAIL, ORDER_DETAILS_RESET, ORDER_PAY_REQUEST2, ORDER_PAY_SUCCESS2, ORDER_PAY_FAIL2, ORDER_LIST_REQUEST2, ORDER_LIST_SUCCESS2, ORDER_LIST_FAIL2, RECENTORDER_LIST_REQUEST, RECENTORDER_LIST_SUCCESS, RECENTORDER_LIST_FAIL
+  ORDER_MY_LIST_REQUEST, ORDER_MY_LIST_SUCCESS, ORDER_MY_LIST_FAIL, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_LIST_FAIL, ORDER_DELIVER_REQUEST, ORDER_DELIVER_SUCCESS, ORDER_DELIVER_FAIL, ORDER_DETAILS_RESET, ORDER_PAY_REQUEST2, ORDER_PAY_SUCCESS2, ORDER_PAY_FAIL2, ORDER_LIST_REQUEST2, ORDER_LIST_SUCCESS2, ORDER_LIST_FAIL2, RECENTORDER_LIST_REQUEST, RECENTORDER_LIST_SUCCESS, RECENTORDER_LIST_FAIL, ORDER_CREATE_REQUEST_EVC, ORDER_CREATE_SUCCESS_EVC, ORDER_CREATE_FAIL_EVC
 } from '../constants/orderConstants'
 
 
@@ -33,6 +33,40 @@ export const createOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
+        payload:
+            error.response && error.response.data.message ?
+            error.response.data.message :
+            error.message,
+    })
+  }
+}
+
+export const createOrderByEvc = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_CREATE_REQUEST_EVC,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.post(`/api/orders/evc`, order, config)
+
+    dispatch({
+      type: ORDER_CREATE_SUCCESS_EVC,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ORDER_CREATE_FAIL_EVC,
         payload:
             error.response && error.response.data.message ?
             error.response.data.message :
