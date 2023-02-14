@@ -1,16 +1,12 @@
 {
   "files": {
-    "main.css": "/static/css/main.9b91f032.css",
-    "main.js": "/static/js/main.1f2c3068.js",
+    "main.css": "/static/css/main.77b40979.css",
+    "main.js": "/static/js/main.a28758b7.js",
     "static/media/product4.jpg": "/static/media/product4.767417bea17688d6d8ce.jpg",
     "static/media/product2.jpg": "/static/media/product2.e93f12ec1b20980a1bd1.jpg",
-    "static/media/HIILKAAB4.png": "/static/media/HIILKAAB4.7848e133ea9c4929b5f6.png",
-    "static/media/HIILKAABCOM.png": "/static/media/HIILKAABCOM.08bea470360598756a6d.png",
-    "static/media/HIILKAAB3.png": "/static/media/HIILKAAB3.0f54b5a0c70b49595445.png",
     "static/media/product1.jpg": "/static/media/product1.b8efc7a24c281ed8911b.jpg",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/primeicons.svg": "/static/media/primeicons.e1441b135b3ca9ad643c.svg",
-    "static/media/offer.jpg": "/static/media/offer.057e68bef2ff8972da1a.jpg",
     "static/media/fontawesome-webfont.eot": "/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
     "static/media/fontawesome-webfont.ttf?v=4.7.0": "/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
     "static/media/product3.jpg": "/static/media/product3.be6bce80c539b3222473.jpg",
@@ -29,16 +25,12 @@
     "static/media/avatar4.jpg": "/static/media/avatar4.f56b774f77caaf2f6921.jpg",
     "static/media/avatar.png": "/static/media/avatar.78af2b15fbc03b7902c9.png",
     "static/media/product5.jpg": "/static/media/product5.f4c5d8f991b753ca0fcc.jpg",
-    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
-    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
-    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
-    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.9b91f032.css.map": "/static/css/main.9b91f032.css.map",
-    "main.1f2c3068.js.map": "/static/js/main.1f2c3068.js.map"
+    "main.77b40979.css.map": "/static/css/main.77b40979.css.map",
+    "main.a28758b7.js.map": "/static/js/main.a28758b7.js.map"
   },
   "entrypoints": [
-    "static/css/main.9b91f032.css",
-    "static/js/main.1f2c3068.js"
+    "static/css/main.77b40979.css",
+    "static/js/main.a28758b7.js"
   ]
 }
