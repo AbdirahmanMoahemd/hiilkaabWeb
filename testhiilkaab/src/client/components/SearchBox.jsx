@@ -26,9 +26,8 @@ const SearchBox = () => {
               onChange={(e) => setKeyword(e.target.value)}
             />
             <button
-              type="submit"
               onClick={submitHandler}
-              className="bg-primary border border-primary text-primary px-8 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
+              className="bg-primary border border-primary text-white px-8 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
             >
               Search
             </button>

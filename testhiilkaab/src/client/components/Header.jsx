@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import hiilkaab from "../../data/images/hiilkaab.jpg";
 import { Link, Route, useNavigate } from "react-router-dom";
 import { useStateContext } from "../../admin/contexts/ContextProvider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import SearchBox from "./SearchBox";
+import { listCategories } from "../../actions/categoryActions";
 
 function getWindowSize() {
   const { innerWidth, innerHeight } = window;
@@ -14,40 +15,59 @@ function getWindowSize() {
 const Header = () => {
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [navbarState, setNavbarState] = useState(false);
+  const [categoryState, setCategory] = useState(false);
   const [searchState, setSearchState] = useState(false);
+  const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const [keyword, setKeyword] = useState('')
-    const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
 
-    const submitHandler = (e) => {
-        e.preventDefault()
-        if (keyword.trim()) {
-            navigate(`/search/${keyword}`)
-            
-        }
-        else {
-            navigate('/')
-        }
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/search/${keyword}`);
+    } else {
+      navigate("/");
     }
-
-  
+  };
 
   useEffect(() => {}, [userInfo]);
+
+  useEffect(() => {
+    dispatch(listCategories());
+  }, [dispatch]);
 
   const changeHandler = () => {
     if (searchState == true) {
       setSearchState(false);
+      setCategory(false);
     }
     setNavbarState(!navbarState);
   };
   const changeSearchHandler = () => {
-    if (navbarState == true) {
+    if (categoryState == true) {
       setNavbarState(false);
+      setCategory(false);
     }
     setSearchState(!searchState);
+  };
+
+  const categoryList = useSelector((state) => state.categoryList);
+  const {
+    loading: loadingcategory,
+    error: errorcategory,
+    categories,
+  } = categoryList;
+
+  const changeCategoryHandler = () => {
+    if (categoryState == true) {
+      setNavbarState(false);
+      setSearchState(false);
+    }
+    setCategory(!searchState);
   };
 
   const cart = useSelector((state) => state.cart);
@@ -80,14 +100,12 @@ const Header = () => {
     if (currentMode === "Dark") {
       setCurrentMode("Light");
       localStorage.setItem("themeMode", currentMode);
-      
     }
   };
   const toChangeDark = () => {
     if (currentMode === "Light") {
       setCurrentMode("Dark");
       localStorage.setItem("themeMode", currentMode);
-      
     }
   };
 
@@ -145,26 +163,26 @@ const Header = () => {
       </header>
       {/* <!-- header end --> */}
 
-      <nav class="bg-gray-800  hidden lg:block">
-        <div class="container">
-          <div class="flex">
+      <nav className="bg-gray-800  hidden lg:block">
+        <div className="container">
+          <div className="flex">
             {/* <!-- all category --> */}
-            <div class="px-8 py-4 bg-primary flex items-center cursor-pointer group relative">
-              <span class="text-white">
-                <i class="fa fa-bars"></i>
+            <div className="px-8 py-4 bg-primary flex items-center cursor-pointer group relative">
+              <span className="text-white">
+                <i className="fa fa-bars"></i>
               </span>
-              <span class="capitalize ml-2 text-white">All categories</span>
+              <span className="capitalize ml-2 text-white">All categories</span>
             </div>
             {/* <!-- all category end --> */}
 
             {/* <!-- nav menu --> */}
-            <div class="flex items-center justify-between flex-grow pl-12">
-              <div class="flex items-center space-x-6 text-base capitalize">
+            <div className="flex items-center justify-between flex-grow pl-12">
+              <div className="flex items-center space-x-6 text-base capitalize">
                 <Link to="/">
                   {" "}
                   <a
                     href="index.html"
-                    class="text-gray-200 hover:text-white transition"
+                    className="text-gray-200 hover:text-white transition"
                   >
                     Home
                   </a>
@@ -173,21 +191,21 @@ const Header = () => {
                   {" "}
                   <a
                     href="shop.html"
-                    class="text-gray-200 hover:text-white transition"
+                    className="text-gray-200 hover:text-white transition"
                   >
                     Shop
                   </a>
                 </Link>
                 <a
                   href="/about"
-                  class="text-gray-200 hover:text-white transition"
+                  className="text-gray-200 hover:text-white transition"
                 >
                   About us
                 </a>
                 {userInfo && userInfo.isAdmin && (
                   <Link
                     to="/dashboard"
-                    class="text-gray-200 hover:text-white transition"
+                    className="text-gray-200 hover:text-white transition"
                   >
                     Dashboard
                   </Link>
@@ -197,14 +215,14 @@ const Header = () => {
                 {userInfo ? (
                   <Link
                     to="/"
-                    class="ml-auto justify-self-end text-gray-200 hover:text-white transition"
+                    className="ml-auto justify-self-end text-gray-200 hover:text-white transition"
                   >
                     {userInfo.name.split(" ")[0]}
                   </Link>
                 ) : (
                   <a
                     href="/login"
-                    class="ml-auto justify-self-end text-gray-200 hover:text-white transition"
+                    className="ml-auto justify-self-end text-gray-200 hover:text-white transition"
                   >
                     Login/Register
                   </a>
@@ -235,45 +253,45 @@ const Header = () => {
       </nav>
 
       {/* <!-- mobile menubar --> */}
-      <div class="fixed w-full border-t  border-gray-200 shadow-sm bg-white py-3 bottom-0 left-0 flex justify-around items-start px-6 lg:hidden z-40">
+      <div className="fixed w-full border-t  border-gray-200 shadow-sm bg-white py-3 bottom-0 left-0 flex justify-around items-start px-6 lg:hidden z-40">
         <Link
-          to={'/'}
-          class="block text-center text-gray-700 hover:text-primary transition relative"
+          to={"/"}
+          className="block text-center text-gray-700 hover:text-primary transition relative"
         >
-          <div class="text-2xl" id="menuBar">
-            <i onClick={changeHandler} class="fa fa-bars"></i>
+          <div className="text-2xl" id="menuBar">
+            <i onClick={changeHandler} className="fa fa-bars"></i>
           </div>
-          <div class="text-xs leading-3">Menu</div>
+          <div className="text-xs leading-3">Menu</div>
         </Link>
         <Link
-          to={'/'}
-          class="block text-center text-gray-700 hover:text-primary transition relative"
+          to={"/"}
+          className="block text-center text-gray-700 hover:text-primary transition relative"
         >
-          <div class="text-2xl">
-            <i class="fa fa-list-ul"></i>
+          <div className="text-2xl">
+            <i onClick={changeCategoryHandler} className="fa fa-list-ul"></i>
           </div>
-          <div class="text-xs leading-3">Category</div>
+          <div className="text-xs leading-3">Category</div>
         </Link>
         <Link
-          to={'/'}
-          class="block text-center text-gray-700 hover:text-primary transition relative"
+          to={"/"}
+          className="block text-center text-gray-700 hover:text-primary transition relative"
         >
-          <div class="text-2xl">
-            <i onClick={changeSearchHandler} class="fa fa-search"></i>
+          <div className="text-2xl">
+            <i onClick={changeSearchHandler} className="fa fa-search"></i>
           </div>
-          <div class="text-xs leading-3">Search</div>
+          <div className="text-xs leading-3">Search</div>
         </Link>
         <Link
           to={"/cart"}
-          class="text-center text-gray-700 hover:text-primary transition relative"
+          className="text-center text-gray-700 hover:text-primary transition relative"
         >
-          <span class="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
+          <span className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
             {cartItems.length}
           </span>
-          <div class="text-2xl">
-            <i class="fa fa-shopping-bag"></i>
+          <div className="text-2xl">
+            <i className="fa fa-shopping-bag"></i>
           </div>
-          <div class="text-xs leading-3">Cart</div>
+          <div className="text-xs leading-3">Cart</div>
         </Link>
       </div>
       {/* <!-- mobile menu end --> */}
@@ -289,37 +307,36 @@ const Header = () => {
           }
           id="mobileMenu"
         >
-          <div class="absolute left-0 top-0 w-72 z-50  h-[90%] bg-white shadow">
+          <div className="absolute left-0 top-0 w-72 z-50  h-[90%] bg-white shadow">
             <div
               id="closeMenu"
-              class="text-gray-400 hover:text-primary text-lg absolute right-3 top-3 cursor-pointer"
+              className="text-gray-400 hover:text-primary text-lg absolute right-3 top-3 cursor-pointer"
             >
-              <i onClick={changeHandler} class="fa fa-times"></i>
+              <i onClick={changeHandler} className="fa fa-times"></i>
             </div>
             {/* <!-- navlink --> */}
-            <h3 class="text-xl font-semibold text-gray-700 mb-1 font-roboto pl-4 pt-4">
+            <h3 className="text-xl font-semibold text-gray-700 mb-1 font-roboto pl-4 pt-4">
               Menu
             </h3>
-            <div class="">
+            <div className="">
               <Link
                 to={"/"}
-                class="block px-4 py-2 font-medium transition hover:bg-gray-100"
+                className="block px-4 py-2 font-medium transition hover:bg-gray-100"
               >
                 Home
               </Link>
               <Link
                 to={"/shop"}
-                class="block px-4 py-2 font-medium transition hover:bg-gray-100"
+                className="block px-4 py-2 font-medium transition hover:bg-gray-100"
               >
                 Shop
               </Link>
               <Link
                 to={"/about"}
-                class="block px-4 py-2 font-medium transition hover:bg-gray-100"
+                className="block px-4 py-2 font-medium transition hover:bg-gray-100"
               >
                 About Us
               </Link>
-              
             </div>
             {/* <!-- navlinks end --> */}
           </div>
@@ -329,9 +346,50 @@ const Header = () => {
       )}
       {/* <!-- mobile sidebar menu end --> */}
 
+      {categoryState ? (
+        <div
+          className={
+            "fixed left-0 top-0 pb-30 w-full h-[5%] z-50 bg-black bg-opacity-30 shadow " +
+            categoryState
+              ? ""
+              : "hidden"
+          }
+          id="mobileMenu"
+        >
+          <div className="absolute left-0 top-0 w-72 z-50  h-[90%] bg-white shadow">
+            <div
+              id="closeMenu"
+              className="text-gray-400 hover:text-primary text-lg absolute right-3 top-3 cursor-pointer"
+            >
+              <i onClick={() => setCategory(false)} className="fa fa-times"></i>
+            </div>
+            {/* <!-- navlink --> */}
+            <h3 className="text-xl font-semibold text-gray-700 mb-1 font-roboto pl-4 pt-4">
+              Categories
+            </h3>
+            <div className="">
+              {categories.map((category) =>(
+                <Link
+                to={`/shop/${category.id}`}
+                className="block px-4 py-2 font-medium transition hover:bg-gray-100"
+              >
+                {category.name}
+              </Link>
+              ))}
+              
+            </div>
+            {/* <!-- navlinks end --> */}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       {searchState ? (
-        <form onSubmit={submitHandler} class="absolute flex m-auto pl-4 pr-4 top-20 w-full h-[5%] z-50  shadow">
-         
+        <form
+          onSubmit={submitHandler}
+          className="absolute flex m-auto pl-4 pr-4 top-20 w-full h-[5%] z-50  shadow"
+        >
           <input
             type="text"
             className="pl-12 w-full border border-r-0 border-primary py-2 px-2 rounded-l-md focus:ring-primary focus:border-primary"
@@ -339,18 +397,20 @@ const Header = () => {
             onChange={(e) => setKeyword(e.target.value)}
           />
           <button
-            type="submit"
             onClick={submitHandler}
-            className="bg-white border border-primary text-primary px-3 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
+            className="bg-white border border-primary text-white px-3 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
           >
             Search
           </button>
 
           <div
             id="closeMenu"
-            class="text-gray-600 hover:text-primary text-lg  right-3  cursor-pointer"
+            className="text-gray-600 hover:text-primary text-lg  right-3  cursor-pointer"
           >
-            <i onClick={changeSearchHandler} class="fa fa-times py-3 pl-2"></i>
+            <i
+              onClick={changeSearchHandler}
+              className="fa fa-times py-3 pl-2"
+            ></i>
           </div>
         </form>
       ) : (
@@ -362,13 +422,13 @@ const Header = () => {
 
 export default Header;
 
-// {/* <div class="absolute left-0 top-full w-full bg-white shadow-md py-3 invisible opacity-0 group-hover:opacity-200 group-hover:visible transition duration-300 z-50 divide-y divide-gray-300 divide-dashed">
+// {/* <div className="absolute left-0 top-full w-full bg-white shadow-md py-3 invisible opacity-0 group-hover:opacity-200 group-hover:visible transition duration-300 z-50 divide-y divide-gray-300 divide-dashed">
 //                 {/* <!-- single category --> */}
 //                 <a
 //                   href="/"
-//                   class="px-6 py-3 flex items-center hover:bg-gray-100 transition"
+//                   className="px-6 py-3 flex items-center hover:bg-gray-100 transition"
 //                 >
-//                   <img src={bed} class="w-5 h-5 object-contain" />
+//                   <img src={bed} className="w-5 h-5 object-contain" />
 //                   <span class="ml-6 text-gray-600 text-sm">Bedroom</span>
 //                 </a>
 //                 {/* <!-- single category end -->

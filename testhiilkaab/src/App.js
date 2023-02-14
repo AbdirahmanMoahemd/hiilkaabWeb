@@ -80,7 +80,7 @@ function App() {
         <Route path="/manag-address" element={<ManageAddress/>} />
         <Route path="/change-password" element={<ChangePassword/> } />
         
-        <Route path="/product/:id" element={<ScrollToTop><Product/></ScrollToTop> } />
+        <Route path="/product/:id" element={<Product/>} />
         
         <Route path="/register" element={<Register/> } />
         <Route path="/about" element={<About/> } />

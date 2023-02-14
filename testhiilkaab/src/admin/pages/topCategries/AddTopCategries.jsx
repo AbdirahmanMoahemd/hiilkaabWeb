@@ -46,7 +46,7 @@ const AddTopCategory = () => {
     <div className="container m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-2xl">
       {/* <!-- checkout form --> */}
       <Header category="Add" title="TopCategory" />
-      <div class="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
+      <div className="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
         <form onSubmit={submitHandler}>
           {loadingCreate && (
             <ProgressSpinner
@@ -57,7 +57,7 @@ const AddTopCategory = () => {
             />
           )}
           {errorCreate && <Message severity="error" text={errorCreate} />}
-          <div class="space-y-4">
+          <div className="space-y-4">
             <p>{}</p>
             
           
@@ -66,7 +66,7 @@ const AddTopCategory = () => {
               <select
                 name="category1"
                 type="text"
-                class="input-box"
+                className="input-box"
                 value={category1}
                 required
                 onChange={(e) => setCategory1(e.target.value)}
@@ -89,7 +89,7 @@ const AddTopCategory = () => {
               <select
                 name="category2"
                 type="text"
-                class="input-box"
+                className="input-box"
                 value={category2}
                 required
                 onChange={(e) => setCategory2(e.target.value)}
@@ -111,7 +111,7 @@ const AddTopCategory = () => {
               <select
                 name="category3"
                 type="text"
-                class="input-box"
+                className="input-box"
                 value={category3}
                 required
                 onChange={(e) => setCategory3(e.target.value)}
@@ -133,7 +133,7 @@ const AddTopCategory = () => {
               <select
                 name="category4"
                 type="text"
-                class="input-box"
+                className="input-box"
                 value={category4}
                 required
                 onChange={(e) => setCategory4(e.target.value)}
@@ -151,8 +151,8 @@ const AddTopCategory = () => {
             </div>
             <div className="mt-4 flex justify-center">
               <button
-                type="submit"
-                className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                
+                className="py-2 px-10 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
               >
                 Save
               </button>

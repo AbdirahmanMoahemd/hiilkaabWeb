@@ -36,12 +36,12 @@ const Cart = () => {
       <Header />
       {/* <!-- cart wrapper --> */}
       {/* <!-- breadcrum --> */}
-    <div class="py-4 container flex gap-3 items-center">
-        <Link to="/" class="text-primary text-base">
-            <i class="fa fa-home"></i>
+    <div className="py-4 container flex gap-3 items-center">
+        <Link to="/" className="text-primary text-base">
+            <i className="fa fa-home"></i>
         </Link>
-        <span class="text-sm text-gray-400"><i class="fa fa-chevron-right"></i></span>
-        <p class="text-gray-600 font-medium uppercase">SHOPPING CART</p>
+        <span className="text-sm text-gray-400"><i className="fa fa-chevron-right"></i></span>
+        <p className="text-gray-600 font-medium uppercase">SHOPPING CART</p>
     </div>
     {/* <!-- breadcrum end --> */}
       {cartItems.length === 0 ? (

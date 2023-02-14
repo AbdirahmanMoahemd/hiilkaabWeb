@@ -122,14 +122,14 @@ const OrdersScreen = () => {
     <>
       <Toast ref={toast} />
       <Header />
-      <div class="py-4 container flex gap-3 items-center">
-        <Link to="/" class="text-primary text-base">
-          <i class="fa fa-home"></i>
+      <div className="py-4 container flex gap-3 items-center">
+        <Link to="/" className="text-primary text-base">
+          <i className="fa fa-home"></i>
         </Link>
-        <span class="text-sm text-gray-400">
-          <i class="fa fa-chevron-right"></i>
+        <span className="text-sm text-gray-400">
+          <i className="fa fa-chevron-right"></i>
         </span>
-        <p class="text-gray-600 font-medium uppercase">Your Order</p>
+        <p className="text-gray-600 font-medium uppercase">Your Order</p>
       </div>
       {loading ? (
         <ProgressSpinner
@@ -144,10 +144,10 @@ const OrdersScreen = () => {
         </Message>
       ) : (
         <>
-          <div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4">
-            <div class="border lg:col-span-8 border-gray-200 px-4 py-4 rounded">
+          <div className="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4">
+            <div className="border lg:col-span-8 border-gray-200 px-4 py-4 rounded">
               <div>
-                <h3 class="text-lg font-medium capitalize mb-4">Shipping</h3>
+                <h3 className="text-lg font-medium capitalize mb-4">Shipping</h3>
                 <p>Name: {order.user.name}</p>
                 <p>Email: {order.user.email}</p>
                 <p>
@@ -158,13 +158,13 @@ const OrdersScreen = () => {
                 </p>
               </div>
               <div className="py-6">
-                <h3 class="text-lg font-medium capitalize mb-4">
+                <h3 className="text-lg font-medium capitalize mb-4">
                   Payment Method
                 </h3>
                 <p>{order.paymentMethod}</p>
               </div>
               <div className="py-6">
-                <h3 class="text-lg font-medium capitalize mb-4">
+                <h3 className="text-lg font-medium capitalize mb-4">
                   Order Status:
                 </h3>
                 <p>
@@ -190,7 +190,7 @@ const OrdersScreen = () => {
                 </p>
               </div>
               <div className="py-6">
-                <h3 class="text-lg font-medium capitalize mb-4">Order Items</h3>
+                <h3 className="text-lg font-medium capitalize mb-4">Order Items</h3>
                 <div className="bg-gray-200 py-2 pl-12 pr-20 xl:pr-28 mb-4 hidden md:flex lg:grid grid-cols-12 gap-6 items-start">
                   <p className="text-gray-600  lg:col-span-8">Product</p>
                   <p className="text-gray-600 text-center ml-auto mr-16 xl:mr-24 lg:col-span-2">
@@ -245,17 +245,17 @@ const OrdersScreen = () => {
               </div>
             </div>
             {/* <!-- order summary --> */}
-            <div class="lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0">
-              <h4 class="text-gray-800 text-lg mb-4 font-medium uppercase">
+            <div className="lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0">
+              <h4 className="text-gray-800 text-lg mb-4 font-medium uppercase">
                 ORDER SUMMARY
               </h4>
-              <div class="space-y-2"></div>
+              <div className="space-y-2"></div>
 
-              <div class="flex justify-between">
-                <h4 class="text-gray-800 font-semibold my-3 uppercase">
+              <div className="flex justify-between">
+                <h4 className="text-gray-800 font-semibold my-3 uppercase">
                   Total
                 </h4>
-                <h4 class="text-gray-800 font-semibold my-3 uppercase">
+                <h4 className="text-gray-800 font-semibold my-3 uppercase">
                   ${order.totalPrice}
                 </h4>
               </div>

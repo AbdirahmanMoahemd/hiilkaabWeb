@@ -58,7 +58,7 @@ const AddCategory = () => {
     <div className="container m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-2xl">
       {/* <!-- checkout form --> */}
       <Header category="Add" title="Category" />
-      <div class="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
+      <div className="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
         <form onSubmit={submitHandler}>
           {loadingCreate && (
             <ProgressSpinner
@@ -69,20 +69,20 @@ const AddCategory = () => {
             />
           )}
           {errorCreate && <Message severity="error" text={errorCreate} />}
-          <div class="space-y-4">
+          <div className="space-y-4">
             <div>
-              <label class="text-gray-600 mb-2 block">Category Name</label>
+              <label className="text-gray-600 mb-2 block">Category Name</label>
               <input
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Category Name"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Select image <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Select image <span className="text-primary">*</span>
               </label>
               <input
                 value={icon}
@@ -116,8 +116,8 @@ const AddCategory = () => {
                 </div>
             <div className="mt-4 flex justify-center">
               <button
-                type="submit"
-                className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                
+                className="py-2 px-10 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
               >
                 Save
               </button>

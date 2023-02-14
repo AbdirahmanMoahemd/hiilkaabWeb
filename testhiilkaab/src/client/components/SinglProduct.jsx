@@ -6,7 +6,7 @@ import Rating from "./Rating";
 const SinglProduct = ({ products }) => {
   return (
     <>
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-4 grid-cols-2 gap-3 pt-4">
         {/* <!-- single product --> */}
 
         {products.map((product) => (

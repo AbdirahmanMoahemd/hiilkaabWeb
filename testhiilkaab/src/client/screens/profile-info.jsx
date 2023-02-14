@@ -68,15 +68,15 @@ const ProfileInfo = () => {
     <>
       <Header />
       {/* <!-- account wrapper --> */}
-      <div class="container lg:grid grid-cols-12 items-start gap-6 pt-4 pb-16">
+      <div className="container lg:grid grid-cols-12 items-start gap-6 pt-4 pb-16">
         {/* <!-- sidebar --> */}
         <HomeSidebar />
         {/* <!-- sidebar end --> */}
 
         {/* <!-- account content --> */}
-        <div class="col-span-9 shadow rounded px-6 pt-5 pb-7 mt-6 lg:mt-0">
+        <div className="col-span-9 shadow rounded px-6 pt-5 pb-7 mt-6 lg:mt-0">
           <form onSubmit={submitHandler}>
-            <h3 class="text-lg font-medium capitalize mb-4">
+            <h3 className="text-lg font-medium capitalize mb-4">
               Profile Information
             </h3>
             {loading && (
@@ -89,63 +89,63 @@ const ProfileInfo = () => {
             )}
             {error && <Message severity="error">{error}</Message>}
             {success && <Message severity="success">Profile Updated</Message>}
-            <div class="space-y-4">
-              <div class="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="text-gray-600 mb-2 block">Name</label>
+                  <label className="text-gray-600 mb-2 block">Name</label>
                   <input
                     value={name}
                     type="text"
-                    class="input-box"
+                    className="input-box"
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label class="text-gray-600 mb-2 block">Email Address</label>
+                  <label className="text-gray-600 mb-2 block">Email Address</label>
                   <input
                     value={email}
                     type="text"
-                    class="input-box"
+                    className="input-box"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
 
-              <div class="grid sm:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="text-gray-600 mb-2 block">Street</label>
+                  <label className="text-gray-600 mb-2 block">Street</label>
                   <input
                     type="text"
-                    class="input-box"
+                    className="input-box"
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label class="text-gray-600 mb-2 block">City</label>
+                  <label className="text-gray-600 mb-2 block">City</label>
                   <input
                     type="text"
-                    class="input-box"
+                    className="input-box"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                   />
                 </div>
               </div>
-              <div class="grid sm:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="text-gray-600 mb-2 block">Country</label>
+                  <label className="text-gray-600 mb-2 block">Country</label>
                   <input
                     type="text"
-                    class="input-box"
+                    className="input-box"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label class="text-gray-600 mb-2 block">Phone Number</label>
+                  <label className="text-gray-600 mb-2 block">Phone Number</label>
                   <input
                     type="number"
-                    class="input-box"
+                    className="input-box"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
@@ -153,10 +153,10 @@ const ProfileInfo = () => {
               </div>
             </div>
 
-            <div class="mt-6">
+            <div className="mt-6">
               <button
-                type="submit"
-                class="px-6 py-2 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                
+                className="px-6 py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
               >
                 Save change
               </button>

@@ -134,7 +134,7 @@ const AddProduct = () => {
     <div className="container m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-2xl">
       {/* <!-- checkout form --> */}
       <Header category="Add" title="Products" />
-      <div class="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
+      <div className="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
         <form onSubmit={submitHandler}>
           {loadingCategories && (
             <ProgressSpinner
@@ -167,10 +167,10 @@ const AddProduct = () => {
             />
           )}
           {errorCreate && <Message severity="error" text={errorCreate} />}
-          <div class="space-y-4">
+          <div className="space-y-4">
           <div>
-              <label class="text-gray-600 mb-2 block">
-                Select image <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Select image <span className="text-primary">*</span>
               </label>
               <input
                 value={image}
@@ -233,20 +233,20 @@ const AddProduct = () => {
 
 
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Product Name <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Product Name <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Category <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Category <span className="text-primary">*</span>
               </label>
               <br />
               <select
@@ -254,7 +254,7 @@ const AddProduct = () => {
                 value={category}
                 required
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <option>Select Category here</option>
@@ -268,8 +268,8 @@ const AddProduct = () => {
             </div>
 
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Sub Category <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Sub Category <span className="text-primary">*</span>
               </label>
               <br />
               <select
@@ -277,7 +277,7 @@ const AddProduct = () => {
                 value={subcategory}
                 required
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setSubCategory(e.target.value)}
               >
                 <option>Select Sub Category here</option>
@@ -290,44 +290,44 @@ const AddProduct = () => {
             </div>
 
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Description <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Description <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Description"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Brand <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Brand <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setBrand(e.target.value)}
                 placeholder="Brand"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Price <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Price <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                isDiscounted <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                isDiscounted <span className="text-primary">*</span>
               </label>
 
               <input
@@ -340,24 +340,24 @@ const AddProduct = () => {
               <span className="pl-2">isDiscounted</span>
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                OldPrice <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                OldPrice <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setNewPrice(e.target.value)}
                 placeholder="OldPrice"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                CountInStock <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                CountInStock <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setCountInStock(e.target.value)}
                 placeholder="CountInStock"
                 required
@@ -365,7 +365,7 @@ const AddProduct = () => {
             </div>
 
             <div>
-              <label class="text-gray-600 mb-2 block">Colors</label>
+              <label className="text-gray-600 mb-2 block">Colors</label>
               <SketchPicker
                 onChange={(color) => {
                   setSketchPickerColor(color.hex);
@@ -403,11 +403,11 @@ const AddProduct = () => {
               )}
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">Sizes</label>
+              <label className="text-gray-600 mb-2 block">Sizes</label>
               <input
                 value={temSizes}
                 type="text"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setTemSizes(e.target.value)}
                 placeholder="Sizes"
               />
@@ -451,8 +451,8 @@ const AddProduct = () => {
             </div>
             <div className="mt-4 flex justify-center">
               <button
-                type="submit"
-                className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                
+                className="py-2 px-10 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
               >
                 Save
               </button>

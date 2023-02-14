@@ -71,7 +71,7 @@ const uploadFileHandler = async (e) => {
     <div className="container m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-2xl">
       {/* <!-- checkout form --> */}
       <Header category="Update" title="Settings" />
-      <div class="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
+      <div className="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
         <form onSubmit={submitHandler}>
           {loadingCreate && (
             <ProgressSpinner
@@ -82,42 +82,42 @@ const uploadFileHandler = async (e) => {
             />
           )}
           {errorCreate && <Message severity="error" text={errorCreate} />}
-          <div class="space-y-4">
+          <div className="space-y-4">
             <div>
-              <label class="text-gray-600 mb-2 block">PhoneNumber</label>
+              <label className="text-gray-600 mb-2 block">PhoneNumber</label>
               <input
                 type="number"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="PhoneNumber"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">WhatsAppPhoneNumber</label>
+              <label className="text-gray-600 mb-2 block">WhatsAppPhoneNumber</label>
               <input
                 type="number"
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setWhatsAppPhoneNumber(e.target.value)}
                 placeholder="WhatsAppPhoneNumber"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">About text</label>
+              <label className="text-gray-600 mb-2 block">About text</label>
               <textarea
                 type="text"
                 rows={5}
                 cols={5}
-                class="input-box"
+                className="input-box"
                 onChange={(e) => setAbout(e.target.value)}
                 placeholder="About"
                 required
               />
             </div>
             <div>
-              <label class="text-gray-600 mb-2 block">
-                Select about image <span class="text-primary">*</span>
+              <label className="text-gray-600 mb-2 block">
+                Select about image <span className="text-primary">*</span>
               </label>
               <input
                 value={aboutImg}
@@ -150,8 +150,8 @@ const uploadFileHandler = async (e) => {
             </div>
             <div className="mt-4 flex justify-center">
               <button
-                type="submit"
-                className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                
+                className="py-2 px-10 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
               >
                 Save
               </button>

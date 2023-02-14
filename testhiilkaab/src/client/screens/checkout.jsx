@@ -140,35 +140,35 @@ const Checkout = () => {
       <Header />
       {/* <!-- checkout wrapper --> */}
       {/* <!-- breadcrum --> */}
-      <div class="py-4 container flex gap-3 items-center">
-        <Link to="/" class="text-primary text-base">
-          <i class="fa fa-home"></i>
+      <div className="py-4 container flex gap-3 items-center">
+        <Link to="/" className="text-primary text-base">
+          <i className="fa fa-home"></i>
         </Link>
-        <span class="text-sm text-gray-400">
-          <i class="fa fa-chevron-right"></i>
+        <span className="text-sm text-gray-400">
+          <i className="fa fa-chevron-right"></i>
         </span>
-        <p class="text-gray-600 font-medium uppercase">checkout</p>
+        <p className="text-gray-600 font-medium uppercase">checkout</p>
       </div>
       {/* <!-- breadcrum end --> */}
-      <div class="container  pb-16 pt-4">
+      <div className="container  pb-16 pt-4">
         {/* <!-- checkout form --> */}
-        <div class="border border-gray-200 px-4 py-4 rounded">
+        <div className="border border-gray-200 px-4 py-4 rounded">
           <form
             onSubmit={index === 1 || 2 || 3 ? placeOrderHandler : submitHandler}
           >
-            <h3 class="text-lg font-medium capitalize mb-4">
+            <h3 className="text-lg font-medium capitalize mb-4">
               Shipping Address
             </h3>
 
-            <div class="space-y-4">
+            <div className="space-y-4">
               <div>
                 <div>
-                  <label class="text-gray-600 mb-2 block">
-                    Address <span class="text-primary">*</span>
+                  <label className="text-gray-600 mb-2 block">
+                    Address <span className="text-primary">*</span>
                   </label>
                   <input
                     type="text"
-                    class="input-box"
+                    className="input-box"
                     value={address}
                     placeholder="Address"
                     name="Address"
@@ -178,12 +178,12 @@ const Checkout = () => {
                 </div>
               </div>
               <div>
-                <label class="text-gray-600 mb-2 block">
-                  Phone Number<span class="text-primary">*</span>
+                <label className="text-gray-600 mb-2 block">
+                  Phone Number<span className="text-primary">*</span>
                 </label>
                 <input
                   type="number"
-                  class="input-box"
+                  className="input-box"
                   value={phoneNumber}
                   placeholder="Enter Country code + Phone Number"
                   name="phoneNumber"
@@ -192,12 +192,12 @@ const Checkout = () => {
                 />
               </div>
               <div>
-                <label class="text-gray-600 mb-2 block">
-                  City<span class="text-primary">*</span>
+                <label className="text-gray-600 mb-2 block">
+                  City<span className="text-primary">*</span>
                 </label>
                 <input
                   type="text"
-                  class="input-box"
+                  className="input-box"
                   value={city}
                   placeholder="City"
                   name="city"
@@ -207,12 +207,12 @@ const Checkout = () => {
               </div>
 
               <div>
-                <label class="text-gray-600 mb-2 block">
-                  County/Region <span class="text-primary">*</span>
+                <label className="text-gray-600 mb-2 block">
+                  County/Region <span className="text-primary">*</span>
                 </label>
                 <input
                   type="text"
-                  class="input-box"
+                  className="input-box"
                   value={country}
                   placeholder="Country"
                   name="country"
@@ -222,8 +222,8 @@ const Checkout = () => {
               </div>
             </div>
 
-            <div class="space-y-4 pt-6">
-              <h3 class="text-lg font-medium capitalize mb-4">
+            <div className="space-y-4 pt-6">
+              <h3 className="text-lg font-medium capitalize mb-4">
                 Choose Your Payment Method
               </h3>
               <div>
@@ -249,7 +249,7 @@ const Checkout = () => {
               {error && <Message severity="error" text={errorOrderCreateEvc} />}
               {error && <Message severity="error" text={errorCreate} />}
               <button
-              type="submit"
+             
                 className="bg-primary border border-primary text-primary px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
              hover:text-primary transition text-sm w-full block text-center"
               >

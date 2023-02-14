@@ -48,7 +48,9 @@ const Product = () => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
-  useEffect(() => {}, [isProDetails, isReviews]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [isProDetails, isReviews]);
 
   useEffect(() => {
     if (successProductReview) {
@@ -100,17 +102,17 @@ const Product = () => {
         <Message severity="error" text={error} />
       ) : (
         <>
-          <div class="container pt-4 pb-6 grid lg:grid-cols-2 gap-6">
+          <div className="container pt-4 pb-6 grid lg:grid-cols-2 gap-6">
             {/* <!-- product image --> */}
             <div>
               <div className="flex justify-center">
                 <img
                   id="main-img"
                   src={product.images ? product.images[selectedImg] : ""}
-                  class="h-72 lg:h-96"
+                  className="h-72 lg:h-96"
                 />
               </div>
-              <div class="grid grid-cols-4 gap-4 mt-4">
+              <div className="grid grid-cols-4 gap-4 mt-4">
                 {product.images &&
                   product.images.map((img, index) => (
                     <div id={index} className="">
@@ -121,7 +123,7 @@ const Product = () => {
                           console.log(selectedImg + 1);
                         }}
                         src={img}
-                        class={
+                        className={
                           "single-img w-full h-24 lg:h-36 cursor-pointer border border-primary"
                         }
                       />
@@ -132,56 +134,56 @@ const Product = () => {
             {/* <!-- product image end --> */}
             {/* <!-- product content --> */}
             <div>
-              <h2 class="md:text-2xl text-xl font-medium uppercase mb-2">
+              <h2 className="md:text-2xl text-xl font-medium uppercase mb-2">
                 {product.name}
               </h2>
-              <div class="flex items-center mb-4">
-                <div class="flex gap-1 text-sm text-yellow-400">
+              <div className="flex items-center mb-4">
+                <div className="flex gap-1 text-sm text-yellow-400">
                   <span>
-                    <i class="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </span>
                   <span>
-                    <i class="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </span>
                   <span>
-                    <i class="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </span>
                   <span>
-                    <i class="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </span>
                   <span>
-                    <i class="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </span>
                 </div>
-                <div class="text-xs text-gray-500 ml-3">(150 Reviews)</div>
+                <div className="text-xs text-gray-500 ml-3">(150 Reviews)</div>
               </div>
-              <div class="space-y-2">
-                <p class="text-gray-800 font-semibold space-x-2">
+              <div className="space-y-2">
+                <p className="text-gray-800 font-semibold space-x-2">
                   <span>Availability: </span>
                   {product.countInStock < 0 ? (
-                    <span class="text-green-600">Out Of Stock</span>
+                    <span className="text-green-600">Out Of Stock</span>
                   ) : (
-                    <span class="text-green-600">In Stock</span>
+                    <span className="text-green-600">In Stock</span>
                   )}
                 </p>
-                <p class="space-x-2">
-                  <span class="text-gray-800 font-semibold">Brand: </span>
-                  <span class="text-gray-600">{product.brand}</span>
+                <p className="space-x-2">
+                  <span className="text-gray-800 font-semibold">Brand: </span>
+                  <span className="text-gray-600">{product.brand}</span>
                 </p>
-                <p class="space-x-2">
-                  <span class="text-gray-800 font-semibold">Category: </span>
-                  <span class="text-gray-600">{product.category.name}</span>
+                <p className="space-x-2">
+                  <span className="text-gray-800 font-semibold">Category: </span>
+                  <span className="text-gray-600">{product.category.name}</span>
                 </p>
               </div>
-              <div class="mt-4 flex items-baseline gap-3">
-                <span class="text-primary font-semibold text-xl">
+              <div className="mt-4 flex items-baseline gap-3">
+                <span className="text-primary font-semibold text-xl">
                   ${product.price}
                 </span>
-                <span class="text-gray-500 text-base line-through">
+                <span className="text-gray-500 text-base line-through">
                   ${product.newPrice}
                 </span>
               </div>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
                 exercitationem quaerat excepturi labore blanditiis
               </p>
@@ -189,22 +191,22 @@ const Product = () => {
               {product.sizes && product.sizes.length === "" ? (
                 ""
               ) : (
-                <div class="mt-4">
-                  <h3 class="text-base text-gray-800 mb-1">Size</h3>
-                  <div class="flex items-center gap-2">
+                <div className="mt-4">
+                  <h3 className="text-base text-gray-800 mb-1">Size</h3>
+                  <div className="flex items-center gap-2">
                     {/* <!-- single size --> */}
                     {product.sizes &&
                       product.sizes.map((size) => (
-                        <div class="size-selector">
+                        <div className="size-selector">
                           <input
                             type="radio"
                             name="size"
-                            class="hidden"
+                            className="hidden"
                             id="size-xs"
                           />
                           <label
                             for="size-xs"
-                            class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600"
+                            className="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600"
                           >
                             {size}
                           </label>
@@ -218,24 +220,24 @@ const Product = () => {
               {product.colors && product.colors.length === "" ? (
                 ""
               ) : (
-                <div class="mt-4">
-                  <h3 class="text-base text-gray-800 mb-1">Color</h3>
-                  <div class="flex items-center gap-2">
+                <div className="mt-4">
+                  <h3 className="text-base text-gray-800 mb-1">Color</h3>
+                  <div className="flex items-center gap-2">
                     {/* <!-- single color --> */}
                     {product.colors &&
                       product.colors.map((color) => (
-                        <div class="color-selector">
+                        <div className="color-selector">
                           <input
                             type="radio"
                             name="color"
-                            class="hidden"
+                            className="hidden"
                             id="color-red"
                             checked
                           />
                           <label
                             for="color-red"
                             style={{ background: `${color}` }}
-                            class="text-xs border border-gray-200 rounded-sm h-5 w-5 flex items-center justify-center cursor-pointer shadow-sm"
+                            className="text-xs border border-gray-200 rounded-sm h-5 w-5 flex items-center justify-center cursor-pointer shadow-sm"
                           ></label>
                         </div>
                       ))}
@@ -247,47 +249,47 @@ const Product = () => {
               
               {/* <!-- color end --> */}
               {/* <!-- add to cart button --> */}
-              <div class="flex gap-3 border-b border-gray-200 pb-5 mt-6">
+              <div className="flex gap-3 border-b border-gray-200 pb-5 mt-6">
                 <button
                 onClick={addToCartHandler}
-                  class="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase 
+                  className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm flex items-center"
                 >
-                  <span class="mr-2">
-                    <i class="fa fa-shopping-bag"></i>
+                  <span className="mr-2">
+                    <i className="fa fa-shopping-bag"></i>
                   </span>{" "}
                   Add to cart
                 </button>
                 <button
-                  class="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
+                  className="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm"
                 >
-                  <span class="mr-2">
-                    <i class="fa fa-heart"></i>
+                  <span className="mr-2">
+                    <i className="fa fa-heart"></i>
                   </span>{" "}
                   <button onClick={addToWishHandler}>Wishlist</button>
                 </button>
               </div>
               {/* <!-- add to cart button end --> */}
               {/* <!-- product share icons --> */}
-              <div class="flex space-x-3 mt-4">
+              <div className="flex space-x-3 mt-4">
                 <a
                   href="#"
-                  class="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
+                  className="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
                 >
-                  <i class="fa fa-facebook-f"></i>
+                  <i className="fa fa-facebook-f"></i>
                 </a>
                 <a
                   href="#"
-                  class="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
+                  className="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
                 >
-                  <i class="fa fa-twitter"></i>
+                  <i className="fa fa-twitter"></i>
                 </a>
                 <a
                   href="#"
-                  class="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
+                  className="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
                 >
-                  <i class="fa fa-instagram"></i>
+                  <i className="fa fa-instagram"></i>
                 </a>
               </div>
               {/* <!-- product share icons end --> */}
@@ -297,7 +299,7 @@ const Product = () => {
           {/* <!-- product view end --> */}
 
           {/* <!-- product details and review --> */}
-          <div class="container pb-16">
+          <div className="container pb-16">
             {/* <!-- detail buttons --> */}
             <div className="flex gap-2">
               <button
@@ -311,7 +313,7 @@ const Product = () => {
                     isProDetails ? "border-primary" : "border-gray-600"
                   }`}
                 >
-                  <h3 class="font-roboto text-center text-gray-800 pb-3 font-medium">
+                  <h3 className="font-roboto text-center text-gray-800 pb-3 font-medium">
                     Product Details
                   </h3>
                 </div>
@@ -328,7 +330,7 @@ const Product = () => {
                     isReviews ? "border-primary" : "border-gray-600"
                   }`}
                 >
-                  <h3 class="font-roboto text-center text-gray-800 pb-3 font-medium">
+                  <h3 className="font-roboto text-center text-gray-800 pb-3 font-medium">
                     Reviews
                   </h3>
                 </div>
@@ -338,10 +340,10 @@ const Product = () => {
               <div className="pt-10">
                <p className="text-primary">{errorProductReview}</p>
                 <form onSubmit={submitHandler}>
-                  <h3 class="text-lg font-medium capitalize mb-4">
+                  <h3 className="text-lg font-medium capitalize mb-4">
                     Write a Customer Review
                   </h3>
-                  <div class="space-y-4">
+                  <div className="space-y-4">
                     <div>
                       <select
                         name="cars"
@@ -367,7 +369,7 @@ const Product = () => {
                         onChange={(e) => setComment(e.target.value)}
                       />
                     </div>
-                    <button type="submit"  className="border border-primary text-primary px-8 py-2 font-medium rounded uppercase 
+                    <button   className="border border-primary text-white px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm flex items-center">submit</button>
                   </div>
                 </form>
@@ -375,7 +377,7 @@ const Product = () => {
                 {product.reviews.map((review) => (
                   <div>
                   <p>{review.name}</p>
-                  <div class="flex gap-1 text-sm text-yellow-400">
+                  <div className="flex gap-1 text-sm text-yellow-400">
                     <Rating value={review.rating}/>
                   </div>
                   <p>{review.comment}</p>
@@ -393,12 +395,12 @@ const Product = () => {
         </>
       )}
       {/* <!-- related products --> */}
-      <div class="container pb-16">
-        <h2 class="text-2xl md:text-3xl font-medium text-gray-800 uppercase mb-6">
+      <div className="container pb-16">
+        <h2 className="text-2xl md:text-3xl font-medium text-gray-800 uppercase mb-6">
           related products
         </h2>
         {/* <!-- product wrapper --> */}
-        <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
           {/* <!-- single product --> */}
           {loadingProductList ? (
             <ProgressSpinner
