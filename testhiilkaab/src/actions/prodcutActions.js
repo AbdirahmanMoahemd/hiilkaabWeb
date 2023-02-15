@@ -55,28 +55,47 @@ export const listProducts =
     }
   };
 
-  export const listOfBrands =
-  () =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: BRAND_LIST_REQUEST });
+export const listProductsByPrice = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST });
 
-      const { data } = await axios.get('/api/products/brands');
+    const { data } = await axios.get('/api/products/price');
 
-      dispatch({
-        type: BRAND_LIST_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: BRAND_LIST_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
+    dispatch({
+      type: PRODUCT_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listOfBrands = () => async (dispatch) => {
+  try {
+    dispatch({ type: BRAND_LIST_REQUEST });
+
+    const { data } = await axios.get("/api/products/brands");
+
+    dispatch({
+      type: BRAND_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BRAND_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const listDisProducts = () => async (dispatch) => {
   try {
@@ -331,48 +350,44 @@ export const createProductReview =
     }
   };
 
-
-  
 export const listProductsCount = () => async (dispatch) => {
   try {
-      dispatch({ type: CPRODUCT_LIST_REQUEST })
+    dispatch({ type: CPRODUCT_LIST_REQUEST });
 
-      const { data } = await axios.get('/api/products/count')
+    const { data } = await axios.get("/api/products/count");
 
-      dispatch({
-          type: CPRODUCT_LIST_SUCCESS,
-          payload: data
-      })
-
+    dispatch({
+      type: CPRODUCT_LIST_SUCCESS,
+      payload: data,
+    });
   } catch (error) {
-      dispatch({
-          type: CPRODUCT_LIST_FAIL,
-          payload: error.response && error.response.data.message ?
-              error.response.data.message :
-              error.message,
-     })  
+    dispatch({
+      type: CPRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
-}
-
-
+};
 
 export const listTopProducts = () => async (dispatch) => {
   try {
-      dispatch({ type: PRODUCT_TOP_REQUEST })
+    dispatch({ type: PRODUCT_TOP_REQUEST });
 
-      const { data } = await axios.get('api/products/top')
+    const { data } = await axios.get("api/products/top");
 
-      dispatch({
-          type: PRODUCT_TOP_SUCCESS,
-          payload: data
-      })
-
+    dispatch({
+      type: PRODUCT_TOP_SUCCESS,
+      payload: data,
+    });
   } catch (error) {
-      dispatch({
-          type: PRODUCT_TOP_FAIL,
-          payload: error.response && error.response.data.message ?
-              error.response.data.message :
-              error.message,
-     }) 
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
-}
+};

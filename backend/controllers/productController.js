@@ -42,9 +42,9 @@ export const getTopProducts = asyncHandler (async (req, res) => {
 // @access  Public
 export const getProductsLowPriceToHight = asyncHandler (async (req, res) => {
   
-  const products = await Product.find({}).populate("category")
-  .populate("subcategory").sort({ price: -1 }).limit(16)
-  products.sort((a, b) => (a._id > b._id) ? -1 : 1)
+  const products = await Product.find({}).sort({ price: -1 }).populate("category")
+  .populate("subcategory"); 
+
   res.json({ products })
 })
 

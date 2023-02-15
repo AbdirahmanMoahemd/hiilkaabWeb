@@ -6,7 +6,11 @@ import { listCategories } from "../../actions/categoryActions";
 import { listSubCategories } from "../../actions/subCategoryActions";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
-import { listOfBrands, listProducts } from "../../actions/prodcutActions";
+import {
+  listOfBrands,
+  listProducts,
+  listProductsByPrice,
+} from "../../actions/prodcutActions";
 import { useParams } from "react-router-dom";
 import ShopComponent from "../components/ShopComponent";
 import { getProductsByFilter } from "../../actions/filterActions";
@@ -20,6 +24,7 @@ const Shop = () => {
   const dispatch = useDispatch();
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [navbarState, setNavbarState] = useState(true);
+  const [index, setIndex] = useState();
   const { keyword } = useParams();
   const { id } = useParams();
 
@@ -30,8 +35,6 @@ const Shop = () => {
   let updatedCategoryIds;
   let updatedSubCategoryIds;
   let updatedBrandIds;
- 
- 
 
   const changeHandler = () => {
     setNavbarState(!navbarState);
@@ -41,10 +44,8 @@ const Shop = () => {
   const {
     loading: loadingBrand,
     error: errorBrand,
-    products:brands,
+    products: brands,
   } = brandList;
-
-
 
   const categoryList = useSelector((state) => state.categoryList);
   const {
@@ -67,7 +68,6 @@ const Shop = () => {
     dispatch(listCategories());
   }, [dispatch]);
 
-
   useEffect(() => {
     dispatch(listOfBrands());
   }, [dispatch]);
@@ -77,13 +77,11 @@ const Shop = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (id !== undefined ) {
-
-      dispatch( getProductsByFilter({ type: "category", query: id }))
-     }else{
+    if (id !== undefined) {
+      dispatch(getProductsByFilter({ type: "category", query: id }));
+    } else {
       dispatch(listProducts(keyword));
-     }
-   
+    }
   }, [dispatch, keyword]);
 
   useEffect(() => {
@@ -105,6 +103,33 @@ const Shop = () => {
       setNavbarState(true);
     }
   }, [windowSize]);
+
+  const sorts = [
+    {
+      text: "Default sortingh",
+      index: 1,
+    },
+    {
+      text: "Price high-low",
+      index: 2,
+    },
+
+    {
+      text: "Price low-high",
+      index: 3,
+    },
+  ];
+  useEffect(() => {
+    dispatch(listOfBrands());
+  }, [dispatch, index]);
+
+  useEffect(() => {
+    if (index == 2) {
+      dispatch(listProductsByPrice());
+    } else if (index == 3) {
+      dispatch(listProducts(keyword));
+    }
+  }, [dispatch, index, keyword]);
 
   const handleCategory = (e) => {
     resetState();
@@ -167,7 +192,6 @@ const Shop = () => {
     setSubCategoryIds([]);
   };
 
-
   const handleBrands = (e) => {
     resetState3();
 
@@ -187,9 +211,7 @@ const Shop = () => {
       updatedBrandIds.splice(indexFound, 1);
       setBrandIds(updatedBrandIds);
     }
-    dispatch(
-      getProductsByFilter({ type: "brand", query3: updatedBrandIds })
-    );
+    dispatch(getProductsByFilter({ type: "brand", query3: updatedBrandIds }));
   };
 
   const resetState3 = () => {
@@ -319,31 +341,34 @@ const Shop = () => {
                       fill="var(--surface-ground)"
                       animationDuration=".5s"
                     />
-                  ) : errorBrand ? <>{errorBrand}</> : (
+                  ) : errorBrand ? (
+                    <>{errorBrand}</>
+                  ) : (
                     <>
-                    {brands.map((brand) =>
-                    <div className="flex items-center" key={brand.id}>
-                    <input 
-                      type="checkbox" 
-                      id={brand.id}
-                      name="brand"
+                      {brands.map((brand) => (
+                        <div className="flex items-center" key={brand.id}>
+                          <input
+                            type="checkbox"
+                            id={brand.id}
+                            name="brand"
                             value={brand.id}
                             checked={brandIds.includes(brand.id)}
                             onChange={handleBrands}
-                      className="text-primary focus:ring-0 rounded-sm cursor-pointer"
-                    />
-                    <label
-                      for="Dominik"
-                      className="text-gray-600 ml-3 cursor-pointer"
-                    >
-                      {brand.brand}
-                    </label>
-                    <div className="ml-auto text-gray-600 text-sm">(15)</div>
-                  </div>
-                    )}
-                  
-                  </>)}
-                  
+                            className="text-primary focus:ring-0 rounded-sm cursor-pointer"
+                          />
+                          <label
+                            for="Dominik"
+                            className="text-gray-600 ml-3 cursor-pointer"
+                          >
+                            {brand.brand}
+                          </label>
+                          <div className="ml-auto text-gray-600 text-sm">
+                            (15)
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
                 </div>
               </div>
               {/* <!-- brand filter end -->
@@ -384,11 +409,18 @@ const Shop = () => {
             >
               Filter
             </button>
-            <select className="w-44 text-sm text-gray-600 px-4 py-3 border-gray-300 shadow-sm rounded focus:ring-primary  focus:border-primary">
-              <option>Default sorting</option>
-              <option>Price low-high</option>
-              <option>Price high-low</option>
-              <option>Latest product</option>
+            <select
+              value={index}
+              onChange={(e) => {
+                setIndex(e.target.value);
+              }}
+              className="w-44 text-sm text-gray-600 px-4 py-3 border-gray-300 shadow-sm rounded focus:ring-primary  focus:border-primary"
+            >
+              {sorts.map((cat) => (
+                <>
+                  <option value={cat.index}>{cat.text}</option>
+                </>
+              ))}
             </select>
           </div>
           {/* <!-- sorting end -->

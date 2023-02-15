@@ -15,7 +15,8 @@ import {
   getProductsByTopCategory3,
   getProductsByTopCategory4,
   getProductsCount,
-  getTopProducts
+  getTopProducts,
+  getProductsLowPriceToHight
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -24,6 +25,7 @@ const router = express.Router();
 router.route("/").get(getProducts).post(protect, admin, createProduct);
 router.route("/dis", ).get(getDiscProducts);
 router.route("/top", ).get(getTopProducts);
+router.route("/price").get(getProductsLowPriceToHight);
 router.route("/brands", ).get(getBrands);
 router.route("/category1", ).post(getProductsByTopCategory1);
 router.route('/count').get(getProductsCount); 
