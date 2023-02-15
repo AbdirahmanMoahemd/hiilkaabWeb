@@ -41,6 +41,7 @@ const Header = () => {
   }, [dispatch]);
 
   const changeHandler = () => {
+    window.scrollTo(0, 0);
     if (searchState == true) {
       setSearchState(false);
       setCategory(false);
@@ -48,6 +49,7 @@ const Header = () => {
     setNavbarState(!navbarState);
   };
   const changeSearchHandler = () => {
+    window.scrollTo(0, 0);
     if (categoryState == true) {
       setNavbarState(false);
       setCategory(false);
@@ -63,6 +65,7 @@ const Header = () => {
   } = categoryList;
 
   const changeCategoryHandler = () => {
+    window.scrollTo(0, 0);
     if (categoryState == true) {
       setNavbarState(false);
       setSearchState(false);
@@ -254,33 +257,34 @@ const Header = () => {
 
       {/* <!-- mobile menubar --> */}
       <div className="fixed w-full border-t  border-gray-200 shadow-sm bg-white py-3 bottom-0 left-0 flex justify-around items-start px-6 lg:hidden z-40">
-        <Link
-          to={"/"}
+        <i
+          onClick={changeHandler}
           className="block text-center text-gray-700 hover:text-primary transition relative"
         >
           <div className="text-2xl" id="menuBar">
-            <i onClick={changeHandler} className="fa fa-bars"></i>
+            <i  className="fa fa-bars"></i>
           </div>
           <div className="text-xs leading-3">Menu</div>
-        </Link>
-        <Link
-          to={"/"}
+        </i>
+        <i
+          
+          onClick={changeCategoryHandler} 
           className="block text-center text-gray-700 hover:text-primary transition relative"
         >
           <div className="text-2xl">
-            <i onClick={changeCategoryHandler} className="fa fa-list-ul"></i>
+            <i className="fa fa-list-ul"></i>
           </div>
           <div className="text-xs leading-3">Category</div>
-        </Link>
-        <Link
-          to={"/"}
+        </i>
+        <i
+           onClick={changeSearchHandler}
           className="block text-center text-gray-700 hover:text-primary transition relative"
         >
           <div className="text-2xl">
-            <i onClick={changeSearchHandler} className="fa fa-search"></i>
+            <i className="fa fa-search"></i>
           </div>
           <div className="text-xs leading-3">Search</div>
-        </Link>
+        </i>
         <Link
           to={"/cart"}
           className="text-center text-gray-700 hover:text-primary transition relative"
@@ -388,7 +392,7 @@ const Header = () => {
       {searchState ? (
         <form
           onSubmit={submitHandler}
-          className="absolute flex m-auto pl-4 pr-4 top-20 w-full h-[5%] z-50  shadow"
+          className="absolute flex m-auto pl-4 pr-4 top-20 w-full h-[7%] z-50  shadow"
         >
           <input
             type="text"
@@ -398,7 +402,7 @@ const Header = () => {
           />
           <button
             onClick={submitHandler}
-            className="bg-white border border-primary text-white px-3 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
+            className="bg-primary border border-primary text-white px-3 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
           >
             Search
           </button>
@@ -409,7 +413,7 @@ const Header = () => {
           >
             <i
               onClick={changeSearchHandler}
-              className="fa fa-times py-3 pl-2"
+              className="fa fa-times py-3 pl-2 text-primary"
             ></i>
           </div>
         </form>

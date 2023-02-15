@@ -83,8 +83,6 @@ export const logout = () => (dispatch) => {
 
 export const RemoveCartFun = () => (dispatch) => {
   localStorage.removeItem("cartItems");
-  localStorage.removeItem("shippingAddress");
-  localStorage.removeItem("paymentMethod");
 };
 
 export const register =

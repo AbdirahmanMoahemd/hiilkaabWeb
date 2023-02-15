@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -13,12 +13,15 @@ import {
   ORDER_DETAILS_RESET,
   ORDER_DETAILS_SUCCESS,
 } from "../../constants/orderConstants";
-import { createOrderByEvc } from "../../actions/orderActions";
+import { createOrder, createOrderByEvc } from "../../actions/orderActions";
+import { Toast } from "primereact/toast";
+import axios from "axios";
 import { Message } from "primereact/message";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState();
   const [index, setIndex] = useState();
+  const [msg, setMsg] = useState();
 
   const cart = useSelector((state) => state.cart);
   const { shippingAddress, cartItems } = cart;
@@ -28,6 +31,7 @@ const Checkout = () => {
   const [phoneNumber, setPhoneNumber] = useState(shippingAddress.phoneNumber);
   const [country, setCountry] = useState(shippingAddress.country);
   const navigate = useNavigate();
+  const toast = useRef(null);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -45,7 +49,7 @@ const Checkout = () => {
   } = orderCreateEvc;
 
   const orderCreate = useSelector((state) => state.orderCreate);
-  const { order, success, error:errorCreate } = orderCreate;
+  const { order, success, error: errorCreate } = orderCreate;
 
   const itemsPri = cartItems
     .reduce((acc, item) => acc + item.quantity * item.price, 0)
@@ -65,7 +69,7 @@ const Checkout = () => {
         dispatch(getUserDetails("profile"));
       } else {
         if (!shippingAddress.address) {
-          setAddress(user.street, user.apartment);
+          setAddress(user.address);
           setPhoneNumber(user.phone);
           setCity(user.city);
           setCountry(user.country);
@@ -73,8 +77,6 @@ const Checkout = () => {
       }
     }
   }, [dispatch, navigate, userInfo, user]);
-
-
 
   useEffect(() => {
     if (successOrderCreateEvc) {
@@ -111,18 +113,18 @@ const Checkout = () => {
     }
   };
 
-
   const submitHandler = (e) => {
     e.preventDefault();
+
     dispatch(saveShippingAddress({ address, city, phoneNumber, country }));
     dispatch(savePaymentMethod(paymentMethod));
-    if (successOrderCreateEvc) {
+    if (success) {
       dispatch({ type: ORDER_DETAILS_RESET });
       dispatch({ type: ORDER_DETAILS_REQUEST });
       dispatch({ type: ORDER_DETAILS_SUCCESS });
     } else {
       dispatch(
-        createOrderByEvc({
+        createOrder({
           products: cart.cartItems,
           shippingAddress: cart.shippingAddress,
           paymentMethod: cart.paymentMethod,
@@ -135,8 +137,97 @@ const Checkout = () => {
     }
   };
 
+  const evcpayment = (e) => {
+    e.preventDefault();
+    dispatch(saveShippingAddress({ address, city, phoneNumber, country }));
+    dispatch(savePaymentMethod(paymentMethod));
+
+    const shippingAddress ={
+      address, city, phoneNumber, country
+    }
+
+    if (phoneNumber.startsWith("252")) {
+      setMsg(null);
+
+      var data = JSON.stringify({
+        schemaVersion: "1.0",
+        requestId: phoneNumber,
+        timestamp: Date.now(),
+        channelName: "WEB",
+        serviceName: "API_PURCHASE",
+        serviceParams: {
+          merchantUid: "M0910455",
+          apiUserId: "1001052",
+          apiKey: "API-14003888AHX",
+          paymentMethod: "mwallet_account",
+          payerInfo: {
+            accountNo: phoneNumber,
+          },
+          transactionInfo: {
+            referenceId: "REF8815718025",
+            invoiceId: "INV8815718025",
+            amount: "0.01",
+            currency: "USD",
+            description: "test direct purchase",
+          },
+        },
+      });
+      var config = {
+        method: "post",
+        url: "https://api.waafipay.net/asm",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          if (response.data.responseCode === "5206") {
+            toast.current.show({
+              severity: "error",
+              summary: "Error Message",
+              detail: "Not sent yet, please try again",
+              life: 3000,
+            });
+          
+          }
+          if (response.data.responseCode === "2001") {
+            toast.current.show({
+              severity: "success",
+              summary: "Success Message",
+              detail: "Paid successfully",
+              life: 3000,
+            });
+
+            if (successOrderCreateEvc) {
+              dispatch({ type: ORDER_DETAILS_RESET });
+              dispatch({ type: ORDER_DETAILS_REQUEST });
+              dispatch({ type: ORDER_DETAILS_SUCCESS });
+            } else {
+              dispatch(
+                createOrderByEvc({
+                  products: cart.cartItems,
+                  shippingAddress: shippingAddress,
+                  paymentMethod: paymentMethod,
+                  shippingPrice: cart.shippingPrice,
+                  totalPrice: itemsPri,
+                })
+              );
+              dispatch(RemoveCartFun());
+            }
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      setMsg("phoneNumber must be start 252XXXXXXX");
+    }
+  };
   return (
     <>
+      <Toast ref={toast} />
       <Header />
       {/* <!-- checkout wrapper --> */}
       {/* <!-- breadcrum --> */}
@@ -153,9 +244,7 @@ const Checkout = () => {
       <div className="container  pb-16 pt-4">
         {/* <!-- checkout form --> */}
         <div className="border border-gray-200 px-4 py-4 rounded">
-          <form
-            onSubmit={index === 1 || 2 || 3 ? placeOrderHandler : submitHandler}
-          >
+          <form onSubmit={index === 1 || 2 || 3 ? evcpayment : submitHandler}>
             <h3 className="text-lg font-medium capitalize mb-4">
               Shipping Address
             </h3>
@@ -240,16 +329,19 @@ const Checkout = () => {
                         setIndex(pay.indx);
                       }}
                     />
-                    <span className="pl-2">{pay.value}qsdaf</span>
+                    <span className="pl-2">{pay.value}</span>
                   </div>
                 ))}
               </div>
               <br />
               <br />
-              {error && <Message severity="error" text={errorOrderCreateEvc} />}
+              {errorOrderCreateEvc && (
+                <Message severity="error" text={errorOrderCreateEvc} />
+              )}
               {error && <Message severity="error" text={errorCreate} />}
+              {msg != null && <Message severity="error" text={msg} />}
               <button
-             
+                type="submit"
                 className="bg-primary border border-primary text-primary px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
              hover:text-primary transition text-sm w-full block text-center"
               >
