@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+    overflow-x:hidden;
+    height:100%;
+  }
+
 .carousel-demo .product-item .product-item-content {
     border: 1px solid var(--surface-d);
     border-radius: 3px;

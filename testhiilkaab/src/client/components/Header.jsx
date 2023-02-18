@@ -256,7 +256,7 @@ const Header = () => {
       </nav>
 
       {/* <!-- mobile menubar --> */}
-      <div className="fixed w-full border-t  border-gray-200 shadow-sm bg-white py-3 bottom-0 left-0 flex justify-around items-start px-6 lg:hidden z-40">
+      <div className="fixed w-full border-t   border-gray-200 shadow-sm bg-white py-3 bottom-0 left-0 right-0 flex justify-around items-start px-6 lg:hidden z-40">
         <i
           onClick={changeHandler}
           className="block text-center text-gray-700 hover:text-primary transition relative"

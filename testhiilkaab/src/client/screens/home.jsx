@@ -29,6 +29,7 @@ import TopRanking3 from "../components/TopRanking3";
 import TopRanking4 from "../components/TopRanking4";
 import { listSlides } from "../../actions/slideActions";
 import { listDiscounts } from "../../actions/discountActions";
+import WhatsApplink from "../components/whatsApplink";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -281,7 +282,7 @@ const Home = () => {
         )}
       </div>
       {/* <!-- recomended for you end --> */}
-
+<WhatsApplink/>
       {/* <!-- footer --> */}
       <Footer />
 

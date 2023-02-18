@@ -65,8 +65,6 @@ const Product = () => {
     );
   }, [dispatch, successProductReview]);
 
-  
-
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
   };
@@ -171,7 +169,9 @@ const Product = () => {
                   <span className="text-gray-600">{product.brand}</span>
                 </p>
                 <p className="space-x-2">
-                  <span className="text-gray-800 font-semibold">Category: </span>
+                  <span className="text-gray-800 font-semibold">
+                    Category:{" "}
+                  </span>
                   <span className="text-gray-600">{product.category.name}</span>
                 </p>
               </div>
@@ -183,10 +183,7 @@ const Product = () => {
                   ${product.newPrice}
                 </span>
               </div>
-              <p className="mt-4 text-gray-600">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-                exercitationem quaerat excepturi labore blanditiis
-              </p>
+              <p className="mt-4 text-gray-600">{product.description}</p>
               {/* <!-- size --> */}
               {product.sizes && product.sizes.length === "" ? (
                 ""
@@ -246,12 +243,12 @@ const Product = () => {
                 </div>
               )}
               {/* <!-- color end --> */}
-              
+
               {/* <!-- color end --> */}
               {/* <!-- add to cart button --> */}
               <div className="flex gap-3 border-b border-gray-200 pb-5 mt-6">
                 <button
-                onClick={addToCartHandler}
+                  onClick={addToCartHandler}
                   className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm flex items-center"
                 >
@@ -338,7 +335,7 @@ const Product = () => {
             </div>
             {isReviews ? (
               <div className="pt-10">
-               <p className="text-primary">{errorProductReview}</p>
+                <p className="text-primary">{errorProductReview}</p>
                 <form onSubmit={submitHandler}>
                   <h3 className="text-lg font-medium capitalize mb-4">
                     Write a Customer Review
@@ -369,24 +366,28 @@ const Product = () => {
                         onChange={(e) => setComment(e.target.value)}
                       />
                     </div>
-                    <button   className="border border-primary text-white px-8 py-2 font-medium rounded uppercase 
-                    hover:bg-transparent hover:text-primary transition text-sm flex items-center">submit</button>
+                    <button
+                      className="border border-primary text-white px-8 py-2 font-medium rounded uppercase 
+                    hover:bg-transparent hover:text-primary transition text-sm flex items-center"
+                    >
+                      submit
+                    </button>
                   </div>
                 </form>
                 <div className="pt-10 grid grid-cols-1 lg:grid-cols-1 gap-4">
-                {product.reviews.map((review) => (
-                  <div>
-                  <p>{review.name}</p>
-                  <div className="flex gap-1 text-sm text-yellow-400">
-                    <Rating value={review.rating}/>
-                  </div>
-                  <p>{review.comment}</p>
-                  </div>
-                ))}
+                  {product.reviews.map((review) => (
+                    <div>
+                      <p>{review.name}</p>
+                      <div className="flex gap-1 text-sm text-yellow-400">
+                        <Rating value={review.rating} />
+                      </div>
+                      <p>{review.comment}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             ) : (
-              ""
+              <p className=" text-gray-600">{product.mainDescription}</p>
             )}
 
             {/* <!-- details button end --> */}
@@ -419,20 +420,16 @@ const Product = () => {
                   <div className="flex items-center justify-center">
                     <div className="relative">
                       <div className="w-40 h-40 ">
-                        <img
-                          src={pro.images ? pro.images[0] : hiilkaab}
-                          className="w-full h-full"
-                        />
+                        <Link to={`/product/${product.id}`}>
+                          <img
+                            src={pro.images ? pro.images[0] : hiilkaab}
+                            className="w-full h-full"
+                          />
+                        </Link>
                       </div>
                       <div className="absolute inset-0  h-40 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                         <Link
-                          to="/"
-                          className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
-                        >
-                          <i className="fa fa-search"></i>
-                        </Link>
-                        <Link
-                          to="/"
+                          to={`/product/${product.id}`}
                           className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
                         >
                           <i className="fa fa-heart"></i>
@@ -443,8 +440,8 @@ const Product = () => {
                   {/* <!-- pro image end -->
                    <!-- pro content --> */}
                   <div className="pt-4 pb-3 px-4">
-                    <Link to="/">
-                      <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition">
+                    <Link to={`/product/${product.id}`}>
+                      <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition truncate ...">
                         {pro.name}
                       </h4>
                     </Link>
