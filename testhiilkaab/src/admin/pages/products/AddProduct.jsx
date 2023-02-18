@@ -17,6 +17,7 @@ const AddProduct = () => {
   const [subcategory, setSubCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
+  const [mainDescription, setMainDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
   const [isFeatured, setisFeatured] = useState(true);
@@ -73,6 +74,7 @@ const AddProduct = () => {
         subcategory,
         brand,
         description,
+        mainDescription,
         price,
         countInStock,
         isFeatured,
@@ -298,6 +300,22 @@ const AddProduct = () => {
                 className="input-box"
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Description"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="text-gray-600 mb-2 block">
+                Main Description <span className="text-primary">*</span>
+              </label>
+              <textarea
+                type="text"
+                rows={5}
+                cols={5}
+                value={mainDescription}
+                className="input-box"
+                onChange={(e) => setMainDescription(e.target.value)}
+                placeholder="About"
                 required
               />
             </div>

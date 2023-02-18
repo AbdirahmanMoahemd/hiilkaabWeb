@@ -225,6 +225,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     category: req.body.category,
     subcategory: req.body.subcategory,
     description: req.body.description,
+    mainDescription:req.body.mainDescription,
     price: req.body.price,
     isDiscounted: req.body.isDiscounted,
     newPrice: req.body.newPrice,
@@ -246,6 +247,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
     colors,
     sizes,
     description,
+    mainDescription,
     brand,
     category,
     subcategory,
@@ -264,6 +266,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.colors = colors;
     product.sizes = sizes;
     product.description = description;
+    product.mainDescription=mainDescription;
     product.brand = brand;
     product.category = category;
     product.subcategory = subcategory;

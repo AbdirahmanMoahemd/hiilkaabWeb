@@ -3,9 +3,16 @@ import { Message } from "primereact/message";
 import { ProgressSpinner } from "primereact/progressspinner";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { createSettings } from "../../actions/settingsActions";
-import { SETTINGS_CREATE_RESET } from "../../constants/settingsConstants";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  createSettings,
+  getSettingsDetails,
+  updateSettings,
+} from "../../actions/settingsActions";
+import {
+  SETTINGS_CREATE_RESET,
+  SETTINGS_UPDATE_RESET,
+} from "../../constants/settingsConstants";
 import { Header } from "../components";
 
 const UpdateSettings = () => {
@@ -17,6 +24,7 @@ const UpdateSettings = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const settingsCreat = useSelector((state) => state.settingsCreat);
   const {
@@ -25,17 +33,33 @@ const UpdateSettings = () => {
     success: successCreate,
   } = settingsCreat;
 
+  const settingsDetails = useSelector((state) => state.settingsDetails);
+  const { loading, error, settings } = settingsDetails;
+
+  const settingsUpdate = useSelector((state) => state.settingsUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = settingsUpdate;
 
   useEffect(() => {
-    if (successCreate) {
-        dispatch({ type: SETTINGS_CREATE_RESET })
-        navigate('/settings')
+    if (successUpdate) {
+      dispatch({ type: SETTINGS_UPDATE_RESET });
+      navigate("/settings");
+    } else {
+      if (settings._id == id) {
+        dispatch(getSettingsDetails(id));
+      } else {
+        setAbout(settings.about);
+        setAboutImg(settings.aboutImg);
+        setWhatsAppPhoneNumber(settings.whatsAppPhoneNumber);
+        setPhoneNumber(settings.phoneNumber);
+      }
     }
+  }, [dispatch, navigate, successUpdate]);
 
-}, [ dispatch, navigate, successCreate])
-
-
-const uploadFileHandler = async (e) => {
+  const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
@@ -56,16 +80,12 @@ const uploadFileHandler = async (e) => {
     }
   };
 
-
   const submitHandler = (e) => {
-           
-    e.preventDefault() 
-        dispatch(createSettings(
-       phoneNumber, whatsAppPhoneNumber,about, aboutImg
-   ))
-}
-
-
+    e.preventDefault();
+    dispatch(
+      updateSettings({_id:id, phoneNumber, whatsAppPhoneNumber, about, aboutImg})
+    );
+  };
 
   return (
     <div className="container m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-2xl">
@@ -73,7 +93,7 @@ const uploadFileHandler = async (e) => {
       <Header category="Update" title="Settings" />
       <div className="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
         <form onSubmit={submitHandler}>
-          {loadingCreate && (
+          {loadingUpdate && (
             <ProgressSpinner
               style={{ width: "20px", height: "20px" }}
               strokeWidth="6"
@@ -81,12 +101,13 @@ const uploadFileHandler = async (e) => {
               animationDuration=".5s"
             />
           )}
-          {errorCreate && <Message severity="error" text={errorCreate} />}
+          {errorUpdate && <Message severity="error" text={errorUpdate} />}
           <div className="space-y-4">
             <div>
               <label className="text-gray-600 mb-2 block">PhoneNumber</label>
               <input
                 type="number"
+                value={phoneNumber}
                 className="input-box"
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="PhoneNumber"
@@ -94,9 +115,12 @@ const uploadFileHandler = async (e) => {
               />
             </div>
             <div>
-              <label className="text-gray-600 mb-2 block">WhatsAppPhoneNumber</label>
+              <label className="text-gray-600 mb-2 block">
+                WhatsAppPhoneNumber
+              </label>
               <input
                 type="number"
+                value={whatsAppPhoneNumber}
                 className="input-box"
                 onChange={(e) => setWhatsAppPhoneNumber(e.target.value)}
                 placeholder="WhatsAppPhoneNumber"
@@ -109,6 +133,7 @@ const uploadFileHandler = async (e) => {
                 type="text"
                 rows={5}
                 cols={5}
+                value={about}
                 className="input-box"
                 onChange={(e) => setAbout(e.target.value)}
                 placeholder="About"
@@ -149,10 +174,9 @@ const uploadFileHandler = async (e) => {
               <img src={aboutImg} />
             </div>
             <div className="mt-4 flex justify-center">
-              <button
+               
+              <button type="submit" className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">
                 
-                className="py-2 px-10 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
-              >
                 Save
               </button>
             </div>

@@ -1,8 +1,11 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import colors from 'colors'
 
 import connectDB from './config/db2.js'
+import Product from './models/productModel.js'
+import users from './data/users.js'
+import products from './data/products.js'
+import User from './models/userModel.js'
 
 
 dotenv.config()
@@ -11,19 +14,19 @@ connectDB()
 
 const importData = async () => {
     try {
-        await Oder.deleteMany()
-        // await Product.deleteMany()
+        // await Oder.deleteMany()
+        await Product.deleteMany()
         // await User.deleteMany()
         // await Slide.deleteMany()
 
-        // const createUsers = await User.insertMany(users)
+        const createUsers = await User.insertMany(users)
 
-        // const adminUser = createUsers[0]._id
-        // const sampleProducts = products.map(product => {
-        //     return {...product, user: adminUser}
-        // })
+        const adminUser = createUsers[0]._id
+        const sampleProducts = products.map(product => {
+            return {...product, user: adminUser}
+        })
 
-        await Settings.insertMany(products)
+        await Product.insertMany(sampleProducts)
 
         // await Slide.insertMany(slides)
         //  await Promotions.insertMany(promotions)

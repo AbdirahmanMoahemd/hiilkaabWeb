@@ -50,6 +50,7 @@ const MyOrdersScreen = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
+                    <td>IMAGE</td>
                     <td>DATE</td>
                     <td>TOTAL</td>
                     <td>PAID</td>
@@ -61,8 +62,9 @@ const MyOrdersScreen = () => {
                   {orders.map((order) => (
                     <tr key={order._id}>
                       <td>{order._id.substring(0, 15)}</td>
+                      <td><img src={order.products[0].images && order.products[0].images[0]} className='w-20 h-20'/></td>
                       <td>{order.createdAt.substring(0, 10)}</td>
-                      <td>{order.totalPrice}</td>
+                      <td>${order.totalPrice}</td>
                       <td>
                         {order.isPaid ? (
                           order.paidAt.substring(0, 10)

@@ -134,7 +134,7 @@ function App() {
 
         {/* Settings  */}
         <Route path="/settings" element={<SettingsScreens/> } />
-        <Route path="/updateSettings" element={<UpdateSettingsScreen/> } />
+        <Route path="/updateSettings/:id" element={<UpdateSettingsScreen/> } />
         <Route path="/Logout" element={<Logout/> } />
         </Routes> 
       

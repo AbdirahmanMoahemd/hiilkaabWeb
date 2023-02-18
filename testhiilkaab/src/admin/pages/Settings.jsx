@@ -62,7 +62,7 @@ const Settings = () => {
                   <p>{setting.whatsAppPhoneNumber}</p>
                 </div>
                 <div className="flex mt-4 justify-around lg:text-2xl">
-                  <Link to={`/updateCategory/${setting.id}`}>
+                  <Link to={`/updateSettings/${setting.id}`}>
                     <button className="text-primary">
                       <MdModeEdit />
                     </button>

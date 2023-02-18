@@ -15,7 +15,7 @@ const ProductBuild = ({ product }) => {
         </div>
       </div>
       <div className="lg:ml-4 pt-4 pb-3 px-2">
-        <Link to={`/product/${product.id}`}>{product.name}</Link>
+        <Link to={`/product/${product.id}`} className='truncate ...'>{product.name}</Link>
         <div className="flex items-baseline mb-1 space-x-2">
           <p className="text-xl text-primary font-roboto font-semibold">$200</p>
           <p className="text-sm text-gray-400 font-roboto line-through">$300</p>

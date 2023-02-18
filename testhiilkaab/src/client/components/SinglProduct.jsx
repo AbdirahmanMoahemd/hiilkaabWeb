@@ -6,15 +6,16 @@ import Rating from "./Rating";
 const SinglProduct = ({ products }) => {
   return (
     <>
-      <div className="grid lg:grid-cols-4 grid-cols-2 gap-3 pt-4">
+      <div className="grid lg:grid-cols-4 grid-cols-2 gap-y-6 gap-x-4 pb-4">
         {/* <!-- single product --> */}
 
         {products.map((product) => (
           <div className="group rounded bg-white shadow overflow-hidden">
             {/* <!-- product image --> */}
+            <Link to={`/product/${product.id}`}>
             <div className="flex items-center justify-center">
               <div className="relative">
-                <div className="w-40 h-40 ">
+                <div className="w-40 h-40">
                   <img
                     src={product.images ? product.images[0] : hiilkaab}
                     className="w-full h-full"
@@ -25,22 +26,17 @@ const SinglProduct = ({ products }) => {
                     to="/"
                     className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
                   >
-                    <i className="fa fa-search"></i>
-                  </Link>
-                  <Link
-                    to="/"
-                    className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
-                  >
                     <i className="fa fa-heart"></i>
                   </Link>
                 </div>
               </div>
             </div>
+            </Link>
             {/* <!-- product image end -->
                 <!-- product content --> */}
             <div className="pt-4 pb-3 px-4">
               <Link to={`/product/${product.id}`}>
-                <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition">
+                <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition truncate ...">
                   {product.name}
                 </h4>
               </Link>

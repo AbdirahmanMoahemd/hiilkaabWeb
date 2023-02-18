@@ -400,7 +400,7 @@ const Product = () => {
           related products
         </h2>
         {/* <!-- product wrapper --> */}
-        <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-6">
           {/* <!-- single product --> */}
           {loadingProductList ? (
             <ProgressSpinner
@@ -495,7 +495,6 @@ const Product = () => {
         {/* // <!-- product wrapper end --> */}
       </div>
       {/* // <!-- related products end --> */}
-      <Footer />
     </>
   );
 };

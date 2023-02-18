@@ -8,7 +8,8 @@
     "start": "node backend/index",
     "server": "nodemon backend/index",
     "client": "npm start --prefix testhiilkaab",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder"
   },
   "keywords": [],
   "author": "",

@@ -158,12 +158,12 @@ const OrdersScreen = () => {
                 </p>
               </div>
               <div className="py-6">
-                <h3 className="text-lg font-medium capitalize mb-4">
+                <h3 className="text-lg font-medium capitalize">
                   Payment Method
                 </h3>
                 <p>{order.paymentMethod}</p>
               </div>
-              <div className="py-6">
+              <div>
                 <h3 className="text-lg font-medium capitalize mb-4">
                   Order Status:
                 </h3>
