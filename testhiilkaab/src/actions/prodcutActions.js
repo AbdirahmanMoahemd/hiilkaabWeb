@@ -67,7 +67,7 @@ export const listProducts =
         type: PRODUCT_LIST_SUCCESS,
         payload: data,
       });
-    } catch (error) {
+    } catch (error) { 
       dispatch({
         type: PRODUCT_LIST_FAIL,
         payload:
