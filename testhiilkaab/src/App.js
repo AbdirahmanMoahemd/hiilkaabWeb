@@ -81,8 +81,6 @@ function App() {
         <Route path="/change-password" element={<ChangePassword/> } />
         
         <Route path="/product/:id" element={<Product/>} />
-        <Route path="/related/product/:id" element={<Product/>} />
-        
         <Route path="/register" element={<Register/> } />
         <Route path="/about" element={<About/> } />
         <Route path="/login" element={<Login/>} />

@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import Footer from "../components/footer";
 import hiilkaab from "../../data/images/hiilkaab.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Toast } from "primereact/toast";
 import {
   createProductReview,
   listProductDetails,
@@ -14,8 +12,6 @@ import { PRODUCT_CREATE_REVIEW_RESET } from "../../constants/productConstants";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { addToWish } from "../../actions/wishlistActions";
-import { getProductsByFilter } from "../../actions/filterActions";
-import { Button } from "primereact/button";
 import Rating from "../components/Rating";
 
 const Product = () => {
@@ -30,10 +26,8 @@ const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const toast = useRef(null);
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  
 
   const productReview = useSelector((state) => state.productReview);
   const { success: successProductReview, error: errorProductReview } =
@@ -51,7 +45,7 @@ const Product = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [isProDetails, isReviews]);
+  }, [isProDetails, isReviews, id]);
 
   useEffect(() => {
     if (successProductReview) {
@@ -408,7 +402,7 @@ const Product = () => {
                 .map((filteredproduct) => (
                   <div className="group rounded bg-white shadow overflow-hidden">
                     {/* <!-- product image --> */}
-                    <Link to={`/related/product/${filteredproduct.id}`}>
+                    <Link to={`/product/${filteredproduct.id}`}>
                       <div className="flex items-center justify-center">
                         <div className="relative">
                           <div className="w-40 h-40 ">
@@ -423,7 +417,7 @@ const Product = () => {
                           </div>
                           <div className="absolute inset-0  h-40 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                             <Link
-                              to={`/related/product/${filteredproduct.id}`}
+                              to={`/product/${filteredproduct.id}`}
                               className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
                             >
                               <i className="fa fa-heart"></i>
@@ -435,7 +429,7 @@ const Product = () => {
                     {/* <!-- pro image end -->
                    <!-- pro content --> */}
                     <div className="pt-4 pb-3 px-4">
-                      <Link to={`/related/product/${filteredproduct.id}`}>
+                      <Link to={`/product/${filteredproduct.id}`}>
                         <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition truncate ...">
                           {filteredproduct.name}
                         </h4>
@@ -458,7 +452,7 @@ const Product = () => {
                     {/* <!-- pro content end -->
                    <!-- pro button --> */}
                     <Link
-                      to={`/related/product/${filteredproduct.id}`}
+                      to={`/product/${filteredproduct.id}`}
                       className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
                     >
                       Add to Cart

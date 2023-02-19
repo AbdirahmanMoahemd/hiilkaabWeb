@@ -83,7 +83,7 @@ const Shop = () => {
     } else {
       dispatch(listProducts(keyword));
     }
-  }, [dispatch, keyword]);
+  }, [dispatch, keyword, id]);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -129,12 +129,12 @@ const Shop = () => {
   }, [dispatch, index]);
 
   useEffect(() => {
-    if (index == 2) {
+    if (index === 2) {
       dispatch(listProductsByPrice());
-    } else if (index == 3) {
+    } else if (index === 3) {
       dispatch(listProducts(keyword));
     }
-    else if(index == 4){
+    else if(index === 4){
       dispatch(listDiscountProducts());
     }
   }, [dispatch, index, keyword]);
