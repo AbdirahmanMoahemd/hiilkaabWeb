@@ -331,12 +331,14 @@ const Header = () => {
               </Link>
               <Link
                 to={"/shop"}
+                onClick={()=> setNavbarState(false)}
                 className="block px-4 py-2 font-medium transition hover:bg-gray-100"
               >
                 Shop
               </Link>
               <Link
                 to={"/about"}
+                onClick={()=> setNavbarState(false)}
                 className="block px-4 py-2 font-medium transition hover:bg-gray-100"
               >
                 About Us
