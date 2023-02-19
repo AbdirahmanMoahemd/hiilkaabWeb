@@ -67,8 +67,8 @@ export const updateTopCategory = asyncHandler(async (req, res) => {
     topcategories.category3 = category3;
     topcategories.category4 = category4;
 
-    const updatedTopCategory = await TopCategory.save();
-    res.json(updatedTopCategory);
+    const updatedTopCategory = await topcategories.save();
+    res.json({updatedTopCategory});
   } else {
     res.status(404);
     throw new Error("TopCategory Not Found");

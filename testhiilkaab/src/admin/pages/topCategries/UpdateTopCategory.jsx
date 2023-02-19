@@ -36,7 +36,7 @@ const UpdateTopCategory = () => {
       dispatch({ type: TOPCATEGORY_UPDATE_RESET });
       navigate("/admin/topCategory");
     } else {
-      if (!topcategory.name || topcategory.id !== id) {
+      if (!topcategory.category1 || topcategory.id !== id) {
         dispatch(listTopCategoryDetails(id));
         dispatch(listCategories());
       } else {
@@ -89,13 +89,16 @@ const UpdateTopCategory = () => {
 
             <div>
               <label className="text-gray-600 mb-2 block">Category1</label>
+              <label className="text-gray-600 mb-2 block">{category1 && category1.name}</label>
               <select
                 name="category1"
                 type="text"
                 className="input-box"
                 value={category1}
                 required
-                onChange={(e) => setCategory1(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault()
+                  setCategory1(e.target.value)}}
               >
                 <option>Select Category here</option>
                 {categories.map((cat) => (
@@ -114,13 +117,18 @@ const UpdateTopCategory = () => {
 
             <div>
               <label className="text-gray-600 mb-2 block">Category2</label>
+              <label className="text-gray-600 mb-2 block">{category2 && category2.name}</label>
+
+
               <select
                 name="category2"
                 type="text"
                 className="input-box"
                 value={category2}
                 required
-                onChange={(e) => setCategory2(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault()
+                  setCategory2(e.target.value)}}
               >
                 <option>Select Category here</option>
                 {categories.map((cat) => (
@@ -137,13 +145,18 @@ const UpdateTopCategory = () => {
 
             <div>
               <label className="text-gray-600 mb-2 block">Category3</label>
+              <label className="text-gray-600 mb-2 block">{category3 && category3.name}</label>
+
+
               <select
                 name="category3"
                 type="text"
                 className="input-box"
                 value={category3}
                 required
-                onChange={(e) => setCategory3(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault()
+                  setCategory3(e.target.value)}}
               >
                 <option>Select Category here</option>
                 {categories.map((cat) => (
@@ -160,13 +173,18 @@ const UpdateTopCategory = () => {
 
             <div>
               <label className="text-gray-600 mb-2 block">Category4</label>
+              <label className="text-gray-600 mb-2 block">{category4 && category4.name}</label>
+
+
               <select
                 name="category4"
                 type="text"
                 className="input-box"
                 value={category4}
                 required
-                onChange={(e) => setCategory4(e.target.value)}
+                onChange={(e) => {
+                  e.preventDefault()
+                  setCategory4(e.target.value)}}
               >
                 <option>Select Category here</option>
                 {categories.map((cat) => (

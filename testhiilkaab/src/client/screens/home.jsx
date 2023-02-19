@@ -79,21 +79,22 @@ const Home = () => {
   useEffect(() => {
     dispatch(listCategories());
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(listTopCategories());
+  }, [dispatch]);
+
 
   useEffect(() => {
     dispatch(listDisProducts());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(listTopProducts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(listTopCategories());
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(listDiscounts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(listTopProducts());
   }, [dispatch]);
 
   return (

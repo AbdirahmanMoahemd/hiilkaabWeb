@@ -135,7 +135,7 @@ const Shop = () => {
       dispatch(listProducts(keyword));
     }
     else if(index === 4){
-      dispatch(listDiscountProducts());
+      dispatch(listDiscountProducts(keyword));
     }
   }, [dispatch, index, keyword]);
 
