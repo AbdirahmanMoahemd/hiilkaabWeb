@@ -49,7 +49,6 @@ const ShopComponent = ({ products }) => {
             </div>
             <div className="flex items-center">
               <Rating value={product.rating} text={product.numReviews} />
-              <div className="text-xs text-gray-500 ml-3">(150)</div>
             </div>
           </div>
           {/* <!-- product content end -->

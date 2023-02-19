@@ -272,9 +272,7 @@ const Shop = () => {
                           >
                             {category.name}
                           </label>
-                          <div className="ml-auto text-gray-600 text-sm">
-                            (15)
-                          </div>
+                          
                         </div>
                       ))}
                     </>
@@ -323,9 +321,7 @@ const Shop = () => {
                           >
                             {subcategory.name}
                           </label>
-                          <div className="ml-auto text-gray-600 text-sm">
-                            (15)
-                          </div>
+                          
                         </div>
                       ))}
                     </>
@@ -371,9 +367,7 @@ const Shop = () => {
                           >
                             {brand.brand}
                           </label>
-                          <div className="ml-auto text-gray-600 text-sm">
-                            (15)
-                          </div>
+                         
                         </div>
                       ))}
                     </>
