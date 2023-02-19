@@ -7,6 +7,7 @@ import { Toast } from "primereact/toast";
 import {
   createProductReview,
   listProductDetails,
+  listProducts,
 } from "../../actions/prodcutActions";
 import { useDispatch, useSelector } from "react-redux";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../../constants/productConstants";
@@ -60,10 +61,12 @@ const Product = () => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
     dispatch(listProductDetails(id));
-    dispatch(
-      getProductsByFilter({ type: "category", query: product.category })
-    );
-  }, [dispatch, successProductReview]);
+  }, [dispatch, id, successProductReview, id]);
+
+  useEffect(() => {
+    dispatch(listProducts());
+    window.scrollTo(0, 0);
+  }, [id]);
 
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
@@ -136,23 +139,7 @@ const Product = () => {
                 {product.name}
               </h2>
               <div className="flex items-center mb-4">
-                <div className="flex gap-1 text-sm text-yellow-400">
-                  <span>
-                    <i className="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i className="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i className="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i className="fa fa-star"></i>
-                  </span>
-                  <span>
-                    <i className="fa fa-star"></i>
-                  </span>
-                </div>
+                <Rating value={product.rating} text={product.numReviews} />
                 <div className="text-xs text-gray-500 ml-3">(150 Reviews)</div>
               </div>
               <div className="space-y-2">
@@ -179,15 +166,15 @@ const Product = () => {
                 <span className="text-primary font-semibold text-xl">
                   ${product.price}
                 </span>
-                <span className="text-gray-500 text-base line-through">
-                  ${product.newPrice}
-                </span>
+                {product.newPrice > 0 && (
+                  <span className="text-gray-500 text-base line-through">
+                    ${product.newPrice}
+                  </span>
+                )}
               </div>
               <p className="mt-4 text-gray-600">{product.description}</p>
               {/* <!-- size --> */}
-              {product.sizes && product.sizes.length === "" ? (
-                ""
-              ) : (
+              {product.sizes.length > 0 && (
                 <div className="mt-4">
                   <h3 className="text-base text-gray-800 mb-1">Size</h3>
                   <div className="flex items-center gap-2">
@@ -214,9 +201,7 @@ const Product = () => {
               )}
               {/* <!-- size end --> */}
               {/* <!-- color --> */}
-              {product.colors && product.colors.length === "" ? (
-                ""
-              ) : (
+              {product.colors.length > 0 && (
                 <div className="mt-4">
                   <h3 className="text-base text-gray-800 mb-1">Color</h3>
                   <div className="flex items-center gap-2">
@@ -414,77 +399,73 @@ const Product = () => {
             <Message severity="error">{errrorProductList}</Message>
           ) : (
             <>
-              {products.map((pro) => (
-                <div className="group rounded bg-white shadow overflow-hidden">
-                  {/* <!-- product image --> */}
-                  <div className="flex items-center justify-center">
-                    <div className="relative">
-                      <div className="w-40 h-40 ">
-                        <Link to={`/product/${product.id}`}>
-                          <img
-                            src={pro.images ? pro.images[0] : hiilkaab}
-                            className="w-full h-full"
-                          />
-                        </Link>
+              {products
+                .filter((pro) =>
+                  pro.category
+                    ? pro.category.name === product.category.name
+                    : null
+                )
+                .map((filteredproduct) => (
+                  <div className="group rounded bg-white shadow overflow-hidden">
+                    {/* <!-- product image --> */}
+                    <Link to={`/related/product/${filteredproduct.id}`}>
+                      <div className="flex items-center justify-center">
+                        <div className="relative">
+                          <div className="w-40 h-40 ">
+                            <img
+                              src={
+                                filteredproduct.images
+                                  ? filteredproduct.images[0]
+                                  : hiilkaab
+                              }
+                              className="w-full h-full"
+                            />
+                          </div>
+                          <div className="absolute inset-0  h-40 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
+                            <Link
+                              to={`/related/product/${filteredproduct.id}`}
+                              className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
+                            >
+                              <i className="fa fa-heart"></i>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                      <div className="absolute inset-0  h-40 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <Link
-                          to={`/product/${product.id}`}
-                          className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
-                        >
-                          <i className="fa fa-heart"></i>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- pro image end -->
-                   <!-- pro content --> */}
-                  <div className="pt-4 pb-3 px-4">
-                    <Link to={`/product/${product.id}`}>
-                      <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition truncate ...">
-                        {pro.name}
-                      </h4>
                     </Link>
-                    <div className="flex items-baseline mb-1 space-x-2">
-                      <p className="text-xl text-primary font-roboto font-semibold">
-                        ${pro.price}
-                      </p>
-                      <p className="text-sm text-gray-400 font-roboto line-through">
-                        ${pro.newPrice}
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="flex gap-1 text-sm text-yellow-400">
-                        <span>
-                          <i className="fa fa-star"></i>
-                        </span>
-                        <span>
-                          <i className="fa fa-star"></i>
-                        </span>
-                        <span>
-                          <i className="fa fa-star"></i>
-                        </span>
-                        <span>
-                          <i className="fa fa-star"></i>
-                        </span>
-                        <span>
-                          <i className="fa fa-star"></i>
-                        </span>
+                    {/* <!-- pro image end -->
+                   <!-- pro content --> */}
+                    <div className="pt-4 pb-3 px-4">
+                      <Link to={`/related/product/${filteredproduct.id}`}>
+                        <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition truncate ...">
+                          {filteredproduct.name}
+                        </h4>
+                      </Link>
+                      <div className="flex items-baseline mb-1 space-x-2">
+                        <p className="text-xl text-primary font-roboto font-semibold">
+                          ${filteredproduct.price}
+                        </p>
+                        <p className="text-sm text-gray-400 font-roboto line-through">
+                        {filteredproduct.newPrice > 0 && `$${filteredproduct.newPrice}`}
+                        </p>
                       </div>
-                      <div className="text-xs text-gray-500 ml-3">(150)</div>
+                      <div className="flex items-center">
+                        <Rating
+                          value={filteredproduct.rating}
+                          text={filteredproduct.numReviews}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* <!-- pro content end -->
+                    {/* <!-- pro content end -->
                    <!-- pro button --> */}
-                  <Link
-                    to={`/product/${pro.id}`}
-                    className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
-                  >
-                    Add to Cart
-                  </Link>
-                  {/* <!-- product button end --> */}
-                </div>
-              ))}
+                    <Link
+                      to={`/related/product/${filteredproduct.id}`}
+                      className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
+                    >
+                      Add to Cart
+                    </Link>
+                    {/* <!-- product button end --> */}
+                  </div>
+                ))}
             </>
           )}
           {/* <!-- single product end --> */}

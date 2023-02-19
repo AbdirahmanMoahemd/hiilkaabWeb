@@ -44,7 +44,7 @@ const ShopComponent = ({ products }) => {
                 ${product.price}
               </p>
               <p className="text-sm text-gray-400 font-roboto line-through">
-                ${product.newPrice}
+                ${product.newPrice >0 && product.newPrice}
               </p>
             </div>
             <div className="flex items-center">

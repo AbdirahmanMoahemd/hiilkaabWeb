@@ -17,12 +17,11 @@ const ProductBuild = ({ product }) => {
       <div className="lg:ml-4 pt-4 pb-3 px-2">
         <Link to={`/product/${product.id}`} className='truncate ...'>{product.name}</Link>
         <div className="flex items-baseline mb-1 space-x-2">
-          <p className="text-xl text-primary font-roboto font-semibold">$200</p>
-          <p className="text-sm text-gray-400 font-roboto line-through">$300</p>
+          <p className="text-xl text-primary font-roboto font-semibold">${product.price}</p>
+          <p className="text-sm text-gray-400 font-roboto line-through">{product.newPrice > 0 && `$${product.newPrice}`}</p>
         </div>
         <div className="flex items-center">
           <Rating value={product.rating} text={product.numReviews} />
-          <div className="text-xs text-gray-500 ml-3">(150)</div>
         </div>
       </div>
     </div>

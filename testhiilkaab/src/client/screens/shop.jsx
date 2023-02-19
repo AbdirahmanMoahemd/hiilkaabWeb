@@ -7,6 +7,7 @@ import { listSubCategories } from "../../actions/subCategoryActions";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import {
+  listDiscountProducts,
   listOfBrands,
   listProducts,
   listProductsByPrice,
@@ -118,6 +119,10 @@ const Shop = () => {
       text: "Price low-high",
       index: 3,
     },
+    {
+      text: "Discounted Products",
+      index: 4,
+    },
   ];
   useEffect(() => {
     dispatch(listOfBrands());
@@ -128,6 +133,9 @@ const Shop = () => {
       dispatch(listProductsByPrice());
     } else if (index == 3) {
       dispatch(listProducts(keyword));
+    }
+    else if(index == 4){
+      dispatch(listDiscountProducts());
     }
   }, [dispatch, index, keyword]);
 
@@ -328,6 +336,7 @@ const Shop = () => {
               {/* <!-- category filter end -->*/}
 
               {/* !-- brand filter --> */}
+
               <div className="pt-4">
                 <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
                   Brands
@@ -414,7 +423,7 @@ const Shop = () => {
               onChange={(e) => {
                 setIndex(e.target.value);
               }}
-              className="w-44 text-sm text-gray-600 px-4 py-3 border-gray-300 shadow-sm rounded focus:ring-primary  focus:border-primary"
+              className="w-48 text-sm text-gray-600 px-4 py-3 border-gray-300 shadow-sm rounded focus:ring-primary  focus:border-primary"
             >
               {sorts.map((cat) => (
                 <>
