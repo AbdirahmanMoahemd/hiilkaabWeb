@@ -185,7 +185,7 @@ export const getMyOrdersAll = asyncHandler(async (req, res) => {
     for (let i = 0; i < orders.length; i++) {
        counter2++;
   }
-        let allOrder
+        let allOrder;
         const orders2 = await Order.find({ isPaid: true })
         const addDecimals = (num) => { 
             return (Math.round(num * 100) / 100).toFixed(2)

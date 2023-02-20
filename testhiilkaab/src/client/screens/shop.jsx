@@ -26,6 +26,8 @@ const Shop = () => {
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [navbarState, setNavbarState] = useState(true);
   const [index, setIndex] = useState();
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
   const { keyword } = useParams();
   const { id } = useParams();
 
@@ -83,7 +85,7 @@ const Shop = () => {
     } else {
       dispatch(listProducts(keyword));
     }
-  }, [dispatch, keyword, id]);
+  }, [dispatch, keyword, id, max]);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -137,7 +139,7 @@ const Shop = () => {
     else if(index === 4){
       dispatch(listDiscountProducts(keyword));
     }
-  }, [dispatch, index, keyword]);
+  }, [dispatch, index, keyword, max]);
 
   const handleCategory = (e) => {
     resetState();
@@ -385,12 +387,14 @@ const Shop = () => {
                     type="text"
                     className="w-full border-gray-300 focus:ring-0 focus:border-primary px-3 py-1 text-gray-600 text-sm shadow-sm rounded"
                     placeholder="min"
+                    onChange={(e)=> setMin(e.target.value)}
                   />
                   <span className="mx-3 text-gray-500">-</span>
                   <input
                     type="text"
                     className="w-full border-gray-300 focus:ring-0 focus:border-primary px-3 py-1 text-gray-600 text-sm shadow-sm rounded"
                     placeholder="mix"
+                    onChange={(e)=> setMax(e.target.value)}
                   />
                 </div>
               </div>
@@ -442,7 +446,7 @@ const Shop = () => {
             <Message severity="error">{error}</Message>
           ) : (
             <>
-              <ShopComponent products={products} />
+              <ShopComponent products={products} max={max} min={min}/>
             </>
           )}
           {/* // <!-- product wrapper end --> */}

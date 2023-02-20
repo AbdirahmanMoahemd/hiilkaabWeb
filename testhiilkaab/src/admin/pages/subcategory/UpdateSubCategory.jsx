@@ -119,10 +119,10 @@ const UpdateSubCategory = () => {
               </select>
             </div>
             <div className="mt-4 flex justify-center">
-              <button
-                
-                className="py-2 px-10 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
-              >
+            <button
+                  type="submit"
+                  className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                >
                 Update
               </button>
             </div>

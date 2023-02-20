@@ -315,7 +315,7 @@ const AddProduct = () => {
                 value={mainDescription}
                 className="input-box"
                 onChange={(e) => setMainDescription(e.target.value)}
-                placeholder="About"
+                placeholder="Main Description"
                 required
               />
             </div>
@@ -468,10 +468,10 @@ const AddProduct = () => {
               <span className="pl-2"> isFeatured</span>
             </div>
             <div className="mt-4 flex justify-center">
-              <button
-                
-                className="py-2 px-10 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
-              >
+            <button
+                  type="submit"
+                  className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                >
                 Save
               </button>
             </div>

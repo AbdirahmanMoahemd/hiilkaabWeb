@@ -16,7 +16,7 @@ import {
   getProductsByTopCategory4,
   getProductsCount,
   getTopProducts,
-  getProductsLowPriceToHight
+  getProductsLowPriceToHight,
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
