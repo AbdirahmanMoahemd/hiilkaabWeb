@@ -16,6 +16,7 @@ import settingsRoutes from './routes/settingsRoutes.js'
 import filterRoutes from './routes/filter.js'
 import topCategriesRoutes from './routes/topCategriesRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import brandRoutes from './routes/brandRoutes.js'
  
 
 
@@ -42,6 +43,7 @@ app.use('/api/settings', settingsRoutes);
 app.use('/api/filter', filterRoutes); 
 app.use('/api/topCategories', topCategriesRoutes);
 app.use('/api/orders', orderRoutes) 
+app.use('/api/brands', brandRoutes) 
 
 
 

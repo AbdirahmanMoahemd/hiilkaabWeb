@@ -43,7 +43,9 @@ import DiscountScreen from "./admin/screens/discount/DiscountScreen";
 import AddDiscountScreen from "./admin/screens/discount/AddDiscountScreen";
 import OderComplateScreen from "./client/screens/OderComplateScreen";
 import MyOrdersScreen from "./client/screens/MyOrdersScreen";
-import ScrollToTop from "./client/components/ScrollToTop";
+import BrandScreen from "./admin/screens/brand/BrandScreen";
+import AddBrandScreen from "./admin/screens/brand/AddBrandScreen";
+import UpdateBrandScreen from "./admin/screens/brand/UpdateBrandScreen";
 
 
 function App() {
@@ -106,6 +108,12 @@ function App() {
         <Route path="/admin/subCategory" element={<SubCategoryScreen/> } />
         <Route path="/addsubCategory" element={<AddSubCategoryScreen/> } />
         <Route path="/updateSubCategory/:id" element={<UpdateSubCategoryScreen/> } />
+
+
+        {/* Brand  */}
+        <Route path="/admin/brands" element={<BrandScreen/> } />
+        <Route path="/addbrands" element={<AddBrandScreen/> } />
+        <Route path="/updateBrands/:id" element={<UpdateBrandScreen/> } />
 
         {/* products  */}
         <Route path="/adminproducts" element={<ProductsScreen/> } />

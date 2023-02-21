@@ -181,30 +181,24 @@ const Header = () => {
             {/* <!-- nav menu --> */}
             <div className="flex items-center justify-between flex-grow pl-12">
               <div className="flex items-center space-x-6 text-base capitalize">
-                <Link to="/">
-                  {" "}
-                  <a
-                    href="index.html"
+                <Link to="/"
                     className="text-gray-200 hover:text-white transition"
                   >
                     Home
-                  </a>
+                  
                 </Link>
-                <Link to="/shop">
-                  {" "}
-                  <a
-                    href="shop.html"
+                <Link to="/shop"
                     className="text-gray-200 hover:text-white transition"
-                  >
-                    Shop
-                  </a>
+                  
+                    >Shop
+                 
                 </Link>
-                <a
-                  href="/about"
+                <Link
+                  to="/about"
                   className="text-gray-200 hover:text-white transition"
                 >
                   About us
-                </a>
+                </Link>
                 {userInfo && userInfo.isAdmin && (
                   <Link
                     to="/dashboard"
@@ -223,12 +217,12 @@ const Header = () => {
                     {userInfo.name.split(" ")[0]}
                   </Link>
                 ) : (
-                  <a
-                    href="/login"
+                  <Link
+                    to="/login"
                     className="ml-auto justify-self-end text-gray-200 hover:text-white transition"
                   >
                     Login/Register
-                  </a>
+                  </Link>
                 )}
 
                 {currentMode === "Dark" ? (
@@ -343,6 +337,14 @@ const Header = () => {
               >
                 About Us
               </Link>
+              {userInfo && userInfo.isAdmin && (
+                  <Link
+                    to="/dashboard"
+                    className="text-gray-200 hover:text-white transition"
+                  >
+                    Dashboard
+                  </Link>
+                )}
             </div>
             {/* <!-- navlinks end --> */}
           </div>

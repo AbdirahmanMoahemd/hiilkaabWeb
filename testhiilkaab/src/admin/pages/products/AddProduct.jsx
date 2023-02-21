@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../../actions/prodcutActions";
 import { Message } from "primereact/message";
+import { listBrands } from "../../../actions/brandActions";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -55,8 +56,15 @@ const AddProduct = () => {
     success: successCreate,
   } = productCreate;
 
+  const brandList = useSelector((state) => state.brandList);
+  const { loading: loadingBrand, error: errorBrand, brands } = brandList;
+  
   useEffect(() => {
     dispatch(listCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(listBrands());
   }, [dispatch]);
 
   useEffect(() => {
@@ -290,6 +298,37 @@ const AddProduct = () => {
                 ))}
               </select>
             </div>
+            <div>
+                <label className="text-gray-600 mb-2 block">
+                  Brand <span className="text-primary">*</span>
+                </label>
+                <label className="text-gray-600 mb-2 block">{brand.name}</label>
+                <br />
+                {loadingBrand ? (
+                  <ProgressSpinner
+                    style={{ width: "20px", height: "20px" }}
+                    strokeWidth="6"
+                    fill="var(--surface-ground)"
+                    animationDuration=".5s"
+                  />
+                ) : (
+                  <select
+                    name="Brand"
+                    required
+                    type="text"
+                    className="input-box"
+                    onChange={(e) => setBrand(e.target.value)}
+                  >
+                    <option>Select Brand here</option>
+                    {brands.map((brand) => (
+                      <>
+                        <option value={brand.id}>{brand.name}</option>
+                      </>
+                    ))}
+                  </select>
+                )}
+              </div>
+
 
             <div>
               <label className="text-gray-600 mb-2 block">
@@ -319,18 +358,7 @@ const AddProduct = () => {
                 required
               />
             </div>
-            <div>
-              <label className="text-gray-600 mb-2 block">
-                Brand <span className="text-primary">*</span>
-              </label>
-              <input
-                type="text"
-                className="input-box"
-                onChange={(e) => setBrand(e.target.value)}
-                placeholder="Brand"
-                required
-              />
-            </div>
+            
             <div>
               <label className="text-gray-600 mb-2 block">
                 Price <span className="text-primary">*</span>

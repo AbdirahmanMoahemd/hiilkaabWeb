@@ -20,9 +20,6 @@ import {
   PRODUCT_UPDATE_FAIL,
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
-  BRAND_LIST_REQUEST,
-  BRAND_LIST_FAIL,
-  BRAND_LIST_SUCCESS,
   CPRODUCT_LIST_REQUEST,
   CPRODUCT_LIST_SUCCESS,
   CPRODUCT_LIST_FAIL,
@@ -125,26 +122,6 @@ export const listProductsByPrice = () => async (dispatch) => {
   }
 };
 
-export const listOfBrands = () => async (dispatch) => {
-  try {
-    dispatch({ type: BRAND_LIST_REQUEST });
-
-    const { data } = await axios.get("/api/products/brands");
-
-    dispatch({
-      type: BRAND_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: BRAND_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
 
 export const listDisProducts = () => async (dispatch) => {
   try {

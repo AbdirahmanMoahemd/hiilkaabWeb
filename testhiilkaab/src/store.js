@@ -22,6 +22,16 @@ import {
   subcategoryListReducer,
   subcategoryUpdateReducer,
 } from "./reducers/subCategoryReducers";
+
+import {
+  brandCreateReducer,
+  brandDeleteReducer,
+  brandDetailsReducer,
+  brandListReducer,
+  brandUpdateReducer,
+} from "./reducers/brandReducers";
+
+
 import {
   producDiscounttListReducer,
   productCreateReducer,
@@ -33,7 +43,6 @@ import {
   productListReducer4,
   productReviewReducer,
   productUpdateReducer,
-  brandListReducer,
   productListReducer1,
   productListReducerCount,
   productTopReducer,
@@ -103,6 +112,13 @@ const reducer = combineReducers({
   subcategoryDelete: subcategoryDeleteReducer,
   subcategoryUpdate: subcategoryUpdateReducer,
 
+
+  brandList: brandListReducer,
+  brandDetails: brandDetailsReducer,
+  brandCreate: brandCreateReducer,
+  brandDelete: brandDeleteReducer,
+  brandUpdate: brandUpdateReducer,
+
   productList: productListReducer,
   productList1: productListReducer1,
   productList2: productListReducer2,
@@ -114,7 +130,6 @@ const reducer = combineReducers({
   productUpdate: productUpdateReducer,
   productReview: productReviewReducer,
   producDistList: producDiscounttListReducer,
-  brandList: brandListReducer,
   productCount: productListReducerCount,
   productTop: productTopReducer,
 

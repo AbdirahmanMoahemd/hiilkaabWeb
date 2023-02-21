@@ -484,6 +484,11 @@ export const links = [
     icon: <MdOutlineCategory />,
   },
   {
+    name: "Brand",
+    link: "admin/brands",
+    icon: <MdOutlineCategory />,
+  },
+  {
     name: "Products",
     link: "adminproducts",
     icon: <FaProductHunt />,

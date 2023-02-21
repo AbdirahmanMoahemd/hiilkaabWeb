@@ -5,12 +5,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { listCategories } from "../../../actions/categoryActions";
-import { listProductDetails, updateProduct } from "../../../actions/prodcutActions";
+import {
+  listProductDetails,
+  updateProduct,
+} from "../../../actions/prodcutActions";
 import { listSubCategories } from "../../../actions/subCategoryActions";
 import { PRODUCT_UPDATE_RESET } from "../../../constants/productConstants";
 import { Header } from "../../components";
 import { SketchPicker } from "react-color";
 import { AiFillDelete } from "react-icons/ai";
+import { listBrands } from "../../../actions/brandActions";
 
 const UpdateProduct = () => {
   const [name, setName] = useState("");
@@ -60,6 +64,9 @@ const UpdateProduct = () => {
     subcategories,
   } = subcategoryList;
 
+  const brandList = useSelector((state) => state.brandList);
+  const { loading: loadingBrand, error: errorBrand, brands } = brandList;
+
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -70,6 +77,7 @@ const UpdateProduct = () => {
 
         dispatch(listCategories());
         dispatch(listSubCategories());
+        dispatch(listBrands());
       } else {
         setName(product.name);
         setImages(product.images);
@@ -111,8 +119,6 @@ const UpdateProduct = () => {
         newPrice,
       })
     );
-
-    
   };
 
   const uploadFileHandler = async (e) => {
@@ -163,7 +169,7 @@ const UpdateProduct = () => {
       <Header category="Update" title="Products" />
       <div className="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
         <form onSubmit={submitHandler}>
-        {loadingUpdate && (
+          {loadingUpdate && (
             <ProgressSpinner
               style={{ width: "20px", height: "20px" }}
               strokeWidth="6"
@@ -194,7 +200,7 @@ const UpdateProduct = () => {
           {errorSubcategories && (
             <Message severity="error" text={errorSubcategories} />
           )}
-          
+
           {loading ? (
             <ProgressSpinner
               style={{ width: "20px", height: "20px" }}
@@ -223,6 +229,9 @@ const UpdateProduct = () => {
                 <label className="text-gray-600 mb-2 block">
                   Category <span className="text-primary">*</span>
                 </label>
+                <label className="text-gray-600 mb-2 block">
+                  {category && category.name}
+                </label>
                 <br />
                 <select
                   name="category"
@@ -245,6 +254,9 @@ const UpdateProduct = () => {
                 <label className="text-gray-600 mb-2 block">
                   Sub Category <span className="text-primary">*</span>
                 </label>
+                <label className="text-gray-600 mb-2 block">
+                  {subcategory&&subcategory.name}
+                </label>
                 <br />
                 <select
                   name="subcategory"
@@ -265,6 +277,38 @@ const UpdateProduct = () => {
 
               <div>
                 <label className="text-gray-600 mb-2 block">
+                  Brand <span className="text-primary">*</span>
+                </label>
+                <label className="text-gray-600 mb-2 block">{brand && brand.name}</label>
+                <br />
+                {loadingBrand ? (
+                  <ProgressSpinner
+                    style={{ width: "20px", height: "20px" }}
+                    strokeWidth="6"
+                    fill="var(--surface-ground)"
+                    animationDuration=".5s"
+                  />
+                ) : (
+                  <select
+                    name="Brand"
+                    value={brand}
+                    required
+                    type="text"
+                    className="input-box"
+                    onChange={(e) => setBrand(e.target.value)}
+                  >
+                    <option>Select Brand here</option>
+                    {brands.map((brand) => (
+                      <>
+                        <option value={brand.id}>{brand.name}</option>
+                      </>
+                    ))}
+                  </select>
+                )}
+              </div>
+
+              <div>
+                <label className="text-gray-600 mb-2 block">
                   Description <span className="text-primary">*</span>
                 </label>
                 <input
@@ -277,33 +321,21 @@ const UpdateProduct = () => {
                 />
               </div>
               <div>
-              <label className="text-gray-600 mb-2 block">
-                Main Description <span className="text-primary">*</span>
-              </label>
-              <textarea
-                type="text"
-                rows={5}
-                cols={5}
-                value={mainDescription}
-                className="input-box"
-                onChange={(e) => setMainDescription(e.target.value)}
-                placeholder="Main Description"
-                required
-              />
-            </div>
-              <div>
                 <label className="text-gray-600 mb-2 block">
-                  Brand <span className="text-primary">*</span>
+                  Main Description <span className="text-primary">*</span>
                 </label>
-                <input
+                <textarea
                   type="text"
-                  value={brand}
+                  rows={5}
+                  cols={5}
+                  value={mainDescription}
                   className="input-box"
-                  onChange={(e) => setBrand(e.target.value)}
-                  placeholder="Brand"
+                  onChange={(e) => setMainDescription(e.target.value)}
+                  placeholder="Main Description"
                   required
                 />
               </div>
+
               <div>
                 <label className="text-gray-600 mb-2 block">
                   Price <span className="text-primary">*</span>

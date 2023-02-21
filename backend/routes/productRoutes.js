@@ -9,7 +9,6 @@ import {
   createProduct,
   updateProduct,
   createProductReview,
-  getBrands,
   getProductsByTopCategory1,
   getProductsByTopCategory2,
   getProductsByTopCategory3,
@@ -26,7 +25,6 @@ router.route("/").get(getProducts).post(protect, admin, createProduct);
 router.route("/dis", ).get(getDiscProducts);
 router.route("/top", ).get(getTopProducts);
 router.route("/price").get(getProductsLowPriceToHight);
-router.route("/brands", ).get(getBrands);
 router.route("/category1", ).post(getProductsByTopCategory1);
 router.route('/count').get(getProductsCount); 
 router.route("/category2", ).post(getProductsByTopCategory2);

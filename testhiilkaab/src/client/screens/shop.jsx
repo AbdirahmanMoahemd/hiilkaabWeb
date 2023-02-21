@@ -8,13 +8,13 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import {
   listDiscountProducts,
-  listOfBrands,
   listProducts,
   listProductsByPrice,
 } from "../../actions/prodcutActions";
 import { useParams } from "react-router-dom";
 import ShopComponent from "../components/ShopComponent";
 import { getProductsByFilter } from "../../actions/filterActions";
+import { listBrands } from "../../actions/brandActions";
 
 function getWindowSize() {
   const { innerWidth, innerHeight } = window;
@@ -47,7 +47,7 @@ const Shop = () => {
   const {
     loading: loadingBrand,
     error: errorBrand,
-    products: brands,
+    brands,
   } = brandList;
 
   const categoryList = useSelector((state) => state.categoryList);
@@ -72,7 +72,7 @@ const Shop = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(listOfBrands());
+    dispatch(listBrands());
   }, [dispatch]);
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Shop = () => {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (windowSize.innerWidth < 900) {
@@ -105,7 +105,7 @@ const Shop = () => {
     } else {
       setNavbarState(true);
     }
-  }, [windowSize]);
+  }, [windowSize, dispatch]);
 
   const sorts = [
     {
@@ -126,9 +126,6 @@ const Shop = () => {
       index: 4,
     },
   ];
-  useEffect(() => {
-    dispatch(listOfBrands());
-  }, [dispatch, index]);
 
   useEffect(() => {
     if (index === 2) {
@@ -167,6 +164,7 @@ const Shop = () => {
 
   const resetState = () => {
     setCategoryIds([]);
+    dispatch(listProducts(keyword));
   };
 
   const handleCategory2 = (e) => {
@@ -200,6 +198,7 @@ const Shop = () => {
 
   const resetState2 = () => {
     setSubCategoryIds([]);
+    dispatch(listProducts(keyword));
   };
 
   const handleBrands = (e) => {
@@ -226,6 +225,7 @@ const Shop = () => {
 
   const resetState3 = () => {
     setBrandIds([]);
+    dispatch(listProducts(keyword));
   };
 
   return (
@@ -367,7 +367,7 @@ const Shop = () => {
                             for="Dominik"
                             className="text-gray-600 ml-3 cursor-pointer"
                           >
-                            {brand.brand}
+                            {brand.name}
                           </label>
                          
                         </div>
@@ -378,7 +378,7 @@ const Shop = () => {
               </div>
               {/* <!-- brand filter end -->
         <!-- price filter --> */}
-              <div className="pt-4">
+              {/* <div className="pt-4">
                 <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
                   Price
                 </h3>
@@ -397,7 +397,7 @@ const Shop = () => {
                     onChange={(e)=> setMax(e.target.value)}
                   />
                 </div>
-              </div>
+              </div> */}
               {/* <!-- price filter end -->*/}
             </div>
           </div>
@@ -446,7 +446,7 @@ const Shop = () => {
             <Message severity="error">{error}</Message>
           ) : (
             <>
-              <ShopComponent products={products} max={max} min={min}/>
+              <ShopComponent products={products}/>
             </>
           )}
           {/* // <!-- product wrapper end --> */}
