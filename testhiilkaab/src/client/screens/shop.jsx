@@ -69,23 +69,32 @@ const Shop = () => {
 
   useEffect(() => {
     dispatch(listCategories());
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     dispatch(listBrands());
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     dispatch(listSubCategories());
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (id !== undefined) {
       dispatch(getProductsByFilter({ type: "category", query: id }));
-    } else {
+    }else if(categoryIds.length === 0){
       dispatch(listProducts(keyword));
     }
-  }, [dispatch, keyword, id, max]);
+    else if(subcategoryIds.length === 0){
+      dispatch(listProducts(keyword));
+    }
+    else if(brandIds.length === 0){
+      dispatch(listProducts(keyword));
+    } 
+    else {
+      dispatch(listProducts(keyword));
+    }
+  }, [dispatch, keyword, id, max, categoryIds, subcategoryIds, brandIds]);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -97,7 +106,7 @@ const Shop = () => {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (windowSize.innerWidth < 900) {
@@ -105,7 +114,7 @@ const Shop = () => {
     } else {
       setNavbarState(true);
     }
-  }, [windowSize, dispatch]);
+  }, [windowSize, dispatch, id]);
 
   const sorts = [
     {
@@ -136,7 +145,7 @@ const Shop = () => {
     else if(index === 4){
       dispatch(listDiscountProducts(keyword));
     }
-  }, [dispatch, index, keyword, max]);
+  }, [dispatch, index,id, keyword, max]);
 
   const handleCategory = (e) => {
     resetState();
@@ -164,7 +173,6 @@ const Shop = () => {
 
   const resetState = () => {
     setCategoryIds([]);
-    dispatch(listProducts(keyword));
   };
 
   const handleCategory2 = (e) => {
@@ -198,7 +206,6 @@ const Shop = () => {
 
   const resetState2 = () => {
     setSubCategoryIds([]);
-    dispatch(listProducts(keyword));
   };
 
   const handleBrands = (e) => {
@@ -225,7 +232,6 @@ const Shop = () => {
 
   const resetState3 = () => {
     setBrandIds([]);
-    dispatch(listProducts(keyword));
   };
 
   return (
