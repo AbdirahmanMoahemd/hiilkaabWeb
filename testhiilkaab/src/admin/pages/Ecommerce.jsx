@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { Header } from "../components";
 import { useStateContext } from "../contexts/ContextProvider";
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
-import { listOrdersCount, recentOrders } from "../../actions/orderActions";
+import { getOrdersByPhone, listOrdersCount, recentOrders } from "../../actions/orderActions";
 import { listProductsCount } from "../../actions/prodcutActions";
 
 const Ecommerce = () => {
