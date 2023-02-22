@@ -19,10 +19,10 @@ import {
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
 router.route("/").post(registerUser).get(protect, admin, getUsers);
-router.post("/register", registerUser2);
-router.get("/count", getUsersCount);
-router.post("/login", authUser);
-router.post("/app/login", authUser2);
+router.route("/register").post(registerUser2);
+router.route("/count", getUsersCount);
+router.route("/login",).post(authUser);
+router.route("/app/login").post(authUser2);
 
 router.route('/save-user-address').put(protect, saveUserAddress)
 router.route('/update/forgot/email').post(forgottUserPassword)
