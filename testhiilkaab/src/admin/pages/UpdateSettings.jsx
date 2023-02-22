@@ -26,15 +26,8 @@ const UpdateSettings = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const settingsCreat = useSelector((state) => state.settingsCreat);
-  const {
-    loading: loadingCreate,
-    error: errorCreate,
-    success: successCreate,
-  } = settingsCreat;
-
   const settingsDetails = useSelector((state) => state.settingsDetails);
-  const { loading, error, settings } = settingsDetails;
+  const { loading, error, setting } = settingsDetails;
 
   const settingsUpdate = useSelector((state) => state.settingsUpdate);
   const {
@@ -48,16 +41,17 @@ const UpdateSettings = () => {
       dispatch({ type: SETTINGS_UPDATE_RESET });
       navigate("/settings");
     } else {
-      if (settings._id == id) {
+      if (!setting.about || setting.id !== id) {
         dispatch(getSettingsDetails(id));
       } else {
-        setAbout(settings.about);
-        setAboutImg(settings.aboutImg);
-        setWhatsAppPhoneNumber(settings.whatsAppPhoneNumber);
-        setPhoneNumber(settings.phoneNumber);
+        setAbout(setting.about);
+        setAboutImg(setting.aboutImg);
+        setWhatsAppPhoneNumber(setting.whatsAppPhoneNumber);
+        setPhoneNumber(setting.phoneNumber);
+        console.log("about", about);
       }
     }
-  }, [dispatch, navigate, successUpdate]);
+  }, [dispatch, navigate, successUpdate, id, setting]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -83,7 +77,13 @@ const UpdateSettings = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      updateSettings({_id:id, phoneNumber, whatsAppPhoneNumber, about, aboutImg})
+      updateSettings({
+        _id: id,
+        phoneNumber,
+        whatsAppPhoneNumber,
+        about,
+        aboutImg,
+      })
     );
   };
 
@@ -102,85 +102,98 @@ const UpdateSettings = () => {
             />
           )}
           {errorUpdate && <Message severity="error" text={errorUpdate} />}
-          <div className="space-y-4">
-            <div>
-              <label className="text-gray-600 mb-2 block">PhoneNumber</label>
-              <input
-                type="number"
-                value={phoneNumber}
-                className="input-box"
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="PhoneNumber"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-gray-600 mb-2 block">
-                WhatsAppPhoneNumber
-              </label>
-              <input
-                type="number"
-                value={whatsAppPhoneNumber}
-                className="input-box"
-                onChange={(e) => setWhatsAppPhoneNumber(e.target.value)}
-                placeholder="WhatsAppPhoneNumber"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-gray-600 mb-2 block">About text</label>
-              <textarea
-                type="text"
-                rows={5}
-                cols={5}
-                value={about}
-                className="input-box"
-                onChange={(e) => setAbout(e.target.value)}
-                placeholder="About"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-gray-600 mb-2 block">
-                Select about image <span className="text-primary">*</span>
-              </label>
-              <input
-                value={aboutImg}
-                id="icon"
-                type="text"
-                className="input-box"
-                placeholder="AboutImg"
-                onChange={(e) => setAboutImg(e.target.value)}
-                required
-              />
-              <br />
 
-              <input
-                type="file"
-                id="myfile"
-                name="myfile"
-                onChange={uploadFileHandler}
-              />
-              {uploading && (
-                <ProgressSpinner
-                  style={{ width: "20px", height: "20px" }}
-                  strokeWidth="4"
-                  fill="var(--surface-ground)"
-                  animationDuration=".5s"
+          {loading ? (
+            <ProgressSpinner
+              style={{ width: "20px", height: "20px" }}
+              strokeWidth="6"
+              fill="var(--surface-ground)"
+              animationDuration=".5s"
+            />
+          ) : error ? (
+            <Message severity="error" text={error} />
+          ) : (
+            <div className="space-y-4">
+              <div>
+                <label className="text-gray-600 mb-2 block">PhoneNumber</label>
+                <input
+                  type="number"
+                  value={phoneNumber}
+                  className="input-box"
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="PhoneNumber"
+                  required
                 />
-              )}
+              </div>
+              <div>
+                <label className="text-gray-600 mb-2 block">
+                  WhatsAppPhoneNumber
+                </label>
+                <input
+                  type="number"
+                  value={whatsAppPhoneNumber}
+                  className="input-box"
+                  onChange={(e) => setWhatsAppPhoneNumber(e.target.value)}
+                  placeholder="WhatsAppPhoneNumber"
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-gray-600 mb-2 block">About text</label>
+                <textarea
+                  type="text"
+                  rows={5}
+                  cols={5}
+                  value={about}
+                  className="input-box"
+                  onChange={(e) => setAbout(e.target.value)}
+                  placeholder="About"
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-gray-600 mb-2 block">
+                  Select about image <span className="text-primary">*</span>
+                </label>
+                <input
+                  value={aboutImg}
+                  id="icon"
+                  type="text"
+                  className="input-box"
+                  placeholder="AboutImg"
+                  onChange={(e) => setAboutImg(e.target.value)}
+                  required
+                />
+                <br />
+
+                <input
+                  type="file"
+                  id="myfile"
+                  name="myfile"
+                  onChange={uploadFileHandler}
+                />
+                {uploading && (
+                  <ProgressSpinner
+                    style={{ width: "20px", height: "20px" }}
+                    strokeWidth="4"
+                    fill="var(--surface-ground)"
+                    animationDuration=".5s"
+                  />
+                )}
+              </div>
+              <div className="w-20 flex pl-2">
+                <img src={aboutImg} />
+              </div>
+              <div className="mt-4 flex justify-center">
+                <button
+                  type="submit"
+                  className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+                >
+                  Save
+                </button>
+              </div>
             </div>
-            <div className="w-20 flex pl-2">
-              <img src={aboutImg} />
-            </div>
-            <div className="mt-4 flex justify-center">
-               
-              <button type="submit" className="py-2 px-10 text-center text-primary bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">
-                
-                Save
-              </button>
-            </div>
-          </div>
+          )}
         </form>
       </div>
       {/* <!-- checkout form end --> */}

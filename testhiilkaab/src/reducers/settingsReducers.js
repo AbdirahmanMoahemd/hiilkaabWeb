@@ -24,16 +24,16 @@ export const settingsListReducer = (state = { settings: [] }, action) => {
  
 
 
-export const settingsDetailsReducer = (state = { settings: {} }, action) => {
+export const settingsDetailsReducer = (state = { setting: {} }, action) => {
   switch (action.type) {
     case SETTINGS_DETAILS_REQUEST:
       return { ...state, loading: true }
     case SETTINGS_DETAILS_SUCCESS:
-      return { loading: false, settings: action.payload }
+      return { loading: false, setting: action.payload }
     case SETTINGS_DETAILS_FAIL:
       return { loading: false, error: action.payload }
     case SETTINGS_DETAILS_RESET:
-      return { settings: {} }
+      return { setting: {} }
     default:
       return state
   }
