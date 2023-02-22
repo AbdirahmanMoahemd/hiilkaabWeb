@@ -158,11 +158,13 @@ const Shop = () => {
       setCategoryIds(updatedCategoryIds);
       if (updatedCategoryIds.length ===0) {
         dispatch(listProducts(keyword));
+        window.scrollTo(0, 0);
       }
     }
     dispatch(
       getProductsByFilter({ type: "category", query: updatedCategoryIds })
     );
+    window.scrollTo(0, 0);
   };
 
   const resetState = () => {
@@ -191,6 +193,7 @@ const Shop = () => {
       setSubCategoryIds(updatedSubCategoryIds);
       if (updatedSubCategoryIds.length ===0) {
         dispatch(listProducts(keyword));
+        window.scrollTo(0, 0);
       }
     }
     dispatch(
@@ -199,6 +202,7 @@ const Shop = () => {
         query2: updatedSubCategoryIds,
       })
     );
+    window.scrollTo(0, 0);
   };
 
   const resetState2 = () => {
@@ -225,9 +229,11 @@ const Shop = () => {
       setBrandIds(updatedBrandIds);
       if (updatedBrandIds.length ===0) {
         dispatch(listProducts(keyword));
+        window.scrollTo(0, 0);
       }
     }
     dispatch(getProductsByFilter({ type: "brand", query3: updatedBrandIds }));
+    window.scrollTo(0, 0);
   };
 
   const resetState3 = () => {
