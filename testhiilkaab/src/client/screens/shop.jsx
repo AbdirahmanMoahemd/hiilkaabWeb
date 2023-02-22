@@ -83,6 +83,8 @@ const Shop = () => {
     if (id !== undefined) {
       dispatch(getProductsByFilter({ type: "category", query: id }));
     }
+
+    dispatch(listProducts(keyword));
   }, [dispatch, keyword, id]);
 
   useEffect(() => {
