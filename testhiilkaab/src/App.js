@@ -28,7 +28,7 @@ import SliderScreen from "./admin/screens/SliderScreen";
 import AddProductScreen from "./admin/screens/AddProductScreen";
 import AddCategoryScreen from "./admin/screens/AddCategoryScreen";
 import AddSubCategoryScreen from "./admin/screens/AddSubCategoryScreen";
-import AddUserScreen from "./admin/screens/AddUserScreen";
+import EditUserScreen from "./admin/screens/EditUserScreen";
 import UpdateCategoryScreen from "./admin/screens/UpdateCategoryScreen";
 import UpdateSubCategoryScreen from "./admin/screens/UpdateSubCategoryScreen";
 import UpdateProductsScreen from "./admin/screens/UpdateProductsScreen";
@@ -136,8 +136,8 @@ function App() {
         <Route path="/orders" element={<OrdersScreen/> } />
 
         {/* users  */}
-        <Route path="/users" element={<UserScreen/> } />
-        <Route path="/adduser" element={<AddUserScreen/> } />
+        <Route path="/userlist" element={<UserScreen/> } />
+        <Route path="/edituser/:id" element={<EditUserScreen/> } />
 
         {/* Settings  */}
         <Route path="/settings" element={<SettingsScreens/> } />

@@ -510,7 +510,7 @@ export const links = [
   },
   {
     name: "Users",
-    link: "users",
+    link: "userlist",
     icon: <FaUsers />,
   },
 

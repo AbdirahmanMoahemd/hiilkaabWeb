@@ -41,9 +41,6 @@ const Users = () => {
       <Header
         category="Page"
         title="Users"
-        currentColor={currentColor}
-        onClick={onClickFn}
-        linktext="/adduser"
       />
       <div className="flex justify-center w-full pb-5">
         <form className="w-full xl:max-w-xl max-w-lg flex relative" >
@@ -86,7 +83,7 @@ const Users = () => {
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.id}>
+                <tr key={user._id}>
                   <td>{user.name}</td>
                   <td>
                     <a href={`mailto:${user.email}`}>{user.email}</a>
@@ -94,7 +91,7 @@ const Users = () => {
                   <td>{user.isAdmin ? "YES" : "NO"}</td>
                   <td>
                     <Link
-                    // to={`/admin/user/${user.id}/edit`}
+                    to={`/edituser/${user._id}`}
                     >
                       <button className="text-primary">
                         <MdModeEdit />
