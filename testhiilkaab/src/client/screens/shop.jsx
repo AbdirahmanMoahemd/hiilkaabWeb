@@ -82,19 +82,8 @@ const Shop = () => {
   useEffect(() => {
     if (id !== undefined) {
       dispatch(getProductsByFilter({ type: "category", query: id }));
-    }else if(categoryIds.length === 0){
-      dispatch(listProducts(keyword));
     }
-    else if(subcategoryIds.length === 0){
-      dispatch(listProducts(keyword));
-    }
-    else if(brandIds.length === 0){
-      dispatch(listProducts(keyword));
-    } 
-    else {
-      dispatch(listProducts(keyword));
-    }
-  }, [dispatch, keyword, id, max, categoryIds, subcategoryIds, brandIds]);
+  }, [dispatch, keyword, id]);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -165,6 +154,9 @@ const Shop = () => {
       updatedCategoryIds = [...categoryIds];
       updatedCategoryIds.splice(indexFound, 1);
       setCategoryIds(updatedCategoryIds);
+      if (updatedCategoryIds.length ===0) {
+        dispatch(listProducts(keyword));
+      }
     }
     dispatch(
       getProductsByFilter({ type: "category", query: updatedCategoryIds })
@@ -195,6 +187,9 @@ const Shop = () => {
       updatedSubCategoryIds = [...subcategoryIds];
       updatedSubCategoryIds.splice(indexFound2, 1);
       setSubCategoryIds(updatedSubCategoryIds);
+      if (updatedSubCategoryIds.length ===0) {
+        dispatch(listProducts(keyword));
+      }
     }
     dispatch(
       getProductsByFilter({
@@ -226,6 +221,9 @@ const Shop = () => {
       updatedBrandIds = [...brandIds];
       updatedBrandIds.splice(indexFound, 1);
       setBrandIds(updatedBrandIds);
+      if (updatedBrandIds.length ===0) {
+        dispatch(listProducts(keyword));
+      }
     }
     dispatch(getProductsByFilter({ type: "brand", query3: updatedBrandIds }));
   };
