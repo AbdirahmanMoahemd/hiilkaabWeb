@@ -13,7 +13,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [street, setStreet] = useState("");
+  const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [message, setMessage] = useState(null);
@@ -44,7 +44,7 @@ const Register = () => {
     if (password !== confirmpassword) {
       setMessage("Passwords do Not Match");
     } else {
-      dispatch(register(name, email, password, phone, street,  city, country));
+      dispatch(register(name, email, password, phone, address,  city, country));
     }
   };
 
@@ -141,15 +141,15 @@ const Register = () => {
               </div>
               <div>
                 <label className="text-gray-600 mb-2 block">
-                  Street
+                  Enter your Address
                   <span className="text-primary">*</span>
                 </label>
                 <input
                   type="text"
                   className="input-box"
-                  placeholder="enter your street"
+                  placeholder="enter your Address"
                   required
-                  onChange={(e) => setStreet(e.target.value)}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
               <div>

@@ -76,6 +76,7 @@ const Users = () => {
               <tr>
                 <td>NAME</td>
                 <td>EMAIL</td>
+                <td>PHONE</td>
                 <td>ADMIN</td>
                 <td></td>
                 <td></td>
@@ -87,6 +88,9 @@ const Users = () => {
                   <td>{user.name}</td>
                   <td>
                     <a href={`mailto:${user.email}`}>{user.email}</a>
+                  </td>
+                  <td>
+                    {user.phone}
                   </td>
                   <td>{user.isAdmin ? "YES" : "NO"}</td>
                   <td>

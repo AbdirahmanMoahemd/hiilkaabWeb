@@ -307,6 +307,44 @@ export const listOrders = () => async (
   }
 }
 
+
+
+export const getOrdersByPhone = (phone) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: ORDER_LIST_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      },
+    }
+
+    const { data } = await axios.post(`/api/orders/phone`, phone, config)
+
+    dispatch({
+      type: ORDER_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    })
+  }
+}
+
 export const listOrders2 = () => async (
   dispatch,
   getState

@@ -13,6 +13,7 @@ import { listProductsCount } from "../../actions/prodcutActions";
 
 const Ecommerce = () => {
   const { currentColor } = useStateContext();
+  const [phone, setPhone] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,6 +39,13 @@ const Ecommerce = () => {
       navigate("/login");
     }
   }, [dispatch, navigate, userInfo]);
+
+
+  const submitHanller = (e) => {
+    e.preventDefault();
+
+    dispatch(getOrdersByPhone(phone));
+  };
 
   return (
     <div className="mt-14">
@@ -93,12 +101,12 @@ const Ecommerce = () => {
       <div className="md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header category="" title="Recent Orders" />
         <div className="flex justify-center w-full pb-5">
-        <form className="w-full xl:max-w-xl max-w-lg flex relative" >
+        <form className="w-full xl:max-w-xl max-w-lg flex relative" onSubmit={submitHanller}>
           <input
             type="text"
             className="pl-12 w-full border border-r-0 border-primary py-3 px-3 rounded-l-md focus:ring-primary focus:border-primary"
             placeholder="search"
-            // onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <button
           type="submit"

@@ -11,11 +11,13 @@ import {
   updateOrderToPaid2,
   getRecentOrders,
   addOrderItemsEvc,
+  getOrdersByPhone,
 } from "../controllers/orderController.js";
 import { protect, admin } from "../middlewares/authMiddleware.js";
 
 router.route("/").post(protect, addOrderItems).get(protect, admin, getOrders);
 router.get("/count", getMyOrdersAll);
+router.route("/phone").post(getOrdersByPhone);
 router.route("/evc").post(protect, addOrderItemsEvc);
 router.route("/recent").get(protect, admin, getRecentOrders);
 router.route("/myorders").get(protect, getMyOrders);
