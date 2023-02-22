@@ -238,3 +238,73 @@ export const getOrdersByPhone = asyncHandler(async (req, res) => {
 
 
 });
+
+
+// @desc    Get All orders
+// @route   GET /api/orders
+// @access  Private/admin
+export const getOrdersByPendding = asyncHandler(async (req, res) => {
+  try {
+    const orders = await Order.find({ status: 0 }).populate("user")
+    .populate("products.product")
+    .populate("meals.meal");;
+    orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// @desc    Get All orders
+// @route   GET /api/orders
+// @access  Private/admin
+export const getOrdersByProcess = asyncHandler(async (req, res) => {
+  try {
+    const orders = await Order.find({ status: 1 }).populate("user")
+    .populate("products.product")
+    .populate("meals.meal");;
+    orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// @desc    Get All orders
+// @route   GET /api/orders
+// @access  Private/admin
+export const getOrdersByComplete = asyncHandler(async (req, res) => {
+  try {
+    const orders = await Order.find({ status: 2 || 3 }).populate("user")
+    .populate("products.product")
+    .populate("meals.meal");
+    orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
+// change orders status
+export const changeOrderStatus = asyncHandler(async (req, res) => {
+  try {
+    const { id, status, isPaid, isDelivered } = req.body;
+    let order = await Order.findById(id);
+    order.status = status;
+    order.isPaid = isPaid;
+    if (isPaid) {
+      order.paidAt = Date.now();
+    }
+
+    order.isDelivered = isDelivered;
+    if (isDelivered) {
+      order.deliveredAt = Date.now();
+    }
+
+    order = await order.save();
+    res.json(order);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});

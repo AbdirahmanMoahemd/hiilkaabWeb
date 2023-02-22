@@ -17,6 +17,12 @@ import filterRoutes from './routes/filter.js'
 import topCategriesRoutes from './routes/topCategriesRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import brandRoutes from './routes/brandRoutes.js'
+import mealRouter from "./routes/mealRoutes.js";
+import mealCategoryRoutes from "./routes/mealCategoryRoutes.js";
+import restaurantRouter from './routes/restuarantsRoutes.js';
+import coffeeRouter from './routes/coffeeRoutes.js';
+import sweetsRouter from './routes/sweetsRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
  
 
 
@@ -43,6 +49,12 @@ app.use('/api/settings', settingsRoutes);
 app.use('/api/filter', filterRoutes); 
 app.use('/api/topCategories', topCategriesRoutes);
 app.use('/api/orders', orderRoutes) 
+app.use("/api/meals", mealRouter);
+app.use("/api/mealCategory", mealCategoryRoutes);
+app.use("/api/restaurant", restaurantRouter)
+app.use("/api/sweets",sweetsRouter)
+app.use("/api/coffee", coffeeRouter)
+app.use("/api/cart", cartRoutes)
 app.use('/api/brands', brandRoutes) 
 
 

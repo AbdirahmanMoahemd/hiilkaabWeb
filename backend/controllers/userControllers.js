@@ -27,6 +27,34 @@ export const authUser = asyncHandler(async (req, res) => {
   }
 });
 
+
+// @desc    Auth user & get token
+// @route   POST /api/users/login
+// @access  Public
+export const authUser2 = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      phone: user.phone,
+      address: user.address,
+      city: user.city,
+      country: user.country,
+      cart: user.cart,
+      wishlist: user.wishlist,
+      cartMeal: user.cartMeal,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
@@ -63,6 +91,45 @@ export const registerUser = asyncHandler(async (req, res) => {
   } else {
     res.status(400);
     throw new Error("Invalid User Data");
+  }
+});
+
+
+// @desc    Register a new user
+// @route   POST /api/users
+// @access  Public
+export const registerUser2 = asyncHandler(async (req, res) => {
+  const { name, email, password, phone, address, city, country } = req.body;
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    phone,
+    address,
+    city,
+    country,
+  });
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      phone: user.phone,
+      address: user.address,
+      city: user.city,
+      country: user.country,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(500).json({ error: e.message });
   }
 });
 
@@ -227,5 +294,40 @@ export const updateUser = asyncHandler(async (req, res) => {
   } else {
     res.status(404);
     throw new Error("User Not Found");
+  }
+});
+
+
+// @desc    Update user password
+// @route   PUT /api/users/password
+// @access  Private
+export const forgottUserPassword = asyncHandler(async (req, res) => {
+  const { email, phone } = req.body;
+
+  let user = await User.findOne({ email, phone });
+  if (user) {
+    res.json(user);
+  } else if (!user) {
+    return res
+      .status(400)
+      .json({ msg: "User with this email and phone does not exist!" });
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+// save user address
+export const saveUserAddress = asyncHandler(async (req, res) => {
+  try {
+    const { address,city,country  } = req.body;
+    let user = await User.findById(req.user);
+    user.address = address;
+    user.city = city;
+    user.country = country;
+    user = await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
