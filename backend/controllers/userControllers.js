@@ -56,6 +56,42 @@ export const authUser2 = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
+export const getUserProfileById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+    .populate("cart.product")
+    .populate("wishlist.product")
+    .populate("cartMeal.meal");
+  const { token } = req.body;
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      phone: user.phone,
+      address: user.address,
+      city: user.city,
+      country: user.country,
+      token,
+      cart: user.cart,
+      wishlist: user.wishlist,
+      cartMeal: user.cartMeal,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+
+
+
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
