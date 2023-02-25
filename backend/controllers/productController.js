@@ -24,6 +24,19 @@ export const getProducts = asyncHandler(async (req, res) => {
 });
 
 
+export const getProducts2 = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find().populate("category")
+    .populate("subcategory");;
+    products.sort((a, b) => (a._id > b._id) ? -1 : 1)
+    res.json(products);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+ 
+});
+
+
 
 // // @desc    Fetch all products
 // // @route   GET /api/products
