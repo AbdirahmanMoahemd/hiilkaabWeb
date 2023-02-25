@@ -27,6 +27,19 @@ export const getCategoryById = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Fetch all categories
+// @route   POST /api/categorie/
+// @access  Public
+export const getCategories2 = asyncHandler(async (req, res) => {
+  try {
+    const categories = await Category.find({});
+    categories.sort((a, b) => (a._id > b._id) ? -1 : 1)
+    res.json(categories);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // @desc    create category
 // @route   POST /api/categorie/:id
 // @access  Private/Admin

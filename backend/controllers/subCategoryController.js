@@ -29,6 +29,36 @@ export const getSubCategoryById = asyncHandler(async (req, res) => {
   }
 });
 
+
+// @desc    Fetch all subcategories
+// @route   Get /api/subcategories/
+// @access  Public
+export const getSubCategories2 = asyncHandler(async (req, res) => {
+  try {
+    const subcategories = await SubCategory.find({}).populate("category");
+    res.json(subcategories);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+export const getSubCategoryByCategory = asyncHandler(async (req, res) => {
+  try {
+    const { query } = req.body;
+    let subcategory = await SubCategory.find({ category: query })
+    .populate("category")
+
+    if (subcategory) {
+      subcategory.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(subcategory);
+    } 
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
+
 // @desc    create subcategory
 // @route   POST /api/subcategories/
 // @access  Private/Admin
