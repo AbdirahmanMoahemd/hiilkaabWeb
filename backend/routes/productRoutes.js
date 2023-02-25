@@ -16,6 +16,14 @@ import {
   getProductsCount,
   getTopProducts,
   getProductsLowPriceToHight,
+  getProductsByHightToLowProducts,
+  getProductsByLowToHightProducts,
+  getDiscountedProductsByCat,
+  getDiscountedProducts,
+  getProductsBySubCategory2,
+  getProductsByCategory2,
+  createProductReviewApp,
+  getProductsByname,
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -27,12 +35,24 @@ router.route("/top", ).get(getTopProducts);
 router.route("/price").get(getProductsLowPriceToHight);
 router.route("/category1", ).post(getProductsByTopCategory1);
 router.route('/count').get(getProductsCount); 
+router.route("/search/:name").get(getProductsByname);
 router.route("/category2", ).post(getProductsByTopCategory2);
 router.route("/category3", ).post(getProductsByTopCategory3);
 router.route("/category4", ).post(getProductsByTopCategory4);
 router.route("/search/sub", ).get(getProductsBySubcategory);
 router.route("/search/cat", ).get(getProductsByCategory);
 router.route("/:id/reviews").post(protect, createProductReview);
+router.route("/:id/reviews/app").post(protect, createProductReviewApp);
+
+router.route("/search/cat2").post(getProductsByCategory2);
+router.route("/search/subcat2").post(getProductsBySubCategory2);
+
+
+router.route("/discounted").get(getDiscountedProducts);
+router.route("/discounted/cat").post(getDiscountedProductsByCat);
+router.route("/highttolow").post(getProductsByHightToLowProducts);
+router.route("/lowtohight").post(getProductsByLowToHightProducts);
+
 router
   .route("/:id")
   .get(getProductById)

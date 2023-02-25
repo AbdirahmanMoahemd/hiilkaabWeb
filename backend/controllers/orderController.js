@@ -286,6 +286,19 @@ export const getOrdersByComplete = asyncHandler(async (req, res) => {
 });
 
 
+// @desc    Get All orders
+// @route   GET /api/orders
+// @access  Private/admin
+export const getAllOrdersApp = asyncHandler(async (req, res) => {
+  const orders = await Order.find({})
+  .populate("user")
+  .populate("products.product")
+  .populate("meals.meal");
+  orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+  res.json(orders);
+});
+
+
 // change orders status
 export const changeOrderStatus = asyncHandler(async (req, res) => {
   try {

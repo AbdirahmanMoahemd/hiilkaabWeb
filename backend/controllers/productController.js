@@ -81,6 +81,122 @@ export const getProductsLowPriceToHight = asyncHandler (async (req, res) => {
 
 
 
+// @desc    Fetch products by category
+// @route   GET /api/products
+// @access  Public
+export const getDiscountedProducts = asyncHandler(async (req, res) => {
+  try {
+    let products = await Product.find({ isDiscounted:true})
+    .populate("category")
+    .populate("subcategory");
+
+    if (products) {
+      products.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(products);
+    } 
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+
+});
+
+
+// @desc    Fetch  products by subcategory
+// @route   GET /api/products
+// @access  Public
+export const getProductsByHightToLowProducts = asyncHandler(async (req, res) => {
+  try {
+    const { query } = req.body;
+    const products = await Product.find({category: query,isFeatured:true}).sort({ price: -1 });
+    
+    if (products) {
+      
+      res.json(products);
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
+export const getDiscountedProductsByCat = asyncHandler(async (req, res) => {
+  try {
+    const { query } = req.body;
+    let products = await Product.find({ isDiscounted:true, category: query })
+    .populate("category")
+    .populate("subcategory");
+
+    if (products) {
+      products.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(products);
+    } 
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+
+});
+
+
+// @desc    Fetch products by category
+// @route   GET /api/products
+// @access  Public
+export const getProductsByCategory2 = asyncHandler(async (req, res) => {
+  try {
+    const { query } = req.body;
+    let products = await Product.find({ category: query })
+    .populate("category")
+    .populate("subcategory");
+
+    if (products) {
+      products.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(products);
+    } 
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+
+});
+
+
+// @desc    Fetch products by category
+// @route   GET /api/products
+// @access  Public
+export const getProductsBySubCategory2 = asyncHandler(async (req, res) => {
+  try {
+    const { query } = req.body;
+    let products = await Product.find({ subcategory: query })
+    .populate("category")
+    .populate("subcategory");
+
+    if (products) {
+      products.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(products);
+    } 
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+
+});
+
+
+// @desc    Fetch  products by subcategory
+// @route   GET /api/products
+// @access  Public
+export const getProductsByLowToHightProducts = asyncHandler(async (req, res) => {
+  try {
+    const { query } = req.body;
+    const products = await Product.find({category: query,isFeatured:true}).sort({ price: 1 });
+    
+    if (products) {
+      
+      res.json(products);
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
 
 // @desc    Fetch products by category
 // @route   GET /api/products
@@ -138,6 +254,23 @@ export const getProductsByTopCategory3 = asyncHandler(async (req, res) => {
 
   products.sort((a, b) => (a._id > b._id ? -1 : 1));
   res.json({ products });
+});
+
+// @desc    Fetch products by category
+// @route   GET /api/products
+// @access  Public
+export const getProductsByname = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find({
+      name: { $regex: req.params.name, $options: "i" },isFeatured:true
+    });
+    if (products) {
+      
+      res.json(products);
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 
@@ -332,6 +465,43 @@ export const createProductReview = asyncHandler(async (req, res) => {
     throw new Error("Product Not Found");
   }
 });
+
+export const createProductReviewApp = asyncHandler(async (req, res) => {
+  const { rating } = req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error("Product already reviewed");
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      user: req.user._id,
+    };
+
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length;
+
+    await product.save();
+    res.status(201).json({
+      message: "Review added",
+    });
+  } else {
+    res.status(404);
+    throw new Error("Product Not Found");
+  }
+});
+
 
 
 // @desc    Fetch all products
