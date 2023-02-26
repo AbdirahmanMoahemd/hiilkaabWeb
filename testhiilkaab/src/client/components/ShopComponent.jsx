@@ -19,15 +19,6 @@ const ShopComponent = ({ products}) => {
                   className="w-full h-full"
                 />
               </div>
-              <div className="absolute inset-0  h-40 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-               
-                <Link
-                  to="/"
-                  className="text-white text-lg w-9 h-9 rounded-full bg-primary hover:bg-gray-800 transition flex items-center justify-center"
-                >
-                  <i className="fa fa-heart"></i>
-                </Link>
-              </div>
             </div>
           </div>
           </Link>

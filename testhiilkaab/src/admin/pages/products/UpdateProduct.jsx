@@ -501,8 +501,9 @@ const UpdateProduct = () => {
                     <button>
                       <AiFillDelete
                         className="text-primary"
-                        onClick={() => {
+                        onClick={(e) => {
                           setImages(images.splice(index, 1));
+                          e.preventDefault();
                         }}
                       />
                     </button>
