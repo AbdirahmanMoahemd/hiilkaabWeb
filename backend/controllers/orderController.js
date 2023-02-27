@@ -1,5 +1,7 @@
 import asyncHandler from "express-async-handler";
+import Meal from "../models/mealModel.js";
 import Order from "../models/oderModel.js";
+import Product from "../models/productModel.js";
 import User from "../models/userModel.js";
 
 // @desc    Create new order
@@ -74,6 +76,85 @@ export const addOrderItemsEvc = asyncHandler(async (req, res) => {
     const createdOrder = await order.save();
 
     res.status(201).json(createdOrder);
+  }
+});
+
+
+export const addOrderItems2 = asyncHandler(async (req, res) => {
+  try {
+    const {
+      cartproducts,
+      cartmeals,
+      shippingAddress,
+      paymentMethod,
+      shippingPrice,
+      totalPrice,
+    } = req.body;
+    let products = [];
+
+    for (let i = 0; i < cartproducts.length; i++) {
+      let product = await Product.findById(cartproducts[i].product.id);
+      if (product.countInStock >= cartproducts[i].quantity) {
+        product.countInStock -= cartproducts[i].quantity;
+        products.push({
+          product,
+          quantity: cartproducts[i].quantity,
+          name: cartproducts[i].name,
+          images: cartproducts[i].images,
+          price: cartproducts[i].price,
+          sizes: cartproducts[i].sizes,
+          colors: cartproducts[i].colors,
+        });
+        await product.save();
+      } else {
+        return res
+          .status(400)
+          .json({ msg: `${product.name} is out of stock!` });
+      }
+    }
+
+    let meals = [];
+
+    for (let i = 0; i < cartmeals.length; i++) {
+      let meal = await Meal.findById(cartmeals[i].meal.id);
+      //   // if (meal.quantity >= cartmeals[i].quantity) {
+      //   //   meal.quantity -= cartmeals[i].quantity;
+      meals.push({
+        meal,
+        quantity: cartmeals[i].quantity,
+        name: cartmeals[i].name,
+        images: cartmeals[i].images,
+        price: cartmeals[i].price,
+        note:cartmeals[i].note
+      });
+      await meal.save();
+      //   // } else {
+      //   //   return res
+      //   //     .status(400)
+      //   //     .json({ msg: `${meal.name} is out of stock!` });
+      //   // }
+    }
+
+    let user = await User.findById(req.user);
+    user.cart = [];
+    user.cartMeal = [];
+    user = await user.save();
+
+    let order = new Order({
+      products,
+      meals,
+      user: req.user._id,
+      shippingAddress,
+      paymentMethod,
+      shippingPrice, 
+      totalPrice,
+      status:0,
+      orderedAt: new Date().getTime(),
+    });
+    order = await order.save();
+    res.json(order);   
+  } catch (e) {   
+    res.status(500).json({ error: e.message });
   }
 });
 

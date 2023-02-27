@@ -136,14 +136,14 @@ export const removeWishlistItem = asyncHandler(async (req, res) => {
 // @access  Public
 export const addToCartMeal = asyncHandler(async (req, res) => {
   try {
-    const { id, quantity,name, images, price } = req.body;
+    const { id, quantity,name, images, price, note } = req.body;
     const meal = await Meal.findById(id);
     let user = await User.findById(req.user).populate("cart.product")
     .populate("wishlist.product")
     .populate("cartMeal.meal");;
 
     if (user.cartMeal.length == 0) {
-      user.cartMeal.push({ meal, quantity: quantity,name:name, images:images, price:price });
+      user.cartMeal.push({ meal, quantity: quantity,name:name, images:images, price:price , note:note});
     } else {
       let isMealFound = false;
       for (let i = 0; i < user.cartMeal.length; i++) {
@@ -158,7 +158,7 @@ export const addToCartMeal = asyncHandler(async (req, res) => {
         );
         producttt.quantity += 1;
       } else {
-        user.cartMeal.push({ meal, quantity: quantity,name:name, images:images, price:price });
+        user.cartMeal.push({ meal, quantity: quantity,name:name, images:images, price:price, note:note });
       }
     }
     user = await user.save();
@@ -173,7 +173,7 @@ export const addToCartMeal = asyncHandler(async (req, res) => {
 // @access  Public
 export const increasCartMeal = asyncHandler(async (req, res) => {
   try {
-    const { id,name, images, price  } = req.body;
+    const { id,name, images, price } = req.body;
     const meal = await Meal.findById(id)
     let user = await User.findById(req.user).populate("cart.product")
     .populate("wishlist.product")
@@ -195,7 +195,7 @@ export const increasCartMeal = asyncHandler(async (req, res) => {
         );
         producttt.quantity += 1;
       } else {
-        user.cartMeal.push({ meal, quantity: 1,name:name, images:images, price:price });
+        user.cartMeal.push({ meal, quantity: 1,name:name, images:images, price:price, note:note });
       }
     }
     user = await user.save();

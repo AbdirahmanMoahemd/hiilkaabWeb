@@ -42,6 +42,9 @@ const orderSchema = mongoose.Schema(
             type: String,
           },
         ],
+        note: {
+          type: String,
+        },
         price: { type: Number },
         quantity: { type: Number },
         meal: {

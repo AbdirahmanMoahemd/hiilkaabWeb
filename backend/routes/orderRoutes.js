@@ -17,10 +17,12 @@ import {
   getOrdersByComplete,
   changeOrderStatus,
   getAllOrdersApp,
+  addOrderItems2,
 } from "../controllers/orderController.js";
 import { protect, admin } from "../middlewares/authMiddleware.js";
 
 router.route("/").post(protect, addOrderItems).get(protect, admin, getOrders);
+router.route("/app").post(protect, addOrderItems2)
 router.route("/app").get(protect, admin, getAllOrdersApp);
 router.route("/app/recent-orders").get(protect, admin, getRecentOrders);
 router.get("/count", getMyOrdersAll);

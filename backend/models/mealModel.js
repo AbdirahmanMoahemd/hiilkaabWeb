@@ -42,6 +42,7 @@ const mealSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  
   restaurants: {
     type: String,
     required: true,
