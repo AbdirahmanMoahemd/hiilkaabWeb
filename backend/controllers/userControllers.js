@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
-import generateToken2 from "../utils/generateToken2.js";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -49,7 +48,7 @@ export const authUser2 = asyncHandler(async (req, res) => {
       cart: user.cart,
       wishlist: user.wishlist,
       cartMeal: user.cartMeal,
-      token: generateToken2(user._id),
+      token: generateToken(user._id),
     });
   } else {
     res.status(500).json({ error: e.message });
@@ -163,7 +162,7 @@ export const registerUser2 = asyncHandler(async (req, res) => {
       address: user.address,
       city: user.city,
       country: user.country,
-      token: generateToken2(user._id),
+      token: generateToken(user._id),
     });
   } else {
     res.status(500).json({ error: e.message });

@@ -32,9 +32,9 @@ router.route("/evc").post(protect, addOrderItemsEvc);
 router.route("/recent").get(protect, admin, getRecentOrders);
 router.route("/myorders").get(protect, getMyOrders);
 router.route("/:id").get(protect, getOrderById);
-router.route("/pindding").get(protect, getOrdersByPendding);
-router.route("/process").get(protect, getOrdersByProcess);
-router.route("/complete").get(protect, getOrdersByComplete);
+router.route("/app/pindding").get(protect, getOrdersByPendding);
+router.route("/app/process").get(protect, getOrdersByProcess);
+router.route("/app/complete").get(protect, getOrdersByComplete);
 router.route("/change-order-status").put(protect, admin, changeOrderStatus);
 router
   .route("/:id/pay")
