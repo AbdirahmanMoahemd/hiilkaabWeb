@@ -308,7 +308,7 @@ export const getRecentOrders = asyncHandler(async (req, res) => {
 export const getRecentOrders2 = asyncHandler(async (req, res) => {
   const start = new Date().toDateString();
 
-  const orders = await Order.find().limit(30)
+  const orders = await Order.find({ createdAt: { $gte: start } })
     .populate("user")
     .populate("products.product")
     .populate("meals.meal");
