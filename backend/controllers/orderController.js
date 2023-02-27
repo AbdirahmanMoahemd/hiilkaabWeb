@@ -301,6 +301,21 @@ export const getRecentOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
+
+// @desc    Get All orders
+// @route   GET /api/orders
+// @access  Private/admin
+export const getRecentOrders2 = asyncHandler(async (req, res) => {
+  const start = new Date().toDateString();
+
+  const orders = await Order.find().limit(30)
+    .populate("user")
+    .populate("products.product")
+    .populate("meals.meal");
+  orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+  res.json(orders);
+});
+
 // @desc    Get All orders
 // @route   GET /api/orders
 // @access  Private/admin
