@@ -25,6 +25,7 @@ import {
   createProductReviewApp,
   getProductsByname,
   getProducts2,
+  getTopProducts2,
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -34,6 +35,7 @@ router.route("/").get(getProducts).post(protect, admin, createProduct);
 router.route('/all').get(getProducts2)
 router.route("/dis", ).get(getDiscProducts);
 router.route("/top", ).get(getTopProducts);
+router.route("/app/top", ).get(getTopProducts2);
 router.route("/price").get(getProductsLowPriceToHight);
 router.route("/category1", ).post(getProductsByTopCategory1);
 router.route('/count').get(getProductsCount); 

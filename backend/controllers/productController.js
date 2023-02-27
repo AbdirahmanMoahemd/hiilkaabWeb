@@ -15,29 +15,25 @@ export const getProducts = asyncHandler(async (req, res) => {
     : {};
 
   const products = await Product.find({ ...keyword })
-  .populate("brand")
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
   products.sort((a, b) => (a._id > b._id ? -1 : 1));
- 
 
   res.json({ products });
 });
 
-
 export const getProducts2 = asyncHandler(async (req, res) => {
   try {
-    const products = await Product.find().populate("category")
-    .populate("subcategory");;
-    products.sort((a, b) => (a._id > b._id) ? -1 : 1)
+    const products = await Product.find()
+      .populate("category")
+      .populate("subcategory");
+    products.sort((a, b) => (a._id > b._id ? -1 : 1));
     res.json(products);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
- 
 });
-
-
 
 // // @desc    Fetch all products
 // // @route   GET /api/products
@@ -63,68 +59,62 @@ export const getProducts2 = asyncHandler(async (req, res) => {
 //   res.json({ products, page, pages: Math.ceil(count / pageSize) })
 // })
 
-
-
-
-
+// @desc    Get top rated products
+// @route   POST /api/products/top
+// @access  Public
+export const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({})
+    .populate("brand")
+    .populate("category")
+    .populate("subcategory")
+    .sort({ rating: -1 })
+    .limit(16);
+  products.sort((a, b) => (a._id > b._id ? -1 : 1));
+  res.json({ products });
+});
 
 // @desc    Get top rated products
 // @route   POST /api/products/top
 // @access  Public
-export const getTopProducts = asyncHandler (async (req, res) => {
-  
-  const products = await Product.find({}).populate("brand").populate("category")
-  .populate("subcategory").sort({ rating: -1 }).limit(16)
-  products.sort((a, b) => (a._id > b._id) ? -1 : 1)
-  res.json({ products })
-})
-
-
-
+export const getTopProducts2 = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find({})
+      .populate("brand")
+      .populate("category")
+      .populate("subcategory")
+      .sort({ rating: -1 })
+      .limit(30);
+    products.sort((a, b) => (a._id > b._id ? -1 : 1));
+    res.json(products);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 
 // @desc    Get top rated products
 // @route   POST /api/products/top
 // @access  Public
-export const getProductsLowPriceToHight = asyncHandler (async (req, res) => {
-  
-  const products = await Product.find({}).sort({ price: -1 }).populate("brand").populate("category")
-  .populate("subcategory"); 
+export const getProductsLowPriceToHight = asyncHandler(async (req, res) => {
+  const products = await Product.find({})
+    .sort({ price: -1 })
+    .populate("brand")
+    .populate("category")
+    .populate("subcategory");
 
-  res.json({ products })
-})
-
-
+  res.json({ products });
+});
 
 // @desc    Fetch products by category
 // @route   GET /api/products
 // @access  Public
 export const getDiscountedProducts = asyncHandler(async (req, res) => {
   try {
-    let products = await Product.find({ isDiscounted:true})
-    .populate("category")
-    .populate("subcategory");
+    let products = await Product.find({ isDiscounted: true })
+      .populate("category")
+      .populate("subcategory");
 
     if (products) {
       products.sort((a, b) => (a._id > b._id ? -1 : 1));
-      res.json(products);
-    } 
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-
-});
-
-
-// @desc    Fetch  products by subcategory
-// @route   GET /api/products
-// @access  Public
-export const getProductsByHightToLowProducts = asyncHandler(async (req, res) => {
-  try {
-    const { query } = req.body;
-    const products = await Product.find({category: query,isFeatured:true}).sort({ price: -1 });
-    
-    if (products) {
-      
       res.json(products);
     }
   } catch (e) {
@@ -132,24 +122,42 @@ export const getProductsByHightToLowProducts = asyncHandler(async (req, res) => 
   }
 });
 
+// @desc    Fetch  products by subcategory
+// @route   GET /api/products
+// @access  Public
+export const getProductsByHightToLowProducts = asyncHandler(
+  async (req, res) => {
+    try {
+      const { query } = req.body;
+      const products = await Product.find({
+        category: query,
+        isFeatured: true,
+      }).sort({ price: -1 });
+
+      if (products) {
+        res.json(products);
+      }
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+);
 
 export const getDiscountedProductsByCat = asyncHandler(async (req, res) => {
   try {
     const { query } = req.body;
-    let products = await Product.find({ isDiscounted:true, category: query })
-    .populate("category")
-    .populate("subcategory");
+    let products = await Product.find({ isDiscounted: true, category: query })
+      .populate("category")
+      .populate("subcategory");
 
     if (products) {
       products.sort((a, b) => (a._id > b._id ? -1 : 1));
       res.json(products);
-    } 
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
-
 });
-
 
 // @desc    Fetch products by category
 // @route   GET /api/products
@@ -158,19 +166,17 @@ export const getProductsByCategory2 = asyncHandler(async (req, res) => {
   try {
     const { query } = req.body;
     let products = await Product.find({ category: query })
-    .populate("category")
-    .populate("subcategory");
+      .populate("category")
+      .populate("subcategory");
 
     if (products) {
       products.sort((a, b) => (a._id > b._id ? -1 : 1));
       res.json(products);
-    } 
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
-
 });
-
 
 // @desc    Fetch products by category
 // @route   GET /api/products
@@ -179,30 +185,11 @@ export const getProductsBySubCategory2 = asyncHandler(async (req, res) => {
   try {
     const { query } = req.body;
     let products = await Product.find({ subcategory: query })
-    .populate("category")
-    .populate("subcategory");
+      .populate("category")
+      .populate("subcategory");
 
     if (products) {
       products.sort((a, b) => (a._id > b._id ? -1 : 1));
-      res.json(products);
-    } 
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-
-});
-
-
-// @desc    Fetch  products by subcategory
-// @route   GET /api/products
-// @access  Public
-export const getProductsByLowToHightProducts = asyncHandler(async (req, res) => {
-  try {
-    const { query } = req.body;
-    const products = await Product.find({category: query,isFeatured:true}).sort({ price: 1 });
-    
-    if (products) {
-      
       res.json(products);
     }
   } catch (e) {
@@ -210,7 +197,26 @@ export const getProductsByLowToHightProducts = asyncHandler(async (req, res) => 
   }
 });
 
+// @desc    Fetch  products by subcategory
+// @route   GET /api/products
+// @access  Public
+export const getProductsByLowToHightProducts = asyncHandler(
+  async (req, res) => {
+    try {
+      const { query } = req.body;
+      const products = await Product.find({
+        category: query,
+        isFeatured: true,
+      }).sort({ price: 1 });
 
+      if (products) {
+        res.json(products);
+      }
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+);
 
 // @desc    Fetch products by category
 // @route   GET /api/products
@@ -218,14 +224,14 @@ export const getProductsByLowToHightProducts = asyncHandler(async (req, res) => 
 export const getProductsByCategory = asyncHandler(async (req, res) => {
   const { query } = req.body;
 
-  let products = await Product.find({ category: query }).populate("brand")
+  let products = await Product.find({ category: query })
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
   products.sort((a, b) => (a._id > b._id ? -1 : 1));
   res.json({ products });
 });
-
 
 // @desc    Fetch products by category
 // @route   GET /api/products
@@ -233,7 +239,10 @@ export const getProductsByCategory = asyncHandler(async (req, res) => {
 export const getProductsByTopCategory1 = asyncHandler(async (req, res) => {
   const { query } = req.body;
 
-  let products = await Product.find({ category: query }).sort({ rating: -1 }).limit(5).populate("brand")
+  let products = await Product.find({ category: query })
+    .sort({ rating: -1 })
+    .limit(5)
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
@@ -241,14 +250,16 @@ export const getProductsByTopCategory1 = asyncHandler(async (req, res) => {
   res.json({ products });
 });
 
-
 // @desc    Fetch products by category
 // @route   GET /api/products
 // @access  Public
 export const getProductsByTopCategory2 = asyncHandler(async (req, res) => {
   const { query } = req.body;
 
-  let products = await Product.find({ category: query }).sort({ rating: -1 }).limit(5).populate("brand")
+  let products = await Product.find({ category: query })
+    .sort({ rating: -1 })
+    .limit(5)
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
@@ -262,7 +273,10 @@ export const getProductsByTopCategory2 = asyncHandler(async (req, res) => {
 export const getProductsByTopCategory3 = asyncHandler(async (req, res) => {
   const { query } = req.body;
 
-  let products = await Product.find({ category: query }).sort({ rating: -1 }).limit(5).populate("brand")
+  let products = await Product.find({ category: query })
+    .sort({ rating: -1 })
+    .limit(5)
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
@@ -276,10 +290,10 @@ export const getProductsByTopCategory3 = asyncHandler(async (req, res) => {
 export const getProductsByname = asyncHandler(async (req, res) => {
   try {
     const products = await Product.find({
-      name: { $regex: req.params.name, $options: "i" },isFeatured:true
+      name: { $regex: req.params.name, $options: "i" },
+      isFeatured: true,
     });
     if (products) {
-      
       res.json(products);
     }
   } catch (e) {
@@ -287,14 +301,16 @@ export const getProductsByname = asyncHandler(async (req, res) => {
   }
 });
 
-
 // @desc    Fetch products by category
 // @route   GET /api/products
 // @access  Public
 export const getProductsByTopCategory4 = asyncHandler(async (req, res) => {
   const { query } = req.body;
 
-  let products = await Product.find({ category: query }).sort({ rating: -1 }).limit(5).populate("brand")
+  let products = await Product.find({ category: query })
+    .sort({ rating: -1 })
+    .limit(5)
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
@@ -302,14 +318,14 @@ export const getProductsByTopCategory4 = asyncHandler(async (req, res) => {
   res.json({ products });
 });
 
-
 // @desc    Fetch  products by subcategory
 // @route   GET /api/products
 // @access  Public
 export const getProductsBySubcategory = asyncHandler(async (req, res) => {
   const { query } = req.body;
 
-  let products = await Product.find({ subcategory: query }).populate("brand")
+  let products = await Product.find({ subcategory: query })
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
@@ -326,7 +342,8 @@ export const getProductsBySubcategory = asyncHandler(async (req, res) => {
 // @route   GET /api/products
 // @access  Public
 export const getDiscProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({ isDiscounted: true }).populate("brand")
+  const products = await Product.find({ isDiscounted: true })
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
@@ -337,7 +354,8 @@ export const getDiscProducts = asyncHandler(async (req, res) => {
 // @route   GET /api/product/:id
 // @access  Public
 export const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id).populate("brand")
+  const product = await Product.findById(req.params.id)
+    .populate("brand")
     .populate("category")
     .populate("subcategory");
 
@@ -379,7 +397,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     category: req.body.category,
     subcategory: req.body.subcategory,
     description: req.body.description,
-    mainDescription:req.body.mainDescription,
+    mainDescription: req.body.mainDescription,
     price: req.body.price,
     isDiscounted: req.body.isDiscounted,
     newPrice: req.body.newPrice,
@@ -420,7 +438,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.colors = colors;
     product.sizes = sizes;
     product.description = description;
-    product.mainDescription=mainDescription;
+    product.mainDescription = mainDescription;
     product.brand = brand;
     product.category = category;
     product.subcategory = subcategory;
@@ -516,20 +534,16 @@ export const createProductReviewApp = asyncHandler(async (req, res) => {
   }
 });
 
-
-
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
 export const getProductsCount = asyncHandler(async (req, res) => {
-  const products = await Product.find({ })
- 
-   let counter = 0;
-   for (let i = 0; i < products.length; i++) {
-      counter++;
- }
- 
-  
-   res.json({counter })    
- 
-})
+  const products = await Product.find({});
+
+  let counter = 0;
+  for (let i = 0; i < products.length; i++) {
+    counter++;
+  }
+
+  res.json({ counter });
+});
