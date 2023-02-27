@@ -295,7 +295,8 @@ export const getRecentOrders = asyncHandler(async (req, res) => {
 
   const orders = await Order.find({ createdAt: { $gte: start } })
     .populate("user")
-    .populate("products.product");
+    .populate("products.product")
+    .populate("meals.meal");
   orders.sort((a, b) => (a._id > b._id ? -1 : 1));
   res.json(orders);
 });
