@@ -345,8 +345,12 @@ export const getOrdersByPendding = asyncHandler(async (req, res) => {
     const orders = await Order.find({ status: 0 }).populate("user")
     .populate("products.product")
     .populate("meals.meal");;
-    orders.sort((a, b) => (a._id > b._id ? -1 : 1));
-    res.json(orders);
+    
+    if (orders) {
+      orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(orders);
+    }
+    
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -360,8 +364,10 @@ export const getOrdersByProcess = asyncHandler(async (req, res) => {
     const orders = await Order.find({ status: 1 }).populate("user")
     .populate("products.product")
     .populate("meals.meal");;
-    orders.sort((a, b) => (a._id > b._id ? -1 : 1));
-    res.json(orders);
+    if (orders) {
+      orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(orders);
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -375,8 +381,10 @@ export const getOrdersByComplete = asyncHandler(async (req, res) => {
     const orders = await Order.find({ status: 2 || 3 }).populate("user")
     .populate("products.product")
     .populate("meals.meal");
-    orders.sort((a, b) => (a._id > b._id ? -1 : 1));
-    res.json(orders);
+    if (orders) {
+      orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+      res.json(orders);
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
