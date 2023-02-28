@@ -17,17 +17,18 @@ import {
   registerUser2,
   getUserProfileById,
   updateProfile2,
+  getUserById2,
 } from "../controllers/userControllers.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
 router.route("/").post(registerUser).get(protect, admin, getUsers);
 router.route("/register").post(registerUser2);
 router.route("/count", getUsersCount);
-router.route("/login",).post(authUser);
+router.route("/login").post(authUser);
 router.route("/app/login").post(authUser2);
 
-router.route('/save-user-address').put(protect, saveUserAddress)
-router.route('/update/forgot/email').post(forgottUserPassword)
+router.route("/save-user-address").put(protect, saveUserAddress);
+router.route("/update/forgot/email").post(forgottUserPassword);
 router
   .route("/profile")
   .get(protect, getUserProfile)
@@ -35,7 +36,7 @@ router
 
 router.route("/app/profile").put(protect, updateProfile2);
 
-  router.route('/profile/:id').post(getUserProfileById)
+router.route("/profile/:id").post(getUserProfileById);
 
 router.route("/profile/password").put(protect, updateUserPassword);
 router
@@ -43,5 +44,6 @@ router
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
+router.route("/app/:id").get(protect, getUserById2);
 
 export default router;
