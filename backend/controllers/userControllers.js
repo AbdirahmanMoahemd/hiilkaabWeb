@@ -192,6 +192,50 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+export const updateProfile2 = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).populate("cart.product")
+  .populate("wishlist.product")
+  .populate("cartMeal.meal");;
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.phone = req.body.phone || user.phone;
+    user.address = req.body.address || user.address;
+    user.city = req.body.city || user.city;
+    user.country = req.body.country || user.country;
+    user.isAdmin = user.isAdmin
+    user.token = user.token
+    user.cart = user.cart
+    user.wishlist = user.wishlist
+    user.cartMeal = user.cartMeal
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      phone: updatedUser.phone,
+      address: updatedUser.address,
+      city: updatedUser.city,
+      country: updatedUser.country,
+      token: updatedUser.token,
+      cart: updatedUser.cart,
+      wishlist: updatedUser.wishlist,
+      cartMeal: updatedUser.cartMeal,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private

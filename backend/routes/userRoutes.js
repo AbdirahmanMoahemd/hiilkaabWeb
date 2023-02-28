@@ -16,6 +16,7 @@ import {
   forgottUserPassword,
   registerUser2,
   getUserProfileById,
+  updateProfile2,
 } from "../controllers/userControllers.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -31,6 +32,8 @@ router
   .route("/profile")
   .get(protect, getUserProfile)
   .put(protect, updateProfile);
+
+router.route("/app/profile").put(protect, updateProfile2);
 
   router.route('/profile/:id').post(getUserProfileById)
 
