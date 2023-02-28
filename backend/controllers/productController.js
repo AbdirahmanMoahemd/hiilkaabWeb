@@ -15,9 +15,7 @@ export const getProducts = asyncHandler(async (req, res) => {
     : {};
 
   const products = await Product.find({ ...keyword })
-    .populate("brand")
-    .populate("category")
-    .populate("subcategory");
+   
   products.sort((a, b) => (a._id > b._id ? -1 : 1));
 
   res.json({ products });

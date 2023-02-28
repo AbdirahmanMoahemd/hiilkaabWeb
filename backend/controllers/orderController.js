@@ -3,6 +3,8 @@ import Meal from "../models/mealModel.js";
 import Order from "../models/oderModel.js";
 import Product from "../models/productModel.js";
 import User from "../models/userModel.js";
+import nodemailer from "nodemailer";
+import Mailgen from "mailgen";
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -35,6 +37,56 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
+
+    const config = {
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    };
+
+    let transporter = nodemailer.createTransport(config);
+
+    var mailGenerator = new Mailgen({
+      theme: "default",
+      product: {
+        // Appears in header & footer of e-mails
+        name: "Mailgen",
+        link: "https://mailgen.js/",
+        // Optional product logo
+        // logo: 'https://mailgen.js/img/logo.png'
+      },
+    });
+
+    var email = {
+      body: {
+        name: "HIILKAAB",
+        intro: "NEW ORDER",
+        table: {
+          data: [
+            {
+              oderId: order._id,
+              name: req.user.name,
+              phone: req.user.phone,
+            },
+          ],
+        },
+
+        outro: "MAHADSANID",
+      },
+    };
+
+    var emailBody = mailGenerator.generate(email);
+
+    let message = {
+      from: process.env.EMAIL,
+      to: "fariidka06@gmail.com",
+      subject: "NEW ORDER",
+      html: emailBody,
+    };
+
+    transporter.sendMail(message);
 
     res.status(201).json(createdOrder);
   }
@@ -78,7 +130,6 @@ export const addOrderItemsEvc = asyncHandler(async (req, res) => {
     res.status(201).json(createdOrder);
   }
 });
-
 
 export const addOrderItems2 = asyncHandler(async (req, res) => {
   try {
@@ -125,7 +176,7 @@ export const addOrderItems2 = asyncHandler(async (req, res) => {
         name: cartmeals[i].name,
         images: cartmeals[i].images,
         price: cartmeals[i].price,
-        note:cartmeals[i].note
+        note: cartmeals[i].note,
       });
       await meal.save();
       //   // } else {
@@ -146,14 +197,65 @@ export const addOrderItems2 = asyncHandler(async (req, res) => {
       user: req.user._id,
       shippingAddress,
       paymentMethod,
-      shippingPrice, 
+      shippingPrice,
       totalPrice,
-      status:0,
+      status: 0,
       orderedAt: new Date().getTime(),
     });
     order = await order.save();
-    res.json(order);   
-  } catch (e) {   
+
+    const config = {
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    };
+
+    let transporter = nodemailer.createTransport(config);
+
+    var mailGenerator = new Mailgen({
+      theme: "default",
+      product: {
+        // Appears in header & footer of e-mails
+        name: "Mailgen",
+        link: "https://mailgen.js/",
+        // Optional product logo
+        // logo: 'https://mailgen.js/img/logo.png'
+      },
+    });
+
+    var email = {
+      body: {
+        name: "HIILKAAB",
+        intro: "NEW ORDER",
+        table: {
+          data: [
+            {
+              oderId: order._id,
+              name: req.user.name,
+              phone: req.user.phone,
+            },
+          ],
+        },
+
+        outro: "MAHADSANID",
+      },
+    };
+
+    var emailBody = mailGenerator.generate(email);
+
+    let message = {
+      from: process.env.EMAIL,
+      to: "fariidka06@gmail.com",
+      subject: "NEW ORDER",
+      html: emailBody,
+    };
+
+    transporter.sendMail(message);
+    
+    res.json(order);
+  } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
@@ -301,7 +403,6 @@ export const getRecentOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
-
 // @desc    Get All orders
 // @route   GET /api/orders
 // @access  Private/admin
@@ -320,37 +421,30 @@ export const getRecentOrders2 = asyncHandler(async (req, res) => {
 // @route   GET /api/orders
 // @access  Private/admin
 export const getOrdersByPhone = asyncHandler(async (req, res) => {
-
   const { phone } = req.body;
 
-  const user = await User.find({phone: phone});
+  const user = await User.find({ phone: phone });
 
   if (user) {
-     const orders = await Order.find({user: user}).populate("user");
-     res.json(orders);
-     
-     
+    const orders = await Order.find({ user: user }).populate("user");
+    res.json(orders);
   }
-
-
-
 });
-
 
 // @desc    Get All orders
 // @route   GET /api/orders
 // @access  Private/admin
 export const getOrdersByPendding = asyncHandler(async (req, res) => {
   try {
-    const orders = await Order.find({ status: 0 }).populate("user")
-    .populate("products.product")
-    .populate("meals.meal");;
-    
+    const orders = await Order.find({ status: 0 })
+      .populate("user")
+      .populate("products.product")
+      .populate("meals.meal");
+
     if (orders) {
       orders.sort((a, b) => (a._id > b._id ? -1 : 1));
       res.json(orders);
     }
-    
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -361,9 +455,10 @@ export const getOrdersByPendding = asyncHandler(async (req, res) => {
 // @access  Private/admin
 export const getOrdersByProcess = asyncHandler(async (req, res) => {
   try {
-    const orders = await Order.find({ status: 1 }).populate("user")
-    .populate("products.product")
-    .populate("meals.meal");;
+    const orders = await Order.find({ status: 1 })
+      .populate("user")
+      .populate("products.product")
+      .populate("meals.meal");
     if (orders) {
       orders.sort((a, b) => (a._id > b._id ? -1 : 1));
       res.json(orders);
@@ -378,9 +473,10 @@ export const getOrdersByProcess = asyncHandler(async (req, res) => {
 // @access  Private/admin
 export const getOrdersByComplete = asyncHandler(async (req, res) => {
   try {
-    const orders = await Order.find({ status: 2 || 3 }).populate("user")
-    .populate("products.product")
-    .populate("meals.meal");
+    const orders = await Order.find({ status: 2 || 3 })
+      .populate("user")
+      .populate("products.product")
+      .populate("meals.meal");
     if (orders) {
       orders.sort((a, b) => (a._id > b._id ? -1 : 1));
       res.json(orders);
@@ -390,19 +486,17 @@ export const getOrdersByComplete = asyncHandler(async (req, res) => {
   }
 });
 
-
 // @desc    Get All orders
 // @route   GET /api/orders
 // @access  Private/admin
 export const getAllOrdersApp = asyncHandler(async (req, res) => {
   const orders = await Order.find({})
-  .populate("user")
-  .populate("products.product")
-  .populate("meals.meal");
+    .populate("user")
+    .populate("products.product")
+    .populate("meals.meal");
   orders.sort((a, b) => (a._id > b._id ? -1 : 1));
   res.json(orders);
 });
-
 
 // change orders status
 export const changeOrderStatus = asyncHandler(async (req, res) => {

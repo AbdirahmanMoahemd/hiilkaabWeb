@@ -137,6 +137,8 @@ const Checkout = () => {
     }
   };
 
+ 
+
   const evcpayment = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, phoneNumber, country }));
@@ -244,7 +246,7 @@ const Checkout = () => {
       <div className="container  pb-16 pt-4">
         {/* <!-- checkout form --> */}
         <div className="border border-gray-200 px-4 py-4 rounded">
-          <form onSubmit={index === 1 || 2 || 3 ? evcpayment : submitHandler}>
+          <form onSubmit={index ===1 ? evcpayment :index ===2 ? evcpayment :index ===3 ? evcpayment :  submitHandler}>
             <h3 className="text-lg font-medium capitalize mb-4">
               Shipping Address
             </h3>
@@ -315,6 +317,7 @@ const Checkout = () => {
               <h3 className="text-lg font-medium capitalize mb-4">
                 Choose Your Payment Method
               </h3>
+              
               <div>
                 {paymentList.map((pay) => (
                   <div>
