@@ -168,7 +168,7 @@ const Checkout = () => {
           transactionInfo: {
             referenceId: "REF8815718025",
             invoiceId: "INV8815718025",
-            amount: "0.01",
+            amount: itemsPri,
             currency: "USD",
             description: "test direct purchase",
           },
