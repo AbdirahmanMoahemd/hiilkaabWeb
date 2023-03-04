@@ -34,11 +34,10 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {}, [userInfo]);
 
   useEffect(() => {
     dispatch(listCategories());
-  }, [dispatch]);
+  }, [dispatch, userInfo]);
 
   const changeHandler = () => {
     window.scrollTo(0, 0);

@@ -252,7 +252,7 @@ export const mylistOrders = () => async (
       },
     }
 
-    const { data } = await axios.get(`/api/orders/myorders`, config)
+    const { data } = await axios.get('/api/orders/myorders', config)
 
     dispatch({
       type: ORDER_MY_LIST_SUCCESS,

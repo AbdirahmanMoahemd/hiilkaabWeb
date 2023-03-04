@@ -84,6 +84,7 @@ const userSchema = mongoose.Schema(
           type: Number,
           required: true,
         },
+        price: { type: Number },
         name: { type: String },
         images: [
           {

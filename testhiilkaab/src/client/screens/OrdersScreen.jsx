@@ -242,6 +242,49 @@ const OrdersScreen = () => {
                     {/* <!-- single cart end --> */}
                   </div>
                 ))}
+
+{order.meals.map((item) => (
+                  <div className="space-y-4">
+                    {/* <!-- single cart --> */}
+                    <div className="grid grid-cols-12 gap-6 items-start md:gap-6 py-2 rounded">
+                      {/* <!-- cart image --> */}
+                      <div className="flex-shrink-0 col-span-8">
+                        <div className="flex gap-1">
+                          <div className="w-32">
+                            <img
+                              src={
+                                item.images && item.images[0]
+                              }
+                              className="h-24  border"
+                            />
+                          </div>
+
+                          <div className="">
+                            <h2 className="text-gray-800 mb-3 xl:text-xl textl-lg font-medium uppercase">
+                              {item.name}
+                            </h2>
+                            <p className="text-primary font-semibold">
+                              ${item.price}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      {/* <!-- cart image end --> */}
+                      {/* <!-- cart quantity --> */}
+                      <h2 className="col-span-2  text-gray-800 mb-3 xl:text-xl textl-lg font-medium uppercase">
+                        {item.quantity}
+                      </h2>
+                      {/* <!-- cart quantity end --> */}
+                      <div className="lg:col-span-2 col-span-8 flex gap-2">
+                        <p className="lg:hidden text-lg">Total Price</p>
+                        <p className="text-primary text-lg font-semibold">
+                          ${item.price * item.quantity}
+                        </p>
+                      </div>
+                    </div>
+                    {/* <!-- single cart end --> */}
+                  </div>
+                ))}
               </div>
             </div>
             {/* <!-- order summary --> */}

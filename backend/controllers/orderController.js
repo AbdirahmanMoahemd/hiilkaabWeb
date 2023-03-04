@@ -72,6 +72,14 @@ export const addOrderItems = asyncHandler(async (req, res) => {
             },
           ],
         },
+        action: {
+          instructions: 'To get started with Mailgen, please click here:',
+          button: {
+              color: '#22BC66', // Optional action button color
+              text: 'See the order',
+              link: 'https://mailgen.js/confirm?s=d9729feb74992cc3482b350163a1a010'
+          }
+      },
 
         outro: "MAHADSANID",
       },
@@ -266,7 +274,8 @@ export const addOrderItems2 = asyncHandler(async (req, res) => {
 export const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
     .populate("user")
-    .populate("products.product");
+    .populate("products.product")
+    .populate("meals.meal");;
   if (order) {
     res.json(order);
   } else {
@@ -344,11 +353,11 @@ export const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/myorders
 // @access  Private
 export const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id })
-    .populate("user")
-    .populate("products.product");
-  res.json(orders);
-});
+  const orders = await Order.find({ user: req.user._id }).populate("user")
+  .populate("products.product")
+  .populate("meals.meal");
+  res.json(orders)
+})
 
 // @desc    Get logged in user orders
 // @route   GET /api/orders/myorders
@@ -384,7 +393,8 @@ export const getMyOrdersAll = asyncHandler(async (req, res) => {
 export const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({})
     .populate("user")
-    .populate("products.product");
+    .populate("products.product")
+    .populate("meals.meal");;
   orders.sort((a, b) => (a._id > b._id ? -1 : 1));
   res.json(orders);
 });
@@ -426,7 +436,8 @@ export const getOrdersByPhone = asyncHandler(async (req, res) => {
   const user = await User.find({ phone: phone });
 
   if (user) {
-    const orders = await Order.find({ user: user }).populate("user");
+    const orders = await Order.find({ user: user }).populate("user").populate("products.product")
+    .populate("meals.meal");
     res.json(orders);
   }
 });

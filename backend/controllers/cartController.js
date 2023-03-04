@@ -143,7 +143,7 @@ export const addToCartMeal = asyncHandler(async (req, res) => {
     .populate("cartMeal.meal");;
 
     if (user.cartMeal.length == 0) {
-      user.cartMeal.push({ meal, quantity: quantity,name:name, images:images, price:price , note:note});
+      user.cartMeal.push({ meal, quantity,name, images, price , note});
     } else {
       let isMealFound = false;
       for (let i = 0; i < user.cartMeal.length; i++) {
@@ -195,7 +195,7 @@ export const increasCartMeal = asyncHandler(async (req, res) => {
         );
         producttt.quantity += 1;
       } else {
-        user.cartMeal.push({ meal, quantity: 1,name:name, images:images, price:price, note:note });
+        user.cartMeal.push({ meal, quantity: 1,name:name, images:images, price:price, });
       }
     }
     user = await user.save();
