@@ -73,11 +73,11 @@ export const addOrderItems = asyncHandler(async (req, res) => {
           ],
         },
         action: {
-          instructions: 'To get started with Mailgen, please click here:',
+          instructions: 'To get full details, please click here:',
           button: {
               color: '#22BC66', // Optional action button color
               text: 'See the order',
-              link: 'https://mailgen.js/confirm?s=d9729feb74992cc3482b350163a1a010'
+              link: `https://hiilkaab.onrender.com/order/${order._id}`
           }
       },
 
@@ -246,6 +246,14 @@ export const addOrderItems2 = asyncHandler(async (req, res) => {
             },
           ],
         },
+        action: {
+          instructions: 'To get full details, please click here:',
+          button: {
+              color: '#22BC66', // Optional action button color
+              text: 'See the order',
+              link: `https://hiilkaab.onrender.com/order/${order._id}`
+          }
+      },
 
         outro: "MAHADSANID",
       },

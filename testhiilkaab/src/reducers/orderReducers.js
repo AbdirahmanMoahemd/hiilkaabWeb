@@ -176,7 +176,7 @@ export const orderDeliverReducer = (state = {}, action) => {
 };
 
 export const orderMyListReducer = (
-  state = { orders: [{ user: [] }] },
+  state = { orders: [] },
   action
 ) => {
   switch (action.type) {   
@@ -197,7 +197,7 @@ export const orderMyListReducer = (
     case ORDER_MY_LIST_RESET:
       return {
         orders: [],
-      };
+      }; 
     default:
       return state;
   }

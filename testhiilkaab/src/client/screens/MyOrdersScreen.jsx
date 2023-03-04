@@ -79,7 +79,7 @@ const MyOrdersScreen = () => {
                             />
                           </td>
                         )}
-                        <td>{order.createdAt}</td>
+                        <td>{order.createdAt.substring(0, 10)}</td>
                         <td>${order.totalPrice}</td>
                         <td>
                           {order.isPaid ? (
