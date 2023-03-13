@@ -13,6 +13,19 @@ export const getCategories = asyncHandler(async (req, res) => {
   res.status(200).json({ categories });
 });
 
+
+// @desc    Fetch all categories
+// @route   POST /api/categorie/
+// @access  Public
+export const getCategoriesFooter = asyncHandler(async (req, res) => {
+  const categories = await Category.find().limit(5);
+
+  if (!categories) {
+    res.status(500).json({ success: false });
+  }
+  res.status(200).json({ categories });
+});
+
 // @desc    Fetch category by id
 // @route   POST /api/categorie/:id
 // @access  Public

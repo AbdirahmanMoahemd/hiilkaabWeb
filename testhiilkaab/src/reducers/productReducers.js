@@ -2,6 +2,9 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  SAMEPRODUCT_LIST_FAIL,
+  SAMEPRODUCT_LIST_REQUEST,
+  SAMEPRODUCT_LIST_SUCCESS,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -63,6 +66,25 @@ export const productListReducer = (
 };
 
 
+
+export const sameProductListReducer = (
+  state = { products: [{ brand: [],category: [], subcategory: [] }] },
+  action
+) => {
+  switch (action.type) {
+    case SAMEPRODUCT_LIST_REQUEST:
+      return { loading: true, products: [] };
+    case SAMEPRODUCT_LIST_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload.products,
+      };
+    case SAMEPRODUCT_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 
 

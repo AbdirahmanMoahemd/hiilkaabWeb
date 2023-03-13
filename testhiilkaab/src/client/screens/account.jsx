@@ -17,7 +17,7 @@ const Account = () => {
     const [phoneNumber, setPhoneNumber] = useState(shippingAddress.phoneNumber);
     const [country, setCountry] = useState(shippingAddress.country);
   return (
-    <>
+    <> 
     <Header/>
      {/* <!-- account wrapper --> */}
      <div className="container lg:grid grid-cols-12 items-start gap-6 pt-4 pb-16">

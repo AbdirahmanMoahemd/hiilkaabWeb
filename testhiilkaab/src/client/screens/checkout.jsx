@@ -153,7 +153,7 @@ const Checkout = () => {
 
       var data = JSON.stringify({
         schemaVersion: "1.0",
-        requestId: phoneNumber,
+        requestId: 'no: '+phoneNumber,
         timestamp: Date.now(),
         channelName: "WEB",
         serviceName: "API_PURCHASE",
@@ -163,7 +163,7 @@ const Checkout = () => {
           apiKey: "API-14003888AHX",
           paymentMethod: "mwallet_account",
           payerInfo: {
-            accountNo: phoneNumber,
+            accountNo: phoneNumber
           },
           transactionInfo: {
             referenceId: "REF8815718025",
@@ -250,7 +250,6 @@ const Checkout = () => {
             <h3 className="text-lg font-medium capitalize mb-4">
               Shipping Address
             </h3>
-
             <div className="space-y-4">
               <div>
                 <div>

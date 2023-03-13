@@ -66,7 +66,7 @@ const Cart = () => {
               {cartItems.map((item) => (
                 <div className="space-y-4">
                   {/* <!-- single cart --> */}
-                  <div className="flex items-center md:justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
+                  <div className="flex items-center justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
                     {/* <!-- cart image --> */}
                     <div className="w-32 flex-shrink-0">
                       <img
@@ -86,12 +86,12 @@ const Cart = () => {
                     </div>
                     {/* <!-- cart content end --> */}
                     {/* <!-- cart quantity --> */}
-                    <div className="">
+                    <div className="w-20">
                       <InputNumber
-                      className="w-20"
                         value={item.quantity}
-                        style={{ marginRight: "30px" , width: '6em'}}
+                        // style={{ paddingRight:40, width: '4em'}}
                         showButtons
+                        inputClassName='w-10'
                         buttonLayout="horizontal"
                         decrementButtonClassName="p-button-danger"
                         incrementButtonClassName="p-button-success"
@@ -107,11 +107,11 @@ const Cart = () => {
                       />
                     </div>
                     {/* <!-- cart quantity end --> */}
-                    <div className="ml-auto md:ml-0">
+                    
                       <p className="text-primary text-lg font-semibold">
                         ${item.price * item.quantity}
                       </p>
-                    </div>
+                    
                     <div className="text-gray-600 hover:text-primary cursor-pointer">
                       <i
                         className="fa fa-trash"

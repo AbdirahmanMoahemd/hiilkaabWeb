@@ -16,6 +16,9 @@ import {
     CATEGORY_UPDATE_REQUEST,
     CATEGORY_UPDATE_RESET,
     CATEGORY_UPDATE_SUCCESS,
+    FOOTERCATEGORY_LIST_FAIL,
+    FOOTERCATEGORY_LIST_REQUEST,
+    FOOTERCATEGORY_LIST_SUCCESS,
 } from '../constants/categoryConstants'
 
 
@@ -30,6 +33,24 @@ export const categoryListReducer = (state = { categories: [] }, action) => {
                 categories: action.payload.categories,
             }
         case CATEGORY_LIST_FAIL:
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+
+
+export const footerCategoryListReducer = (state = { categories: [] }, action) => {
+    switch (action.type) {
+        case FOOTERCATEGORY_LIST_REQUEST:
+            return { loading: true, categories: [] }
+        case FOOTERCATEGORY_LIST_SUCCESS:
+            return {
+                loading: false,
+                categories: action.payload.categories,
+            }
+        case FOOTERCATEGORY_LIST_FAIL:
             return { loading: false, error: action.payload }
         default:
             return state

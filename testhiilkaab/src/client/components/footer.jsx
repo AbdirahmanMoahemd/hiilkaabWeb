@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { listCategories } from "../../actions/categoryActions";
+import { listFooetrCategories } from "../../actions/categoryActions";
 import { listsettings } from "../../actions/settingsActions";
-import { listSubCategories } from "../../actions/subCategoryActions";
+import { listFooterSubCategories } from "../../actions/subCategoryActions";
 import hiilkaab from "../../data/images/hiilkaab.jpg";
 
 const Footer = () => {
@@ -12,26 +12,28 @@ const Footer = () => {
   const settingsList = useSelector((state) => state.settingsList);
   const {
     loading: loadingsettings,
-    error: errorsettings,
+
     settings,
   } = settingsList;
 
-  const subcategoryList = useSelector((state) => state.subcategoryList);
-  const { loading, error, subcategories } = subcategoryList;
+  const footerSubcategoryList = useSelector(
+    (state) => state.footerSubcategoryList
+  );
+  const { loading, subcategories } = footerSubcategoryList;
 
-  const categoryList = useSelector((state) => state.categoryList);
+  const footerCategoryList = useSelector((state) => state.footerCategoryList);
   const {
     loading: loadingcategory,
-    error: errorcategory,
+
     categories,
-  } = categoryList;
+  } = footerCategoryList;
 
   useEffect(() => {
-    dispatch(listCategories());
+    dispatch(listFooetrCategories());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(listSubCategories());
+    dispatch(listFooterSubCategories());
   }, [dispatch]);
 
   useEffect(() => {
@@ -50,10 +52,15 @@ const Footer = () => {
                 src={hiilkaab}
                 alt="HIILKAAB"
               />
-              {settings.map(setting => (
-              <p className="text-white text-base">
-                {setting.about}
-              </p>))}
+              {loadingsettings ? (
+                <></>
+              ) : (
+                <>
+                  {settings.map((setting) => (
+                    <p className="text-white text-base">{setting.about}</p>
+                  ))}{" "}
+                </>
+              )}
               <div className="flex space-x-6">
                 <a
                   target="_blank"
@@ -163,7 +170,7 @@ const Footer = () => {
                   </h3>
                   <div className="mt-4 space-y-4">
                     <Link
-                      to={'/about'}
+                      to={"/about"}
                       className="text-base text-white hover:text-white block"
                     >
                       About
@@ -172,7 +179,7 @@ const Footer = () => {
                       href="#"
                       className="text-base text-white hover:text-white block"
                     >
-                      Call us: {" "}
+                      Call us:{" "}
                       {settings.map((setting) => (
                         <>{setting.phoneNumber}</>
                       ))}
@@ -183,7 +190,6 @@ const Footer = () => {
                     >
                       info.hiilkaab@gmail.com
                     </a>
-                    
                   </div>
                 </div>
               </div>

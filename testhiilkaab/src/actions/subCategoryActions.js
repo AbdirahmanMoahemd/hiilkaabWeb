@@ -14,6 +14,9 @@ import {
   SUBCATEGORY_CREATE_SUCCESS,
   SUBCATEGORY_CREATE_REQUEST,
   SUBCATEGORY_CREATE_FAIL,
+  FOOTERSUBCATEGORY_LIST_REQUEST,
+  FOOTERSUBCATEGORY_LIST_SUCCESS,
+  FOOTERSUBCATEGORY_LIST_FAIL,
 } from "../constants/subCategoryConstants";
 import axios from "axios";
 
@@ -30,6 +33,29 @@ export const listSubCategories = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SUBCATEGORY_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+
+export const listFooterSubCategories = () => async (dispatch) => {
+  try {
+    dispatch({ type: FOOTERSUBCATEGORY_LIST_REQUEST });
+
+    const { data } = await axios.get("/api/subcategory/footer");
+
+    dispatch({
+      type: FOOTERSUBCATEGORY_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FOOTERSUBCATEGORY_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

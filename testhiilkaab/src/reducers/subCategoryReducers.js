@@ -1,4 +1,7 @@
 import {
+  FOOTERSUBCATEGORY_LIST_FAIL,
+  FOOTERSUBCATEGORY_LIST_REQUEST,
+  FOOTERSUBCATEGORY_LIST_SUCCESS,
   SUBCATEGORY_CREATE_FAIL,
   SUBCATEGORY_CREATE_REQUEST,
   SUBCATEGORY_CREATE_RESET,
@@ -36,6 +39,28 @@ export const subcategoryListReducer = (
       return state;
   }
 };
+
+
+export const footerSubcategoryListReducer = (
+  state = { subcategories: [{ category: [] }] },
+  action
+) => {
+  switch (action.type) {
+    case FOOTERSUBCATEGORY_LIST_REQUEST:
+      return { loading: true, subcategories: [] };
+    case FOOTERSUBCATEGORY_LIST_SUCCESS:
+      return {
+        loading: false,
+        subcategories: action.payload.subcategories,
+      };
+    case FOOTERSUBCATEGORY_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
 
 export const subcategoryDetailsReducer = (
   state = { subcategory: { category: [] } },

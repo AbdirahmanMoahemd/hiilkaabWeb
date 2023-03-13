@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import hiilkaab from "../../data/images/hiilkaab.jpg";
-import { Link, Route, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useStateContext } from "../../admin/contexts/ContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import SearchBox from "./SearchBox";
 import { listCategories } from "../../actions/categoryActions";
+import { Message } from "primereact/message";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 function getWindowSize() {
   const { innerWidth, innerHeight } = window;
@@ -41,7 +43,7 @@ const Header = () => {
 
   const changeHandler = () => {
     window.scrollTo(0, 0);
-    if (searchState == true) {
+    if (searchState === true) {
       setSearchState(false);
       setCategory(false);
     }
@@ -49,7 +51,7 @@ const Header = () => {
   };
   const changeSearchHandler = () => {
     window.scrollTo(0, 0);
-    if (categoryState == true) {
+    if (categoryState === true) {
       setNavbarState(false);
       setCategory(false);
     }
@@ -65,7 +67,7 @@ const Header = () => {
 
   const changeCategoryHandler = () => {
     window.scrollTo(0, 0);
-    if (categoryState == true) {
+    if (categoryState === true) {
       setNavbarState(false);
       setSearchState(false);
     }
@@ -96,7 +98,7 @@ const Header = () => {
     }
   }, [windowSize]);
 
-  const { setMode, currentMode, setCurrentMode } = useStateContext();
+  const { currentMode, setCurrentMode } = useStateContext();
 
   const toChangeLigth = () => {
     if (currentMode === "Dark") {
@@ -117,9 +119,9 @@ const Header = () => {
       <header className="py-2  shadow-sm bg-pink-100 lg:bg-white">
         <div className="container flex items-center justify-between">
           {/* <!-- logo --> */}
-          <a href="/" className="block lg:w-28 w-12">
+          <Link to="/" className="block lg:w-28 w-12">
             <img src={hiilkaab} alt="logo" className="w-full" />
-          </a>
+          </Link>
           {/* <!-- logo end --> */}
 
           {/* <!-- searchbar --> */}
@@ -375,6 +377,16 @@ const Header = () => {
               Categories
             </h3>
             <div className="">
+            {loadingcategory ? (
+              <ProgressSpinner
+                style={{ width: "20px", height: "20px" }}
+                strokeWidth="6"
+                fill="var(--surface-ground)"
+                animationDuration=".5s"
+              />
+            ) : errorcategory ? (
+              <Message variant="danger">{errorcategory}</Message>
+            ) :<>
               {categories.map((category) =>(
                 <Link
                 to={`/shop/${category.id}`}
@@ -382,7 +394,7 @@ const Header = () => {
               >
                 {category.name}
               </Link>
-              ))}
+              ))}</>}
               
             </div>
             {/* <!-- navlinks end --> */}
@@ -429,59 +441,4 @@ const Header = () => {
 
 export default Header;
 
-// {/* <div className="absolute left-0 top-full w-full bg-white shadow-md py-3 invisible opacity-0 group-hover:opacity-200 group-hover:visible transition duration-300 z-50 divide-y divide-gray-300 divide-dashed">
-//                 {/* <!-- single category --> */}
-//                 <a
-//                   href="/"
-//                   className="px-6 py-3 flex items-center hover:bg-gray-100 transition"
-//                 >
-//                   <img src={bed} className="w-5 h-5 object-contain" />
-//                   <span class="ml-6 text-gray-600 text-sm">Bedroom</span>
-//                 </a>
-//                 {/* <!-- single category end -->
-//                         <!-- single category --> */}
-//                 <a
-//                   href="/"
-//                   class="px-6 py-3 flex items-center hover:bg-gray-100 transition"
-//                 >
-//                   <img src={sofa} class="w-5 h-5 object-contain" />
-//                   <span class="ml-6 text-gray-600 text-sm">Sofa</span>
-//                 </a>
-//                 {/* <!-- single category end -->
-//                         <!-- single category --> */}
-//                 <a
-//                   href="/"
-//                   class="px-6 py-3 flex items-center hover:bg-gray-100 transition"
-//                 >
-//                   <img src={office} class="w-5 h-5 object-contain" />
-//                   <span class="ml-6 text-gray-600 text-sm">Office</span>
-//                 </a>
-//                 {/* <!-- single category end -->
-//                         <!-- single category --> */}
-//                 <a
-//                   href="/"
-//                   class="px-6 py-3 flex items-center hover:bg-gray-100 transition"
-//                 >
-//                   <img src={terrace} class="w-5 h-5 object-contain" />
-//                   <span class="ml-6 text-gray-600 text-sm">Outdoor</span>
-//                 </a>
-//                 {/* <!-- single category end --> */}
-//                 {/* <!-- single category --> */}
-//                 <a
-//                   href="/"
-//                   class="px-6 py-3 flex items-center hover:bg-gray-100 transition"
-//                 >
-//                   <img src={bed2} class="w-5 h-5 object-contain" />
-//                   <span class="ml-6 text-gray-600 text-sm">Mattress</span>
-//                 </a>
-//                 {/* <!-- single category end -->
-//                         <!-- single category --> */}
-//                 <a
-//                   href="/"
-//                   class="px-6 py-3 flex items-center hover:bg-gray-100 transition"
-//                 >
-//                   <img src={restaurant} class="w-5 h-5 object-contain" />
-//                   <span class="ml-6 text-gray-600 text-sm">Sofa</span>
-//                 </a>
-//                 {/* <!-- single category end --> */}
-//               </div> */}
+

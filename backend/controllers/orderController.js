@@ -435,6 +435,24 @@ export const getRecentOrders2 = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
+
+
+// @desc    Get logged in user orders
+// @route   GET /api/orders/myorders
+// @access  Private
+export const getMyOrdersApp = asyncHandler(async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id })
+      .populate("user")
+      .populate("products.product")
+      .populate("meals.meal");
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
 // @desc    Get All orders
 // @route   GET /api/orders
 // @access  Private/admin

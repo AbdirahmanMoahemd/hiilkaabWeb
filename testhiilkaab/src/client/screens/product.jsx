@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   createProductReview,
   listProductDetails,
-  listProducts,
+  listSameProducts,
 } from "../../actions/prodcutActions";
 import { useDispatch, useSelector } from "react-redux";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../../constants/productConstants";
@@ -13,9 +13,10 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { addToWish } from "../../actions/wishlistActions";
 import Rating from "../components/Rating";
+import { InputNumber } from 'primereact/inputnumber';
 
 const Product = () => {
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [selectedImg, setSelectedImg] = useState(0);
@@ -33,12 +34,12 @@ const Product = () => {
   const { success: successProductReview, error: errorProductReview } =
     productReview;
 
-  const productList = useSelector((state) => state.productList);
+  const sameProductList = useSelector((state) => state.sameProductList);
   const {
     loading: loadingProductList,
     error: errrorProductList,
     products,
-  } = productList;
+  } = sameProductList;
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -55,12 +56,13 @@ const Product = () => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
     dispatch(listProductDetails(id));
-  }, [dispatch, id, successProductReview, id]);
+   
+  }, [dispatch, id, successProductReview]);
 
   useEffect(() => {
-    dispatch(listProducts());
+    dispatch(listSameProducts(id))
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [dispatch, id]);
 
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
@@ -114,8 +116,7 @@ const Product = () => {
                       <img
                         onClick={() => {
                           setSelectedImg(index);
-                          console.log(index);
-                          console.log(selectedImg + 1);
+                          
                         }}
                         src={img}
                         className={
@@ -222,6 +223,15 @@ const Product = () => {
                 </div>
               )}
               {/* <!-- color end --> */}
+              <br/>
+              <span className="">Qty:</span>{'      '}<InputNumber value={qty}  inputClassName='w-10 h-10' showButtons buttonLayout="horizontal"
+                                                             decrementButtonClassName="p-button-danger"
+                                                incrementButtonClassName="p-button-success"
+                                                 decrementButtonIcon="pi pi-minus"
+                                                            incrementButtonIcon="pi pi-plus"
+                                                            max={product.countInStock}
+                                                            min="1"
+                                                            onValueChange={(e) => setQty(e.target.value)} />
 
               {/* <!-- color end --> */}
               {/* <!-- add to cart button --> */}
@@ -234,7 +244,7 @@ const Product = () => {
                   <span className="mr-2">
                     <i className="fa fa-shopping-bag"></i>
                   </span>{" "}
-                  Add to cart
+                  Add to cart 
                 </button>
                 <button
                   className="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
@@ -346,7 +356,7 @@ const Product = () => {
                       />
                     </div>
                     <button
-                      className="border border-primary text-white px-8 py-2 font-medium rounded uppercase 
+                      className="border border-primary text-primary px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm flex items-center"
                     >
                       submit
@@ -390,16 +400,10 @@ const Product = () => {
               animationDuration=".5s"
             />
           ) : errrorProductList ? (
-            <Message severity="error">{errrorProductList}</Message>
+            <Message severity="error" text={errrorProductList}></Message>
           ) : (
             <>
-              {products
-                .filter((pro) =>
-                  pro.category
-                    ? pro.category.name === product.category.name
-                    : null
-                )
-                .map((filteredproduct) => (
+              {products.map((filteredproduct) => (
                   <div className="group rounded bg-white shadow overflow-hidden">
                     {/* <!-- product image --> */}
                     <Link to={`/product/${filteredproduct.id}`}>

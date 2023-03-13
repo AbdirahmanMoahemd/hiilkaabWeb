@@ -72,13 +72,13 @@ const CategoriesSlider = ({categories}) => {
       <div className="">
       <img src={category.icon} className="w-full h-24" />
       </div>
-      <a
-        to="#"
+      <Link
+        to={`/shop/${category.id}`}
         className="absolute text-center inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 flex items-center justify-center text-base text-white 
               font-roboto font-medium tracking-wide transition"
       >
         {category.name}
-      </a>
+      </Link>
     </div>
     </Link>
     </>

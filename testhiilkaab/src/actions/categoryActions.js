@@ -16,6 +16,9 @@ import {
   CATEGORY_CREATE_RESET,
   CATEGORY_CREATE_REQUEST,
   CATEGORY_CREATE_FAIL,
+  FOOTERCATEGORY_LIST_FAIL,
+  FOOTERCATEGORY_LIST_SUCCESS,
+  FOOTERCATEGORY_LIST_REQUEST,
 } from "../constants/categoryConstants";
 import axios from "axios";
 
@@ -32,6 +35,28 @@ export const listCategories = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CATEGORY_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+export const listFooetrCategories = () => async (dispatch) => {
+  try {
+    dispatch({ type: FOOTERCATEGORY_LIST_REQUEST });
+
+    const { data } = await axios.get("/api/category/footer");
+
+    dispatch({
+      type: FOOTERCATEGORY_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FOOTERCATEGORY_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

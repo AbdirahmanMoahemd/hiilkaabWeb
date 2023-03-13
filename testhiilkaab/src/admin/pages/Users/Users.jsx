@@ -103,7 +103,7 @@ const Users = () => {
                     </Link>
                   </td>
                   <td>
-                    <button onClick={() => deleteHandler(user.id)}>
+                    <button onClick={() => deleteHandler(user._id)}>
                       <MdDelete />
                     </button>
                   </td>

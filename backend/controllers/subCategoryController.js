@@ -13,6 +13,19 @@ export const getSubCategories = asyncHandler(async (req, res) => {
   res.status(200).json({ subcategories });
 });
 
+
+// @desc    Fetch all subcategories
+// @route   Get /api/subcategories/
+// @access  Public
+export const getSubCategoriesFooter = asyncHandler(async (req, res) => {
+  const subcategories = await SubCategory.find().populate("category").limit(5);
+
+  if (!subcategories) {
+    res.status(500).json({ success: false });
+  }
+  res.status(200).json({ subcategories });
+});
+
 // @desc    Fetch subcategory by id
 // @route   Get /api/subcategories/:id
 // @access  Public

@@ -7,6 +7,7 @@ import {
   deleteSubCategory,
   getSubCategories2,
   getSubCategoryByCategory,
+  getSubCategoriesFooter,
 } from "../controllers/subCategoryController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -15,6 +16,8 @@ const router = express.Router();
 router.route("/").get(getSubCategories).post(protect, admin, createSubCategory);
 router.route('/all').get(getSubCategories2)
 router.route('/search').post(getSubCategoryByCategory)
+
+router.route("/footer").get(getSubCategoriesFooter)
 
 router
   .route("/:id")

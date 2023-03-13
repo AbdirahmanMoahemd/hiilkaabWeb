@@ -26,6 +26,7 @@ import {
   getProductsByname,
   getProducts2,
   getTopProducts2,
+  getSameProductById,
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -62,5 +63,7 @@ router
   .get(getProductById)
   .delete(protect, admin, deleteProduct) 
   .put(protect, admin, updateProduct); 
+router
+  .route("/same/:id").get(getSameProductById)
 
 export default router;
