@@ -148,13 +148,13 @@ const Product = () => {
                 </p>
                 <p className="space-x-2">
                   <span className="text-gray-800 font-semibold">Brand: </span>
-                  <span className="text-gray-600">{product.brand}</span>
+                  <span className="text-gray-600">{product.brand && product.brand.name}</span>
                 </p>
                 <p className="space-x-2">
                   <span className="text-gray-800 font-semibold">
                     Category:{" "}
                   </span>
-                  <span className="text-gray-600">{product.category.name}</span>
+                  <span className="text-gray-600">{product.category && product.category.name}</span>
                 </p>
               </div>
               <div className="mt-4 flex items-baseline gap-3">

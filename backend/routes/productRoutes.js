@@ -1,5 +1,6 @@
 import express from "express";
 import {
+ getProductsHightPriceToLow,
   getProducts,
   getProductsByCategory,
   getDiscProducts,
@@ -38,6 +39,7 @@ router.route("/dis", ).get(getDiscProducts);
 router.route("/top", ).get(getTopProducts);
 router.route("/app/top", ).get(getTopProducts2);
 router.route("/price").get(getProductsLowPriceToHight);
+router.route("/lprice").get(getProductsHightPriceToLow);
 router.route("/category1", ).post(getProductsByTopCategory1);
 router.route('/count').get(getProductsCount); 
 router.route("/search/:name").get(getProductsByname);

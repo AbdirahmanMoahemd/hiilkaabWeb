@@ -8,6 +8,7 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import {
   listDiscountProducts,
+listProductsByLowPrice,
   listProducts,
   listProductsByPrice,
 } from "../../actions/prodcutActions";
@@ -25,7 +26,7 @@ const Shop = () => {
   const dispatch = useDispatch();
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [navbarState, setNavbarState] = useState(true);
-  const [index, setIndex] = useState();
+  const [index, setIndex] = useState(1);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
   const { keyword } = useParams();
@@ -44,11 +45,7 @@ const Shop = () => {
   };
 
   const brandList = useSelector((state) => state.brandList);
-  const {
-    loading: loadingBrand,
-    error: errorBrand,
-    brands,
-  } = brandList;
+  const { loading: loadingBrand, error: errorBrand, brands } = brandList;
 
   const categoryList = useSelector((state) => state.categoryList);
   const {
@@ -84,8 +81,19 @@ const Shop = () => {
       dispatch(getProductsByFilter({ type: "category", query: id }));
     }
 
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword, id]);
+    if (index == 1) {
+      dispatch(listProducts(keyword));
+    } else if (index == 2) {
+      dispatch(listProducts(keyword));
+    } else if (index == 3) {
+      dispatch(listProductsByPrice());
+    } else if (index == 4) {
+      dispatch(listProductsByLowPrice());
+    }
+    else if (index == 5) {
+      dispatch(listDiscountProducts());
+    }
+  }, [dispatch, keyword, id, index]);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -108,35 +116,28 @@ const Shop = () => {
   }, [windowSize, dispatch, id]);
 
   const sorts = [
+    
     {
-      text: "Default sortingh",
-      index: 1,
+      text: "Default sorting",
+      index: 2,
     },
     {
       text: "Price high-low",
-      index: 2,
-    },
-
-    {
-      text: "Price low-high",
       index: 3,
     },
     {
-      text: "Discounted Products",
+      text: "Price low-high",
       index: 4,
+    },
+    {
+      text: "Discounted Products",
+      index: 5,
     },
   ];
 
-  useEffect(() => {
-    if (index === 2) {
-      dispatch(listProductsByPrice());
-    } else if (index === 3) {
-      dispatch(listProducts(keyword));
-    }
-    else if(index === 4){
-      dispatch(listDiscountProducts(keyword));
-    }
-  }, [dispatch, index,id, keyword, max]);
+  // useEffect(() => {
+
+  // }, [dispatch, index,id, keyword, max]);
 
   const handleCategory = (e) => {
     resetState();
@@ -156,7 +157,7 @@ const Shop = () => {
       updatedCategoryIds = [...categoryIds];
       updatedCategoryIds.splice(indexFound, 1);
       setCategoryIds(updatedCategoryIds);
-      if (updatedCategoryIds.length ===0) {
+      if (updatedCategoryIds.length === 0) {
         dispatch(listProducts(keyword));
         window.scrollTo(0, 0);
       }
@@ -191,7 +192,7 @@ const Shop = () => {
       updatedSubCategoryIds = [...subcategoryIds];
       updatedSubCategoryIds.splice(indexFound2, 1);
       setSubCategoryIds(updatedSubCategoryIds);
-      if (updatedSubCategoryIds.length ===0) {
+      if (updatedSubCategoryIds.length === 0) {
         dispatch(listProducts(keyword));
         window.scrollTo(0, 0);
       }
@@ -227,7 +228,7 @@ const Shop = () => {
       updatedBrandIds = [...brandIds];
       updatedBrandIds.splice(indexFound, 1);
       setBrandIds(updatedBrandIds);
-      if (updatedBrandIds.length ===0) {
+      if (updatedBrandIds.length === 0) {
         dispatch(listProducts(keyword));
         window.scrollTo(0, 0);
       }
@@ -286,7 +287,6 @@ const Shop = () => {
                           >
                             {category.name}
                           </label>
-                          
                         </div>
                       ))}
                     </>
@@ -335,7 +335,6 @@ const Shop = () => {
                           >
                             {subcategory.name}
                           </label>
-                          
                         </div>
                       ))}
                     </>
@@ -381,7 +380,6 @@ const Shop = () => {
                           >
                             {brand.name}
                           </label>
-                         
                         </div>
                       ))}
                     </>
@@ -432,9 +430,11 @@ const Shop = () => {
               value={index}
               onChange={(e) => {
                 setIndex(e.target.value);
+                console.log(e.target.value);
               }}
               className="w-48 text-sm text-gray-600 px-4 py-3 border-gray-300 shadow-sm rounded focus:ring-primary  focus:border-primary"
             >
+            
               {sorts.map((cat) => (
                 <>
                   <option value={cat.index}>{cat.text}</option>
@@ -458,7 +458,7 @@ const Shop = () => {
             <Message severity="error">{error}</Message>
           ) : (
             <>
-              <ShopComponent products={products}/>
+              <ShopComponent products={products} />
             </>
           )}
           {/* // <!-- product wrapper end --> */}

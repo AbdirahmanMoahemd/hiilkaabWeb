@@ -41,8 +41,8 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     const config = {
       service: "gmail",
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS,
+        user: 'developerkaahiye@gmail.com',
+        pass: 'wwufptdpobzumnml',
       },
     };
 
@@ -77,7 +77,7 @@ export const addOrderItems = asyncHandler(async (req, res) => {
           button: {
               color: '#22BC66', // Optional action button color
               text: 'See the order',
-              link: `https://hiilkaab.onrender.com/order/${order._id}`
+              link: `https://hiilkaab.com/order/${order._id}`
           }
       },
 
@@ -88,7 +88,7 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     var emailBody = mailGenerator.generate(email);
 
     let message = {
-      from: process.env.EMAIL,
+      from: "developerkaahiye@gmail.com",
       to: "fariidka06@gmail.com",
       subject: "NEW ORDER",
       html: emailBody,
@@ -134,7 +134,63 @@ export const addOrderItemsEvc = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
+ const config = {
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    };
 
+    let transporter = nodemailer.createTransport(config);
+
+    var mailGenerator = new Mailgen({
+      theme: "default",
+      product: {
+        // Appears in header & footer of e-mails
+        name: "Mailgen",
+        link: "https://mailgen.js/",
+        // Optional product logo
+        // logo: 'https://mailgen.js/img/logo.png'
+      },
+    });
+
+    var email = {
+      body: {
+        name: "HIILKAAB",
+        intro: "NEW ORDER",
+        table: {
+          data: [
+            {
+              oderId: order._id,
+              name: req.user.name,
+              phone: req.user.phone,
+            },
+          ],
+        },
+        action: {
+          instructions: 'To get full details, please click here:',
+          button: {
+              color: '#22BC66', // Optional action button color
+              text: 'See the order',
+              link: `https://hiilkaab.com/order/${order._id}`
+          }
+      },
+
+        outro: "MAHADSANID",
+      },
+    };
+
+    var emailBody = mailGenerator.generate(email);
+
+    let message = {
+      from: process.env.EMAIL,
+      to: "fariidka06@gmail.com",
+      subject: "NEW ORDER",
+      html: emailBody,
+    };
+
+    transporter.sendMail(message);
     res.status(201).json(createdOrder);
   }
 });
@@ -251,7 +307,7 @@ export const addOrderItems2 = asyncHandler(async (req, res) => {
           button: {
               color: '#22BC66', // Optional action button color
               text: 'See the order',
-              link: `https://hiilkaab.onrender.com/order/${order._id}`
+              link: `https://hiilkaab.com/order/${order._id}`
           }
       },
 
@@ -446,6 +502,7 @@ export const getMyOrdersApp = asyncHandler(async (req, res) => {
       .populate("user")
       .populate("products.product")
       .populate("meals.meal");
+orders.sort((a, b) => (a._id > b._id ? -1 : 1));
     res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -510,7 +567,7 @@ export const getOrdersByProcess = asyncHandler(async (req, res) => {
 // @access  Private/admin
 export const getOrdersByComplete = asyncHandler(async (req, res) => {
   try {
-    const orders = await Order.find({ status: 2 || 3 })
+    const orders = await Order.find({ status: 3 })
       .populate("user")
       .populate("products.product")
       .populate("meals.meal");
