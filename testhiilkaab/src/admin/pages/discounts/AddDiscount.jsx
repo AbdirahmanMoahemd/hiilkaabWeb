@@ -133,14 +133,13 @@ const AddDiscount = () => {
                     </div>
                   }
             <div>
-              <label className="text-gray-600 mb-2 block">Category Name</label>
+              <label className="text-gray-600 mb-2 block">Product Name</label>
               <div className="grid grid-cols-12 gap-2">
                 <input
                   type="text"
                   className="input-box col-span-9"
                   onChange={(e) => setKeyword(e.target.value)}
                   placeholder="product Name"
-                  required
                 />
                 <a
                   onClick={getProducts}
@@ -164,7 +163,7 @@ const AddDiscount = () => {
               
               <div className="grid grid-cols-2 lg:grid-cols-6 sm:grid-cols-2 gap-2">
                 {products.map((product) => (
-                  <button onClick={()=> setProduct(product)}>
+                  <a onClick={()=> setProduct(product)}>
                     <div className="w-36 mb-2 bg-gray-100 p-2">
                       <div className="relative group rounded-sm overflow-hidden">
                         <img
@@ -180,7 +179,7 @@ const AddDiscount = () => {
                         </a>
                       </div>
                     </div>
-                    </button>
+                    </a>
                  
                 ))}
                  </div>

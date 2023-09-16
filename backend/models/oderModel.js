@@ -50,7 +50,7 @@ const orderSchema = mongoose.Schema(
         meal: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Meal",
-        },
+        }, 
       },
     ],
     status: {

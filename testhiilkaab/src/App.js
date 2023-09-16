@@ -46,6 +46,7 @@ import MyOrdersScreen from "./client/screens/MyOrdersScreen";
 import BrandScreen from "./admin/screens/brand/BrandScreen";
 import AddBrandScreen from "./admin/screens/brand/AddBrandScreen";
 import UpdateBrandScreen from "./admin/screens/brand/UpdateBrandScreen";
+import UpdateDiscountScreen from "./admin/screens/discount/UpdateDiscountScreen";
 
 
 function App() {
@@ -59,6 +60,8 @@ function App() {
       setCurrentMode(currentThemeMode);
     }
   }, []);
+
+  
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -125,7 +128,7 @@ function App() {
         {/* discounts products  */}
         <Route path="/discount" element={<DiscountScreen/> } />
         <Route path="/addproductdiscount" element={<AddDiscountScreen/> } />
-        <Route path="/updateproduct/:id" element={<UpdateProductsScreen/> } />
+        <Route path="/updateDiscountProduct/:id" element={<UpdateDiscountScreen/> } />
 
 
         {/* sliders  */}

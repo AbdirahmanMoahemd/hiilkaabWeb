@@ -48,12 +48,15 @@ const OrdersScreen = () => {
       dispatch({ type: ORDER_PAY_RESET2 });
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(id));
+      
     }
   }, [dispatch, id, successDeliver, order, userInfo, successPay2]);
 
   const successPaymentHandler = () => {
     dispatch(payOrder2(id));
   };
+
+  console.log(order)
 
   const evcpayment = () => {
     var data = JSON.stringify({

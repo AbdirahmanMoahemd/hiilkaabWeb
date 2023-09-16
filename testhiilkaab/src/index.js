@@ -7,8 +7,11 @@ import App from './App';
 import 'font-awesome/css/font-awesome.min.css';
 
 import 'primeicons/primeicons.css';
-import 'primereact/resources/themes/saga-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";     
+    
+//core
+import "primereact/resources/primereact.min.css"; 
 import { ContextProvider } from './admin/contexts/ContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

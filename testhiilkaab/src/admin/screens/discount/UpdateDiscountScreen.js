@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { FiSettings } from 'react-icons/fi';
-import { Footer, Navbar, Sidebar, ThemeSettings } from '../components';
-import { useStateContext } from '../contexts/ContextProvider';
+import { useStateContext } from '../../contexts/ContextProvider';
 import UpdateDiscount from '../../pages/discounts/UpdateDiscount';
+import { Footer, Navbar, Sidebar, ThemeSettings } from '../../components';
 
 const UpdateDiscountScreen = () => {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();

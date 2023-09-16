@@ -9,12 +9,14 @@ import { Message } from "primereact/message";
 import {
   listDiscountProducts,
   listProducts,
+  listProductsByLowPrice,
   listProductsByPrice,
 } from "../../actions/prodcutActions";
 import { useParams } from "react-router-dom";
 import ShopComponent from "../components/ShopComponent";
 import { getProductsByFilter } from "../../actions/filterActions";
 import { listBrands } from "../../actions/brandActions";
+import { Paginator } from "primereact/paginator";
 
 function getWindowSize() {
   const { innerWidth, innerHeight } = window;
@@ -25,10 +27,13 @@ const Shop = () => {
   const dispatch = useDispatch();
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [navbarState, setNavbarState] = useState(true);
-  const [index, setIndex] = useState();
+  const [index, setIndex] = useState(1);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
   const { keyword } = useParams();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [first, setFirst] = useState(1);
+  const [rows, setRows] = useState(30);
   const { id } = useParams();
 
   const [categoryIds, setCategoryIds] = useState([]);
@@ -44,11 +49,7 @@ const Shop = () => {
   };
 
   const brandList = useSelector((state) => state.brandList);
-  const {
-    loading: loadingBrand,
-    error: errorBrand,
-    brands,
-  } = brandList;
+  const { loading: loadingBrand, error: errorBrand, brands } = brandList;
 
   const categoryList = useSelector((state) => state.categoryList);
   const {
@@ -65,7 +66,7 @@ const Shop = () => {
   } = subcategoryList;
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products , count} = productList;
 
   useEffect(() => {
     dispatch(listCategories());
@@ -84,59 +85,63 @@ const Shop = () => {
       dispatch(getProductsByFilter({ type: "category", query: id }));
     }
 
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword, id]);
-
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowSize(getWindowSize());
+    if (index == 1) {
+      dispatch(listProducts(keyword, pageNumber));
+    } else if (index == 2) {
+      dispatch(listProducts(keyword, pageNumber));
+    } else if (index == 3) {
+      dispatch(listProductsByPrice());
+    } else if (index == 4) {
+      dispatch(listProductsByLowPrice());
     }
-
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (windowSize.innerWidth < 900) {
-      setNavbarState(false);
-    } else {
-      setNavbarState(true);
+    else if (index == 5) {
+      dispatch(listDiscountProducts());
     }
-  }, [windowSize, dispatch, id]);
+  }, [dispatch, keyword,pageNumber, id, index]);
+
+  // useEffect(() => {
+  //   function handleWindowResize() {
+  //     setWindowSize(getWindowSize());
+  //   }
+
+  //   window.addEventListener("resize", handleWindowResize);
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleWindowResize);
+  //   };
+  // }, [dispatch, id]);
+
+  // useEffect(() => {
+  //   if (windowSize.innerWidth < 900) {
+  //     setNavbarState(false);
+  //   } else {
+  //     setNavbarState(true);
+  //   }
+  // }, [windowSize, dispatch, id]);
 
   const sorts = [
+    
     {
-      text: "Default sortingh",
-      index: 1,
+      text: "Default sorting",
+      index: 2,
     },
     {
       text: "Price high-low",
-      index: 2,
-    },
-
-    {
-      text: "Price low-high",
       index: 3,
     },
     {
-      text: "Discounted Products",
+      text: "Price low-high",
       index: 4,
+    },
+    {
+      text: "Discounted Products",
+      index: 5,
     },
   ];
 
-  useEffect(() => {
-    if (index === 2) {
-      dispatch(listProductsByPrice());
-    } else if (index === 3) {
-      dispatch(listProducts(keyword));
-    }
-    else if(index === 4){
-      dispatch(listDiscountProducts(keyword));
-    }
-  }, [dispatch, index,id, keyword, max]);
+  // useEffect(() => {
+
+  // }, [dispatch, index,id, keyword, max]);
 
   const handleCategory = (e) => {
     resetState();
@@ -156,8 +161,8 @@ const Shop = () => {
       updatedCategoryIds = [...categoryIds];
       updatedCategoryIds.splice(indexFound, 1);
       setCategoryIds(updatedCategoryIds);
-      if (updatedCategoryIds.length ===0) {
-        dispatch(listProducts(keyword));
+      if (updatedCategoryIds.length === 0) {
+        dispatch(listProducts(keyword, pageNumber));
         window.scrollTo(0, 0);
       }
     }
@@ -191,8 +196,8 @@ const Shop = () => {
       updatedSubCategoryIds = [...subcategoryIds];
       updatedSubCategoryIds.splice(indexFound2, 1);
       setSubCategoryIds(updatedSubCategoryIds);
-      if (updatedSubCategoryIds.length ===0) {
-        dispatch(listProducts(keyword));
+      if (updatedSubCategoryIds.length === 0) {
+        dispatch(listProducts(keyword, pageNumber));
         window.scrollTo(0, 0);
       }
     }
@@ -227,8 +232,8 @@ const Shop = () => {
       updatedBrandIds = [...brandIds];
       updatedBrandIds.splice(indexFound, 1);
       setBrandIds(updatedBrandIds);
-      if (updatedBrandIds.length ===0) {
-        dispatch(listProducts(keyword));
+      if (updatedBrandIds.length === 0) {
+        dispatch(listProducts(keyword, pageNumber));
         window.scrollTo(0, 0);
       }
     }
@@ -238,6 +243,12 @@ const Shop = () => {
 
   const resetState3 = () => {
     setBrandIds([]);
+  };
+
+  const onPageChange = (event) => {
+    setFirst(event.first);
+    setRows(event.rows);
+    setPageNumber(event.page + 1);
   };
 
   return (
@@ -286,7 +297,6 @@ const Shop = () => {
                           >
                             {category.name}
                           </label>
-                          
                         </div>
                       ))}
                     </>
@@ -335,7 +345,6 @@ const Shop = () => {
                           >
                             {subcategory.name}
                           </label>
-                          
                         </div>
                       ))}
                     </>
@@ -381,7 +390,6 @@ const Shop = () => {
                           >
                             {brand.name}
                           </label>
-                         
                         </div>
                       ))}
                     </>
@@ -432,9 +440,11 @@ const Shop = () => {
               value={index}
               onChange={(e) => {
                 setIndex(e.target.value);
+                console.log(e.target.value);
               }}
               className="w-48 text-sm text-gray-600 px-4 py-3 border-gray-300 shadow-sm rounded focus:ring-primary  focus:border-primary"
             >
+            
               {sorts.map((cat) => (
                 <>
                   <option value={cat.index}>{cat.text}</option>
@@ -458,7 +468,19 @@ const Shop = () => {
             <Message severity="error">{error}</Message>
           ) : (
             <>
-              <ShopComponent products={products}/>
+            <Paginator
+              first={first}
+              rows={rows}
+              totalRecords={count}
+              onPageChange={onPageChange}
+            />
+              <ShopComponent products={products} />
+              <Paginator
+              first={first}
+              rows={rows}
+              totalRecords={count}
+              onPageChange={onPageChange}
+            />
             </>
           )}
           {/* // <!-- product wrapper end --> */}

@@ -494,11 +494,6 @@ export const links = [
     icon: <FaProductHunt />,
   },
   {
-    name: "Discounts",
-    link: "discount",
-    icon: <TbDiscount2 />,
-  },
-  {
     name: "Sliders",
     link: "sliders",
     icon: <FaSlideshare />,

@@ -15,7 +15,8 @@ router.route("/").get(getDiscounts).post(protect, admin, createDiscounts);
 router
   .route("/:id")
   .get(getDiscountsById)
+  .put(protect, admin, updateDiscounts)
   .delete(protect, admin, deleteDiscounts)
-  .put(protect, admin, updateDiscounts);
+  
 
 export default router;

@@ -129,7 +129,7 @@ import {
       }
     };
   
-  export const updateDiscount = (discount) => async (dispatch, getState) => {
+  export const updateDiscount = (id,product, icon) => async (dispatch, getState) => {
     try {
       dispatch({
         type: DISCOUNT_UPDATE_REQUEST,
@@ -138,17 +138,16 @@ import {
       const {
         userLogin: { userInfo },
       } = getState();
-  
+
       const config = {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
   
       const { data } = await axios.put(
-        `/api/discount/${discount._id}`,
-        discount,
+        `/api/discount/${id}`,
+        {product, icon},
         config
       );
   

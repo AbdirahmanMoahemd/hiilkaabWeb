@@ -224,7 +224,7 @@ const Checkout = () => {
           console.log(error);
         });
     } else {
-      setMsg("phoneNumber must be start 252XXXXXXX");
+      setMsg("phoneNumber must be start 252XXXXXXX \n Lambarka waa in uu ka bilowdaa 252");
     }
   };
   return (

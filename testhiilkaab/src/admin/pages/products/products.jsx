@@ -7,15 +7,22 @@ import { PRODUCT_CREATE_RESET } from "../../../constants/productConstants";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { MdDelete, MdModeEdit } from "react-icons/md";
-import { deleteProduct, listProducts } from "../../../actions/prodcutActions";
+import {
+  deleteProduct,
+  listProductsByAdmin,
+} from "../../../actions/prodcutActions";
+import { Paginator } from "primereact/paginator";
 
 const Products = () => {
   const navigate = useNavigate();
-  const [keyword, setKeyword] = useState('')
+  const [keyword, setKeyword] = useState("");
+  const [first, setFirst] = useState(1);
+  const [rows, setRows] = useState(50);
+  const [pageNumber, setPageNumber] = useState(1);
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, count } = productList;
 
   const productDelete = useSelector((state) => state.productDelete);
   const {
@@ -34,35 +41,46 @@ const Products = () => {
       navigate("/login");
     }
 
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword, navigate, userInfo, successDelete]);
+    dispatch(listProductsByAdmin(keyword, pageNumber));
+  }, [dispatch, navigate, keyword, pageNumber, userInfo, successDelete]);
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    dispatch(listProducts(keyword));
-}
+    e.preventDefault();
+    dispatch(listProductsByAdmin(keyword));
+  };
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure to delete this product")) {
       dispatch(deleteProduct(id));
-      
     }
   };
 
+  console.log(count);
+
   const onClickFn = () => {};
   const { currentColor } = useStateContext();
+
+  const onPageChange = (event) => {
+    setFirst(event.first);
+    setRows(event.rows);
+    setPageNumber(event.page + 1);
+  };
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header
         category="Page"
-        title={`Products(${products && products.length})`}
+        title={`Products`}
+        count={`(${count && count})`}
         currentColor={currentColor}
         onClick={onClickFn}
         linktext="/addproducts"
       />
       <div className="flex justify-center w-full pb-5">
-        <form className="w-full xl:max-w-xl max-w-lg flex relative" onSubmit={submitHandler}>
+        <form
+          className="w-full xl:max-w-xl max-w-lg flex relative"
+          onSubmit={submitHandler}
+        >
           <input
             type="text"
             className="pl-12 w-full border border-r-0 border-primary py-3 px-3 rounded-l-md focus:ring-primary focus:border-primary"
@@ -70,7 +88,7 @@ const Products = () => {
             onChange={(e) => setKeyword(e.target.value)}
           />
           <button
-          type="submit"
+            type="submit"
             className="bg-primary border border-primary text-primary px-8 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
           >
             Search
@@ -97,7 +115,7 @@ const Products = () => {
             animationDuration=".5s"
           />
         ) : error ? (
-          <Message variant="danger">{error}</Message>
+          <Message variant="danger" text={error}></Message>
         ) : (
           <>
             {products.map((product) => (
@@ -184,6 +202,12 @@ const Products = () => {
           </>
         )}
       </div>
+      <Paginator
+        first={first}
+        rows={rows}
+        totalRecords={count}
+        onPageChange={onPageChange}
+      />
     </div>
   );
 };

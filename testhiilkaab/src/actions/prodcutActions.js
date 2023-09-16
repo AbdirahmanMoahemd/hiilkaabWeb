@@ -33,12 +33,12 @@ import {
 import axios from "axios";
 
 export const listProducts =
-  (keyword = "") =>
+  (keyword = "", pageNumber='') =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
 
-      const { data } = await axios.get(`/api/products?keyword=${keyword}`);
+      const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`);
 
       dispatch({
         type: PRODUCT_LIST_SUCCESS,
@@ -55,6 +55,39 @@ export const listProducts =
     }
   };
 
+
+  export const listProductsByAdmin =
+  (keyword = "", pageNumber = '') =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/products/admin/products?keyword=${keyword}&pageNumber=${pageNumber}`, config);
+
+      dispatch({
+        type: PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 
   export const listSameProducts =
@@ -107,7 +140,7 @@ export const listProducts =
   }
 
   export const listDiscountProducts =
-  (keyword = "") =>
+  () =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
@@ -134,6 +167,27 @@ export const listProductsByPrice = () => async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
     const { data } = await axios.get('/api/products/price');
+
+    dispatch({
+      type: PRODUCT_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listProductsByLowPrice = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST });
+
+    const { data } = await axios.get('/api/products/lprice');
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,

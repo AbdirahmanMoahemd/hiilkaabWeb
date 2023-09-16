@@ -8,14 +8,14 @@ import User from "../models/userModel.js";
 // @access  Public
 export const addToCart = asyncHandler(async (req, res) => {
   try {
-    const { id, name, images, price, colors, sizes } = req.body;
+    const { id, name, images, colors, sizes } = req.body;
     const product = await Product.findById(id);
     let user = await User.findById(req.user).populate("cart.product")
     .populate("wishlist.product")
     .populate("cartMeal.meal");;
 
     if (user.cart.length == 0) {
-      user.cart.push({ product, quantity: 1,name, images, price, sizes, colors });
+      user.cart.push({ product, quantity: 1,name, images, price:product.price, sizes, colors });
     } else {
       let isProductFound = false;
       for (let i = 0; i < user.cart.length; i++) {

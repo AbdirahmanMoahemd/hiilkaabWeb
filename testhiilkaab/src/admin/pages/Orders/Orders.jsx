@@ -88,7 +88,7 @@ const Orders = () => {
                     <td>{order.user && order.user.phone}</td>
                     <td>{order.createdAt.substring(0, 10)}</td>
                     <td>{order.paymentMethod}</td>
-                    <td>${order.totalPrice}</td>
+                    <td>${(order.totalPrice).toFixed(2)}</td>
                     <td>
                       {order.isPaid ? (
                         order.paidAt.substring(0, 10)

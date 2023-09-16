@@ -26,12 +26,12 @@ const Category = () => {
   const discountList = useSelector((state) => state.discountList);
   const { loading, error, discounts } = discountList;
 
-  const categoryDelete = useSelector((state) => state.categoryDelete);
+  const discountDelete = useSelector((state) => state.discountDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
-  } = categoryDelete;
+  } = discountDelete;
 
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
@@ -95,7 +95,7 @@ const Category = () => {
                   </a>
                 </div>
                 <div className="flex mt-4 justify-around lg:text-2xl">
-                  <Link to={`/updateDiscount/${discount.id}`}>
+                  <Link to={`/updateDiscountProduct/${discount.id}`}>
                     <button className="text-primary">
                       <MdModeEdit />
                     </button>

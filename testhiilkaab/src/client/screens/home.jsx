@@ -21,6 +21,7 @@ import {
   listTopProducts,
 } from "../../actions/prodcutActions";
 import SinglProduct from "../components/SinglProduct";
+import Productdiscount from "../components/discount";
 import { listSubCategories } from "../../actions/subCategoryActions";
 import TopRanking from "../components/TopRanking";
 import { listTopCategories } from "../../actions/topCategoriesActions";
@@ -30,6 +31,8 @@ import TopRanking4 from "../components/TopRanking4";
 import { listSlides } from "../../actions/slideActions";
 import { listDiscounts } from "../../actions/discountActions";
 import WhatsApplink from "../components/whatsApplink";
+import { Carousel } from 'primereact/carousel';
+        
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -52,7 +55,7 @@ const Home = () => {
   const {
     loading: loadingTopProducts,
     error: errorTopProducts,
-    products: topProducts,
+    products,
   } = productTop;
 
   const producDistList = useSelector((state) => state.producDistList);
@@ -96,6 +99,31 @@ const Home = () => {
   useEffect(() => {
     dispatch(listTopProducts());
   }, [dispatch]);
+
+
+  const responsiveOptions = [
+    {
+        breakpoint: '1199px',
+        numVisible: 1,
+        numScroll: 1
+    },
+    {
+        breakpoint: '991px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '767px',
+        numVisible: 1,
+        numScroll: 1
+    }
+];
+
+const productTemplate = (product) => {
+  return (
+      <Productdiscount product={product}/>
+  );
+};
 
   return (
     <>
@@ -198,65 +226,6 @@ const Home = () => {
         ))}
       </div>
 
-      {/* <!-- top new arrival --> */}
-      <div className="container pb-16 lg:pt-12">
-        <h2 className="text-xl md:text-2xl font-medium text-gray-800 uppercase mb-6">
-          Discounted Products
-        </h2>
-        {/* <!-- product wrapper --> */}
-        {loadingDis ? (
-          <center>
-            {" "}
-            <ProgressSpinner
-              style={{ width: "20px", height: "20px" }}
-              strokeWidth="6"
-              fill="var(--surface-ground)"
-              animationDuration=".5s"
-            />
-          </center>
-        ) : errorDis ? (
-          <Message variant="danger">{errorDis}</Message>
-        ) : (
-          <>
-            <SinglProduct products={productsDis} />
-          </>
-        )}
-        {/* <!-- product wrapper end --> */}
-      </div>
-      {/* <!-- top new arrival end --> */}
-      <Swiper
-        style={{
-          "--swiper-navigation-color": "#E49A38",
-          "--swiper-navigation-size": "35px",
-        }}
-        spaceBetween={100}
-        centeredSlides={true}
-        autoplay={{
-          delay: 4000,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper  container"
-      >
-        {discounts.map((dis) => (
-          <SwiperSlide>
-            <div className="container relative">
-              <img src={dis.icon} className="w-full" />
-
-              <Link
-                to={dis.product ? `/product/${dis.product._id}` : '/'}
-                className="btn text-base top-1/4  right-1/3  lg:top-1/2 lg:right-1/2  py-2 lg:px-12 px-1 bg-primary text-white border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
-              >
-                Shop Now
-              </Link>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      {/* <!-- ad section --> */}
 
       <div className="p-10"></div>
       {/* <!-- ad section end --> */}
@@ -278,7 +247,7 @@ const Home = () => {
           <Message variant="danger">{errorTopProducts}</Message>
         ) : (
           <>
-            <SinglProduct products={topProducts} />
+            <SinglProduct products={products} />
           </>
         )}
       </div>

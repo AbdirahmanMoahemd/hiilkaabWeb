@@ -3,29 +3,29 @@ import { Link } from "react-router-dom";
 import hiilkaab from "../../data/images/hiilkaab.jpg";
 import Rating from "./Rating";
 
-const ShopComponent = ({ products}) => {
+const ShopComponent = ({ products }) => {
   return (
-  <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-2 gap-6 mt-8">
+    <div className="grid lg:grid-cols-2 xl:grid-cols-3 grid-cols-2 gap-6 mt-8">
       {/* <!-- single product --> */}
       {products.map((product) => (
         <div className="group rounded bg-white shadow overflow-hidden">
           {/* <!-- product image --> */}
           <Link to={`/product/${product.id}`}>
-          <div className="flex items-center justify-center">
-            <div className="relative">
-              <div className="w-40 h-40 ">
-                <img
-                  src={product.images ? product.images[0] : hiilkaab}
-                  className="w-full h-full"
-                />
+            <div className="flex items-center justify-center">
+              <div className="relative">
+                <div className="w-40 h-40 ">
+                  <img
+                    src={product.images ? product.images[0] : hiilkaab}
+                    className="w-full h-full"
+                  />
+                </div>
               </div>
             </div>
-          </div>
           </Link>
           {/* <!-- product image end -->
                 <!-- product content --> */}
           <div className="pt-4 pb-3 px-4">
-            <Link to="/">
+            <Link to={`/product/${product.id}`}>
               <h4 className="uppercase font-medium text-base lg:text-lg mb-2 text-gray-800 hover:text-primary transition truncate ...">
                 {product.name}
               </h4>
@@ -35,7 +35,7 @@ const ShopComponent = ({ products}) => {
                 ${product.price}
               </p>
               <p className="text-sm text-gray-400 font-roboto line-through">
-                {product.newPrice >0 && `$${product.newPrice}`}
+                {product.newPrice > 0 && `$${product.newPrice}`}
               </p>
             </div>
             <div className="flex items-center">

@@ -81,7 +81,7 @@ export const orderCreateReducerEvc = (state = {}, action) => {
 };
 
 export const orderDetailsReducer = (
-  state = { loading: true, orderItems: [], shippingAddress: {} },
+  state = { loading: true, products: [],meals:[] ,shippingAddress: {}, user:{} },
   action
 ) => {
   switch (action.type) {
