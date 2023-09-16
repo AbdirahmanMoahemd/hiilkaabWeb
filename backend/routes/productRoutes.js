@@ -28,7 +28,6 @@ import {
   getProducts2,
   getTopProducts2,
   getSameProductById,
-  getProductsHightPriceToLow,
   getByAdminProducts,
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
