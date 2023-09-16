@@ -41,8 +41,8 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     const config = {
       service: "gmail",
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS,
+        user: 'developerkaahiye@gmail.com',
+        pass: 'wwufptdpobzumnml',
       },
     };
 
@@ -88,7 +88,7 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     var emailBody = mailGenerator.generate(email);
 
     let message = {
-      from: process.env.EMAIL,
+      from: "developerkaahiye@gmail.com",
       to: "fariidka06@gmail.com",
       subject: "NEW ORDER",
       html: emailBody,
@@ -133,8 +133,7 @@ export const addOrderItemsEvc = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
-
-    const config = {
+ const config = {
       service: "gmail",
       auth: {
         user: process.env.EMAIL,
@@ -191,7 +190,6 @@ export const addOrderItemsEvc = asyncHandler(async (req, res) => {
     };
 
     transporter.sendMail(message);
-
     res.status(201).json(createdOrder);
   }
 });
@@ -503,8 +501,7 @@ export const getMyOrdersApp = asyncHandler(async (req, res) => {
       .populate("user")
       .populate("products.product")
       .populate("meals.meal");
-
-  orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+orders.sort((a, b) => (a._id > b._id ? -1 : 1));
     res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -569,7 +566,7 @@ export const getOrdersByProcess = asyncHandler(async (req, res) => {
 // @access  Private/admin
 export const getOrdersByComplete = asyncHandler(async (req, res) => {
   try {
-    const orders = await Order.find({ status: 2 || 3 })
+    const orders = await Order.find({ status: 3 })
       .populate("user")
       .populate("products.product")
       .populate("meals.meal");

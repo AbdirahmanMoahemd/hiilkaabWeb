@@ -493,6 +493,7 @@ export const links = [
     link: "adminproducts",
     icon: <FaProductHunt />,
   },
+  
   {
     name: "Sliders",
     link: "sliders",

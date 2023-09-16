@@ -48,6 +48,7 @@ export const getByAdminProducts = asyncHandler(async (req, res) => {
   res.json({ products, count });
 });
 
+
 export const getProducts2 = asyncHandler(async (req, res) => {
   try {
     const products = await Product.find()

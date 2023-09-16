@@ -62,6 +62,7 @@ const userSchema = mongoose.Schema(
             type: Number,
           },
         ],
+ 	price: { type: Number },
       },
     ],
     wishlist: [

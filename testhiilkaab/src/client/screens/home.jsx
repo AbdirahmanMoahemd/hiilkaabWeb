@@ -226,6 +226,8 @@ const productTemplate = (product) => {
         ))}
       </div>
 
+     
+      {/* <!-- ad section --> */}
 
       <div className="p-10"></div>
       {/* <!-- ad section end --> */}

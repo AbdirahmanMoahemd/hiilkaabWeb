@@ -8,7 +8,7 @@ import User from "../models/userModel.js";
 // @access  Public
 export const addToCart = asyncHandler(async (req, res) => {
   try {
-    const { id, name, images, colors, sizes } = req.body;
+    const { id, name, images,price,colors, sizes } = req.body;
     const product = await Product.findById(id);
     let user = await User.findById(req.user).populate("cart.product")
     .populate("wishlist.product")
