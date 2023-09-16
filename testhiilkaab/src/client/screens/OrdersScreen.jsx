@@ -235,7 +235,7 @@ const OrdersScreen = () => {
                       <div className="lg:col-span-2 col-span-8 flex gap-2">
                         <p className="lg:hidden text-lg">Total Price</p>
                         <p className="text-primary text-lg font-semibold">
-                          ${item.price * item.quantity}
+                          ${(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -278,7 +278,7 @@ const OrdersScreen = () => {
                       <div className="lg:col-span-2 col-span-8 flex gap-2">
                         <p className="lg:hidden text-lg">Total Price</p>
                         <p className="text-primary text-lg font-semibold">
-                          ${item.price * item.quantity}
+                          ${(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -299,7 +299,7 @@ const OrdersScreen = () => {
                   Total
                 </h4>
                 <h4 className="text-gray-800 font-semibold my-3 uppercase">
-                  ${order.totalPrice}
+                  ${(order.totalPrice).toFixed(2)}
                 </h4>
               </div>
 

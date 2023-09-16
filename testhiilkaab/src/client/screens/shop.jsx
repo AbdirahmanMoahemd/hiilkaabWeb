@@ -95,25 +95,25 @@ const Shop = () => {
     }
   }, [dispatch, keyword, id, index]);
 
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowSize(getWindowSize());
-    }
+//  useEffect(() => {
+//    function handleWindowResize() {
+//      setWindowSize(getWindowSize());
+ //   }
+//
+  //  window.addEventListener("resize", handleWindowResize);
+//
+  //  return () => {
+    //  window.removeEventListener("resize", handleWindowResize);
+  //  };
+//  }, [dispatch, id]);
 
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (windowSize.innerWidth < 900) {
-      setNavbarState(false);
-    } else {
-      setNavbarState(true);
-    }
-  }, [windowSize, dispatch, id]);
+  //useEffect(() => {
+    //if (windowSize.innerWidth < 900) {
+     // //setNavbarState(false);
+   // } else {
+    //  setNavbarState(true);
+   // }
+ // }, [windowSize, dispatch, id]);
 
   const sorts = [
     

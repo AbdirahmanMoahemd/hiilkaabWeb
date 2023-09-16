@@ -7,7 +7,7 @@ import { PRODUCT_CREATE_RESET } from "../../../constants/productConstants";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { MdDelete, MdModeEdit } from "react-icons/md";
-import { deleteProduct, listProducts } from "../../../actions/prodcutActions";
+import { deleteProduct, listProductsByAdmin } from "../../../actions/prodcutActions";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -34,12 +34,12 @@ const Products = () => {
       navigate("/login");
     }
 
-    dispatch(listProducts(keyword));
+    dispatch(listProductsByAdmin(keyword));
   }, [dispatch, keyword, navigate, userInfo, successDelete]);
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(listProducts(keyword));
+    dispatch(listProductsByAdmin(keyword));
 }
 
   const deleteHandler = (id) => {
@@ -97,7 +97,7 @@ const Products = () => {
             animationDuration=".5s"
           />
         ) : error ? (
-          <Message variant="danger">{error}</Message>
+          <Message variant="danger" text={error}></Message>
         ) : (
           <>
             {products.map((product) => (

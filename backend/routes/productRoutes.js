@@ -28,12 +28,14 @@ import {
   getProducts2,
   getTopProducts2,
   getSameProductById,
+getByAdminProducts
 } from "../controllers/productController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.route("/").get(getProducts).post(protect, admin, createProduct);
+router.route("/admin/products").get(protect, admin, getByAdminProducts);
 router.route('/all').get(getProducts2)
 router.route("/dis", ).get(getDiscProducts);
 router.route("/top", ).get(getTopProducts);

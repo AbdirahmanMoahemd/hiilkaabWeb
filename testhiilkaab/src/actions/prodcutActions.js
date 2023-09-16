@@ -55,7 +55,37 @@ export const listProducts =
     }
   };
 
+  export const listProductsByAdmin =
+  (keyword = "") =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST });
 
+	const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+      const { data } = await axios.get(`/api/products/admin/products?keyword=${keyword}`,  config);
+
+      dispatch({
+        type: PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
   export const listSameProducts =
   (id) =>

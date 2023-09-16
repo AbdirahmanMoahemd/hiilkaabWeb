@@ -140,7 +140,7 @@ const Product = () => {
               <div className="space-y-2">
                 <p className="text-gray-800 font-semibold space-x-2">
                   <span>Availability: </span>
-                  {product.countInStock < 0 ? (
+                  {product.countInStock < 1 ? (
                     <span className="text-green-600">Out Of Stock</span>
                   ) : (
                     <span className="text-green-600">In Stock</span>
@@ -230,14 +230,14 @@ const Product = () => {
                                                  decrementButtonIcon="pi pi-minus"
                                                             incrementButtonIcon="pi pi-plus"
                                                             max={product.countInStock}
-                                                            min="1"
+                                                            min="0"
                                                             onValueChange={(e) => setQty(e.target.value)} />
 
               {/* <!-- color end --> */}
               {/* <!-- add to cart button --> */}
               <div className="flex gap-3 border-b border-gray-200 pb-5 mt-6">
                 <button
-                  onClick={addToCartHandler}
+                  onClick={product.countInStock < 1 ? '' : addToCartHandler}
                   className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm flex items-center"
                 >

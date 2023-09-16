@@ -14,12 +14,31 @@ export const getProducts = asyncHandler(async (req, res) => {
       }
     : {};
 
+  const products = await Product.find({ ...keyword , isFeatured:true});
+
+  products.sort((a, b) => (a._id > b._id ? -1 : 1));
+
+  res.json({ products });
+});
+
+
+export const getByAdminProducts = asyncHandler(async (req, res) => {
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
   const products = await Product.find({ ...keyword });
 
   products.sort((a, b) => (a._id > b._id ? -1 : 1));
 
   res.json({ products });
 });
+
 
 export const getProducts2 = asyncHandler(async (req, res) => {
   try {

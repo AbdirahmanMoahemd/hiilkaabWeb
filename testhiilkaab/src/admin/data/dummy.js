@@ -493,11 +493,7 @@ export const links = [
     link: "adminproducts",
     icon: <FaProductHunt />,
   },
-  {
-    name: "Discounts",
-    link: "discount",
-    icon: <TbDiscount2 />,
-  },
+  
   {
     name: "Sliders",
     link: "sliders",

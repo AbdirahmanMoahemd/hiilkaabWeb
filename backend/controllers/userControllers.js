@@ -50,8 +50,8 @@ export const authUser2 = asyncHandler(async (req, res) => {
       cartMeal: user.cartMeal,
       token: generateToken(user._id),
     });
-  } else {
-    res.status(500).json({ error: e.message });
+  }  else {
+    res.status(400).json({msg: "Invalid email or password"});
   }
 });
 
@@ -83,8 +83,8 @@ export const getUserProfileById = asyncHandler(async (req, res) => {
       cartMeal: user.cartMeal,
     });
   } else {
-    res.status(404);
-    throw new Error("User Not Found");
+    res.status(404).json({msg: "User Not Found"});
+   
   }
 });
 
@@ -139,8 +139,7 @@ export const registerUser2 = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
+    res.status(400).json({msg: "User already exists"});
   }
 
   const user = await User.create({
@@ -231,8 +230,7 @@ export const updateProfile2 = asyncHandler(async (req, res) => {
       cartMeal: updatedUser.cartMeal,
     });
   } else {
-    res.status(404);
-    throw new Error("User Not Found");
+    res.status(404).json({msg: "User Not Found" });
   }
 });
 
@@ -296,8 +294,7 @@ export const updateUserPassword = asyncHandler(async (req, res) => {
       token: generateToken(user._id)
     });
   } else {
-    res.status(404);
-    throw new Error("User Not Found");
+    res.status(404).json({msg :"User Not Found" });
   }
 });
 
