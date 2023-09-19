@@ -95,6 +95,7 @@ import {
   orderReducerCount,
   recentOrderListReducer,
 } from "./reducers/orderReducers";
+import { destinationCreateReducer, destinationDeleteReducer, destinationUpdateReducer, districtCreateReducer, districtDeleteReducer, districtUpdateReducer, districtsListReducer } from "./reducers/districtsReducer";
 
 const reducer = combineReducers({
   categoryList: categoryListReducer,
@@ -181,6 +182,15 @@ const reducer = combineReducers({
   settingsDetails: settingsDetailsReducer,
   settingsUpdate: settingsUpdateReducer,
   settingsCreat: settingsCreateReducer,
+
+
+  districtsList:districtsListReducer,
+  districtDelete:districtDeleteReducer,
+  districtCreate:districtCreateReducer,
+  destinationDelete:destinationDeleteReducer,
+  districtUpdate:districtUpdateReducer,
+  destinationUpdate:destinationUpdateReducer,
+  destinationCreate:destinationCreateReducer
 });
 
 const cartItemsFormStorage = localStorage.getItem("cartItems")

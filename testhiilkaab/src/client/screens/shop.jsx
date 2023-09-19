@@ -8,7 +8,7 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import {
   listDiscountProducts,
-listProductsByLowPrice,
+  listProductsByLowPrice,
   listProducts,
   listProductsByPrice,
 } from "../../actions/prodcutActions";
@@ -25,11 +25,8 @@ function getWindowSize() {
 
 const Shop = () => {
   const dispatch = useDispatch();
-  const [windowSize, setWindowSize] = useState(getWindowSize());
   const [navbarState, setNavbarState] = useState(true);
   const [index, setIndex] = useState(1);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
   const { keyword } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
   const [first, setFirst] = useState(1);
@@ -66,7 +63,7 @@ const Shop = () => {
   } = subcategoryList;
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products , count} = productList;
+  const { loading, error, products, count } = productList;
 
   useEffect(() => {
     dispatch(listCategories());
@@ -93,11 +90,10 @@ const Shop = () => {
       dispatch(listProductsByPrice());
     } else if (index == 4) {
       dispatch(listProductsByLowPrice());
-    }
-    else if (index == 5) {
+    } else if (index == 5) {
       dispatch(listDiscountProducts());
     }
-  }, [dispatch, keyword,pageNumber, id, index]);
+  }, [dispatch, keyword, pageNumber, id, index]);
 
   // useEffect(() => {
   //   function handleWindowResize() {
@@ -120,7 +116,6 @@ const Shop = () => {
   // }, [windowSize, dispatch, id]);
 
   const sorts = [
-    
     {
       text: "Default sorting",
       index: 2,
@@ -426,7 +421,7 @@ const Shop = () => {
         )}
         {/* <!-- sidebar end --> */}
 
-        {/* <!-- products --> */} 
+        {/* <!-- products --> */}
         <div className="col-span-3">
           {/* <!-- sorting --> */}
           <div className="mb-4 flex items-center justify-between">
@@ -444,7 +439,6 @@ const Shop = () => {
               }}
               className="w-48 text-sm text-gray-600 px-4 py-3 border-gray-300 shadow-sm rounded focus:ring-primary  focus:border-primary"
             >
-            
               {sorts.map((cat) => (
                 <>
                   <option value={cat.index}>{cat.text}</option>
@@ -468,19 +462,19 @@ const Shop = () => {
             <Message severity="error">{error}</Message>
           ) : (
             <>
-            <Paginator
-              first={first}
-              rows={rows}
-              totalRecords={count}
-              onPageChange={onPageChange}
-            />
+              <Paginator
+                first={first}
+                rows={rows}
+                totalRecords={count}
+                onPageChange={onPageChange}
+              />
               <ShopComponent products={products} />
               <Paginator
-              first={first}
-              rows={rows}
-              totalRecords={count}
-              onPageChange={onPageChange}
-            />
+                first={first}
+                rows={rows}
+                totalRecords={count}
+                onPageChange={onPageChange}
+              />
             </>
           )}
           {/* // <!-- product wrapper end --> */}

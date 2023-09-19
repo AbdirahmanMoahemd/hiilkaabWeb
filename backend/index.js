@@ -23,6 +23,7 @@ import restaurantRouter from './routes/restuarantsRoutes.js';
 import coffeeRouter from './routes/coffeeRoutes.js';
 import sweetsRouter from './routes/sweetsRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import districtsRoutes from './routes/districtsRoutes.js';
 
 
 
@@ -56,8 +57,9 @@ app.use("/api/sweets",sweetsRouter)
 app.use("/api/coffee", coffeeRouter)
 app.use("/api/cart", cartRoutes)
 app.use('/api/brands', brandRoutes) 
-
-
+app.use('/api/districts', districtsRoutes) 
+ 
+ 
 
 
 

@@ -47,6 +47,7 @@ import BrandScreen from "./admin/screens/brand/BrandScreen";
 import AddBrandScreen from "./admin/screens/brand/AddBrandScreen";
 import UpdateBrandScreen from "./admin/screens/brand/UpdateBrandScreen";
 import UpdateDiscountScreen from "./admin/screens/discount/UpdateDiscountScreen";
+import DistrictsScreen from "./admin/screens/Districts/DistrictsScreen";
 
 
 function App() {
@@ -59,9 +60,9 @@ function App() {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-  }, []);
-
-  
+  }, []); 
+ 
+   
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -129,6 +130,9 @@ function App() {
         <Route path="/discount" element={<DiscountScreen/> } />
         <Route path="/addproductdiscount" element={<AddDiscountScreen/> } />
         <Route path="/updateDiscountProduct/:id" element={<UpdateDiscountScreen/> } />
+
+        {/* districts  */}
+        <Route path="/districts" element={<DistrictsScreen/> } />
 
 
         {/* sliders  */}
