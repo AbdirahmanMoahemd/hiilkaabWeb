@@ -7,6 +7,13 @@ export const getDistricts = asyncHandler(async (req, res) => {
   res.status(200).json({ districts });
 });
 
+
+export const getDistricts2 = asyncHandler(async (req, res) => {
+  const districts = await Districts.find();
+
+  res.status(200).json(districts);
+});
+
 export const getDestinationsBySourceId = asyncHandler(async (req, res) => {
   const district = await Districts.findById(req.params.id);
 

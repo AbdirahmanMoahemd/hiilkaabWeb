@@ -7,6 +7,7 @@ import {
   deleteDistrict,
   getDestinationsBySourceId,
   getDistricts,
+  getDistricts2,
   updateDestination,
   updateDistrict,
 } from "../controllers/districtsController.js";
@@ -25,5 +26,6 @@ router
   .put(protect, admin, updateDistrict)
   .post(protect, admin, updateDestination);
 router.route("/delete-des/:id").post(protect, admin, deleteDestinations);
+router.route("/by/phone").get(getDistricts2)
 
 export default router;
