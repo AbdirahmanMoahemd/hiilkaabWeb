@@ -14,6 +14,25 @@ export const getDistricts2 = asyncHandler(async (req, res) => {
   res.status(200).json(districts);
 });
 
+
+// @desc    Fetch products by category
+// @route   GET /api/products
+// @access  Public
+export const getDistrictsByname = asyncHandler(async (req, res) => {
+  try {
+    const districts = await Districts.find({
+      source: { $regex: req.params.source, $options: "i" },
+      
+    });
+    if (districts) {
+      res.json(districts);
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
 export const getDestinationsBySourceId = asyncHandler(async (req, res) => {
   const district = await Districts.findById(req.params.id);
 

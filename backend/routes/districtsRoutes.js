@@ -8,6 +8,7 @@ import {
   getDestinationsBySourceId,
   getDistricts,
   getDistricts2,
+  getDistrictsByname,
   updateDestination,
   updateDistrict,
 } from "../controllers/districtsController.js";
@@ -27,5 +28,6 @@ router
   .post(protect, admin, updateDestination);
 router.route("/delete-des/:id").post(protect, admin, deleteDestinations);
 router.route("/by/phone").get(getDistricts2)
+router.route("/search/:source").get(getDistrictsByname)
 
 export default router;
