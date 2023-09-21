@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(protect, getDeliveryOrders)
+  .get(protect,admin, getDeliveryOrders)
   .post(createDeliveryOrders);
 router.route("/get/app").get(protect, admin, getDeliveryOrders2);
 router

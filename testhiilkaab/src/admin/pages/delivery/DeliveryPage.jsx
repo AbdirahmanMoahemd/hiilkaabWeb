@@ -3,25 +3,13 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog } from "primereact/dialog";
-import {
-  addNewDestination,
-  createDistrict,
-  deleteDestination,
-  deleteDistrict,
-  listDistricts,
-  updateDestination,
-  updateDistrict,
-} from "../../../actions/districtsActions";
 import { Message } from "primereact/message";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Button } from "primereact/button";
 import { MdDelete, MdModeEdit } from "react-icons/md";
-import Header from "../../components/Header";
-import {
-  DESTINATION_UPDATE_RESET,
-  DISTRICTS_CREATE_RESET,
-  DISTRICTS_UPDATE_RESET,
-} from "../../../constants/districtsConstants";
+import { listDeliveryOrders } from "../../../actions/deliveryActions";
+import moment from "moment";
+import Header2 from "../../components/Header2";
 
 const DeliveryPage = () => {
   const navigate = useNavigate();
@@ -30,6 +18,9 @@ const DeliveryPage = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const deliveryOrdersList = useSelector((state) => state.deliveryOrdersList);
+  const { loading, error, deliveryOrders } = deliveryOrdersList;
 
   
   const { currentColor } = useStateContext();
@@ -46,7 +37,7 @@ const DeliveryPage = () => {
     if (!userInfo || !userInfo.isAdmin) {
       navigate("/login");
     }
-
+    dispatch(listDeliveryOrders())
   }, [dispatch, userInfo]);
 
   const deleteHandler = (id) => {
@@ -66,16 +57,15 @@ const DeliveryPage = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <>
-        <Header
+        <Header2
           category="Page"
-          title="Districts"
+          title="Delivery Orders"
           currentColor={currentColor}
-          onClick={onClickFn}
         />
       </>
 
       <div className="flex justify-center w-full pb-5">
-        {/* {errorDelete && <Message severity="error" text={errorDelete} />}
+        {/* {errorDelete && <Message severity="error" text={errorDelete} />} */}
         {loading ? (
           <ProgressSpinner
             style={{ width: "20px", height: "20px" }}
@@ -85,8 +75,9 @@ const DeliveryPage = () => {
           />
         ) : error ? (
           <Message severity="error" text={error} />
-        ) : ( */}
+        ) : (
           <>
+         
             <div
               className="table-responsive table-wrp block max-h-screen overflow-x-scroll"
               style={{ overflowX: "auto" }}
@@ -105,12 +96,24 @@ const DeliveryPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                
+                {deliveryOrders.map((order) => (
+                     <tr key={order.id}>
+                        <td>{order.senderName}</td>
+                        <td>{order.senderPhone}</td>
+                        <td>{order.recipientName}</td>
+                        <td>{order.recipientPhone}</td>
+                        <td>${order.price}</td>
+                        <td>{order.itemType}</td>
+                        <td>{order && moment(order.createdAt).toString().substring(0, 21)}</td>
+                        <td>{order.isDelivered ? "YES" : "NO"}</td>
+                     </tr>
+                ))}
                 </tbody>
               </table>
             </div>
+          
           </>
-        {/* )} */}
+         )} 
       </div>
     </div>
   );

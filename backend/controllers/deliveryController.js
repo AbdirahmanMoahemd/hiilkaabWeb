@@ -12,21 +12,18 @@ export const getDeliveryOrders = asyncHandler(async (req, res) => {
   if (deliveryOrders) {
     res.status(200).json({ deliveryOrders });
   }
-  
 });
-
 
 // @desc    Fetch all categories
 // @route   POST /api/categorie/
 // @access  Public
 export const getDeliveryOrders2 = asyncHandler(async (req, res) => {
-    const deliveryOrders = await DeliveryOrders.find();
-  
-    if (deliveryOrders) {
-        res.status(200).json(deliveryOrders);
-    }
-   
-  });
+  const deliveryOrders = await DeliveryOrders.find();
+
+  if (deliveryOrders) {
+    res.status(200).json(deliveryOrders);
+  }
+});
 
 // @desc    Fetch category by id
 // @route   POST /api/categorie/:id
@@ -59,8 +56,10 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
   deliveryOrder = await deliveryOrder.save();
 
   if (!deliveryOrder) {
-    return res.status(400).json({error:"the deliveryOrder cannot be created!"});
-  } else{
+    return res
+      .status(400)
+      .json({ error: "the deliveryOrder cannot be created!" });
+  } else {
     const config = {
       service: "gmail",
       auth: {
@@ -92,19 +91,19 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
               SenderName: req.body.senderName,
               SenderPhone: req.body.senderPhone,
               RecipientName: req.body.recipientName,
-              RecipientPhone:req.body.recipientPhone,
-              ItemType:req.body.itemType,
+              RecipientPhone: req.body.recipientPhone,
+              ItemType: req.body.itemType,
             },
           ],
         },
         action: {
-          instructions: 'To get full details, please click here:',
+          instructions: "To get full details, please click here:",
           button: {
-              color: '#22BC66', // Optional action button color
-              text: 'See the delivery order',
-              link: `https://hiilkaab.com/order/${deliveryOrder._id}`
-          }
-      },
+            color: "#22BC66", // Optional action button color
+            text: "See the delivery order",
+            link: `https://hiilkaab.com/delivery`,
+          },
+        },
 
         outro: "MAHADSANID",
       },
@@ -123,6 +122,4 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
 
     res.json(deliveryOrder);
   }
-
-  
 });

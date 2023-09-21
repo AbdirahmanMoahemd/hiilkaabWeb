@@ -96,6 +96,7 @@ import {
   recentOrderListReducer,
 } from "./reducers/orderReducers";
 import { destinationCreateReducer, destinationDeleteReducer, destinationUpdateReducer, districtCreateReducer, districtDeleteReducer, districtUpdateReducer, districtsListReducer } from "./reducers/districtsReducer";
+import { deliveryOrdersCreateReducer, deliveryOrdersDeleteReducer, deliveryOrdersDetailsReducer, deliveryOrdersListReducer } from "./reducers/deliveryReducers";
 
 const reducer = combineReducers({
   categoryList: categoryListReducer,
@@ -190,7 +191,12 @@ const reducer = combineReducers({
   destinationDelete:destinationDeleteReducer,
   districtUpdate:districtUpdateReducer,
   destinationUpdate:destinationUpdateReducer,
-  destinationCreate:destinationCreateReducer
+  destinationCreate:destinationCreateReducer,
+
+  deliveryOrdersList:deliveryOrdersListReducer,
+  deliveryOrdersDetails:deliveryOrdersDetailsReducer,
+  deliveryOrdersDelete:deliveryOrdersDeleteReducer,
+  deliveryOrdersCreate:deliveryOrdersCreateReducer
 });
 
 const cartItemsFormStorage = localStorage.getItem("cartItems")
