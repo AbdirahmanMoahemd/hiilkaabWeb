@@ -37,66 +37,69 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
-
-    const config = {
-      service: "gmail",
-      auth: {
-        user: 'developerkaahiye@gmail.com',
-        pass: 'wwufptdpobzumnml',
-      },
-    };
-
-    let transporter = nodemailer.createTransport(config);
-
-    var mailGenerator = new Mailgen({
-      theme: "default",
-      product: {
-        // Appears in header & footer of e-mails
-        name: "Mailgen",
-        link: "https://mailgen.js/",
-        // Optional product logo
-        // logo: 'https://mailgen.js/img/logo.png'
-      },
-    });
-
-    var email = {
-      body: {
-        name: "HIILKAAB",
-        intro: "NEW ORDER",
-        table: {
-          data: [
-            {
-              oderId: order._id,
-              name: req.user.name,
-              phone: req.user.phone,
-            },
-          ],
+    if (createdOrder) {
+      const config = {
+        service: "gmail",
+        auth: {
+          user: "developerkaahiye@gmail.com",
+          pass: process.env.PASS,
         },
-        action: {
-          instructions: 'To get full details, please click here:',
-          button: {
-              color: '#22BC66', // Optional action button color
-              text: 'See the order',
-              link: `https://hiilkaab.com/order/${order._id}`
-          }
-      },
+      };
 
-        outro: "MAHADSANID",
-      },
-    };
+      let transporter = nodemailer.createTransport(config);
 
-    var emailBody = mailGenerator.generate(email);
+      var mailGenerator = new Mailgen({
+        theme: "default",
+        product: {
+          // Appears in header & footer of e-mails
+          name: "Mailgen",
+          link: "https://mailgen.js/",
+          // Optional product logo
+          // logo: 'https://mailgen.js/img/logo.png'
+        },
+      });
 
-    let message = {
-      from: "developerkaahiye@gmail.com",
-      to: "fariidka06@gmail.com",
-      subject: "NEW ORDER",
-      html: emailBody,
-    };
+      var email = {
+        body: {
+          name: "HIILKAAB",
+          intro: "NEW ORDER",
+          table: {
+            data: [
+              {
+                oderId: order._id,
+                name: req.user.name,
+                phone: req.user.phone,
+              },
+            ],
+          },
+          action: {
+            instructions: "To get full details, please click here:",
+            button: {
+              color: "#22BC66", // Optional action button color
+              text: "See the order",
+              link: `https://hiilkaab.com/order/${order._id}`,
+            },
+          },
 
-    transporter.sendMail(message);
+          outro: "MAHADSANID",
+        },
+      };
+ 
+      var emailBody = mailGenerator.generate(email);
 
-    res.status(201).json(createdOrder);
+      let message = {
+        from: "developerkaahiye@gmail.com",
+        to: "fariidka06@gmail.com",
+        subject: "NEW ORDER",
+        html: emailBody,
+      }; 
+
+      transporter.sendMail(message);
+
+      res.status(201).json(createdOrder);
+    } else {
+      res.status(500).json({ error: "test" });
+    }
   }
 });
 
@@ -133,7 +136,7 @@ export const addOrderItemsEvc = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
- const config = {
+    const config = {
       service: "gmail",
       auth: {
         user: process.env.EMAIL,
@@ -168,13 +171,13 @@ export const addOrderItemsEvc = asyncHandler(async (req, res) => {
           ],
         },
         action: {
-          instructions: 'To get full details, please click here:',
+          instructions: "To get full details, please click here:",
           button: {
-              color: '#22BC66', // Optional action button color
-              text: 'See the order',
-              link: `https://hiilkaab.com/order/${order._id}`
-          }
-      },
+            color: "#22BC66", // Optional action button color
+            text: "See the order",
+            link: `https://hiilkaab.com/order/${order._id}`,
+          },
+        },
 
         outro: "MAHADSANID",
       },
@@ -302,13 +305,13 @@ export const addOrderItems2 = asyncHandler(async (req, res) => {
           ],
         },
         action: {
-          instructions: 'To get full details, please click here:',
+          instructions: "To get full details, please click here:",
           button: {
-              color: '#22BC66', // Optional action button color
-              text: 'See the order',
-              link: `https://hiilkaab.com/order/${order._id}`
-          }
-      },
+            color: "#22BC66", // Optional action button color
+            text: "See the order",
+            link: `https://hiilkaab.com/order/${order._id}`,
+          },
+        },
 
         outro: "MAHADSANID",
       },
@@ -324,7 +327,7 @@ export const addOrderItems2 = asyncHandler(async (req, res) => {
     };
 
     transporter.sendMail(message);
-    
+
     res.json(order);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -338,7 +341,7 @@ export const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
     .populate("user")
     .populate("products.product")
-    .populate("meals.meal");;
+    .populate("meals.meal");
   if (order) {
     res.json(order);
   } else {
@@ -416,11 +419,12 @@ export const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/myorders
 // @access  Private
 export const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id }).populate("user")
-  .populate("products.product")
-  .populate("meals.meal");
-  res.json(orders)
-})
+  const orders = await Order.find({ user: req.user._id })
+    .populate("user")
+    .populate("products.product")
+    .populate("meals.meal");
+  res.json(orders);
+});
 
 // @desc    Get logged in user orders
 // @route   GET /api/orders/myorders
@@ -457,7 +461,7 @@ export const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({})
     .populate("user")
     .populate("products.product")
-    .populate("meals.meal");;
+    .populate("meals.meal");
   orders.sort((a, b) => (a._id > b._id ? -1 : 1));
   res.json(orders);
 });
@@ -490,8 +494,6 @@ export const getRecentOrders2 = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
-
-
 // @desc    Get logged in user orders
 // @route   GET /api/orders/myorders
 // @access  Private
@@ -501,13 +503,12 @@ export const getMyOrdersApp = asyncHandler(async (req, res) => {
       .populate("user")
       .populate("products.product")
       .populate("meals.meal");
-orders.sort((a, b) => (a._id > b._id ? -1 : 1));
+    orders.sort((a, b) => (a._id > b._id ? -1 : 1));
     res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
-
 
 // @desc    Get All orders
 // @route   GET /api/orders
@@ -518,8 +519,10 @@ export const getOrdersByPhone = asyncHandler(async (req, res) => {
   const user = await User.find({ phone: phone });
 
   if (user) {
-    const orders = await Order.find({ user: user }).populate("user").populate("products.product")
-    .populate("meals.meal");
+    const orders = await Order.find({ user: user })
+      .populate("user")
+      .populate("products.product")
+      .populate("meals.meal");
     res.json(orders);
   }
 });

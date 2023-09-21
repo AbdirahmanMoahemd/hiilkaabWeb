@@ -48,6 +48,7 @@ import AddBrandScreen from "./admin/screens/brand/AddBrandScreen";
 import UpdateBrandScreen from "./admin/screens/brand/UpdateBrandScreen";
 import UpdateDiscountScreen from "./admin/screens/discount/UpdateDiscountScreen";
 import DistrictsScreen from "./admin/screens/Districts/DistrictsScreen";
+import DeliveryScreen from "./admin/screens/Delivery/DeliveryScreen";
 
 
 function App() {
@@ -133,6 +134,9 @@ function App() {
 
         {/* districts  */}
         <Route path="/districts" element={<DistrictsScreen/> } />
+
+        {/* delivery  */}
+        <Route path="/delivery" element={<DeliveryScreen/> } />
 
 
         {/* sliders  */}

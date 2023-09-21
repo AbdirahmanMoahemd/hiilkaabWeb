@@ -9,6 +9,10 @@ import {
 } from "react-icons/fi";
 
 import {
+  CiDeliveryTruck
+} from "react-icons/ci";
+
+import {
   BsCurrencyDollar,
 } from "react-icons/bs";
 import {  MdCategory, MdOutlineCategory } from "react-icons/md"
@@ -137,6 +141,11 @@ export const links = [
   {
     name: "Districts",
     link: "districts",
+    icon: <FaCity />,
+  }, 
+  {
+    name: "Delivery",
+    link: "delivery",
     icon: <FaCity />,
   }, 
   {
