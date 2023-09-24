@@ -12,6 +12,10 @@ import {
   DELIVERY_LIST_FAIL,
   DELIVERY_LIST_REQUEST,
   DELIVERY_LIST_SUCCESS,
+  DELIVERY_UPDATE_FAIL,
+  DELIVERY_UPDATE_REQUEST,
+  DELIVERY_UPDATE_RESET,
+  DELIVERY_UPDATE_SUCCESS,
 } from "../constants/deliveryConstants";
 
 export const deliveryOrdersListReducer = (state = { deliveryOrders: [] }, action) => {
@@ -70,3 +74,18 @@ export const deliveryOrdersCreateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const deliveryOrdersUpdateReducer = (state = { order: {} } , action) => {
+  switch (action.type) {
+      case DELIVERY_UPDATE_REQUEST:
+          return { loading: true}
+      case DELIVERY_UPDATE_SUCCESS:
+          return { loading: false, success: true, order: action.payload}
+      case DELIVERY_UPDATE_RESET:
+          return { order: {} }
+      case DELIVERY_UPDATE_FAIL:
+          return { loading: false, error: action.payload }
+      default:
+          return state
+  }
+}

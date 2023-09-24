@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const deliverySchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
   senderName: {
     type: String,
     required: true,
@@ -32,6 +37,10 @@ const deliverySchema = mongoose.Schema({
     type: Boolean,
     required: true,
     default: false,
+  },
+  comment: {
+    type: String,
+    default: 'No Comment Yet'
   },
 },{
   timestamps: true

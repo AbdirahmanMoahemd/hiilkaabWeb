@@ -7,7 +7,9 @@ import Mailgen from "mailgen";
 // @route   POST /api/categorie/
 // @access  Public
 export const getDeliveryOrders = asyncHandler(async (req, res) => {
-  const deliveryOrders = await DeliveryOrders.find();
+  const deliveryOrders = await DeliveryOrders.find()
+    .sort({ createdAt: -1 })
+    .populate("user");
 
   if (deliveryOrders) {
     res.status(200).json({ deliveryOrders });
@@ -18,18 +20,33 @@ export const getDeliveryOrders = asyncHandler(async (req, res) => {
 // @route   POST /api/categorie/
 // @access  Public
 export const getDeliveryOrders2 = asyncHandler(async (req, res) => {
-  const deliveryOrders = await DeliveryOrders.find();
+  const deliveryOrders = await DeliveryOrders.find()
+    .sort({ createdAt: -1 })
+    .populate("user");
 
   if (deliveryOrders) {
     res.status(200).json(deliveryOrders);
   }
 });
 
+// @desc    Get logged in user orders
+// @route   GET /api/orders/myorders
+// @access  Private
+export const getMyDeliveryOrders = asyncHandler(async (req, res) => {
+  const deliveryOrders = await DeliveryOrders.find({ user: req.params.id })
+    .sort({ createdAt: -1 })
+    .populate("user");
+
+  res.json(deliveryOrders);
+});
+
 // @desc    Fetch category by id
 // @route   POST /api/categorie/:id
 // @access  Public
 export const getDeliveryOrdersById = asyncHandler(async (req, res) => {
-  const deliveryOrders = await DeliveryOrders.findById(req.params.id);
+  const deliveryOrders = await DeliveryOrders.findById(req.params.id)
+    .sort({ createdAt: -1 })
+    .populate("user");
 
   if (deliveryOrders) {
     res.json(deliveryOrders);
@@ -44,6 +61,7 @@ export const getDeliveryOrdersById = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 export const createDeliveryOrders = asyncHandler(async (req, res) => {
   let deliveryOrder = new DeliveryOrders({
+    user: req.body.user,
     senderName: req.body.senderName,
     senderPhone: req.body.senderPhone,
     recipientName: req.body.recipientName,
@@ -121,5 +139,25 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
     transporter.sendMail(message);
 
     res.json(deliveryOrder);
+  }
+});
+
+
+export const updateDeliveryOrderByStatus = asyncHandler(async (req, res) => {
+  const { isDelivered, comment } = req.body;
+
+  const deliveryOrder = await DeliveryOrders.findById(req.params.id);
+
+  if (deliveryOrder) {
+    deliveryOrder.isDelivered = isDelivered;
+    deliveryOrder.comment = comment;
+
+    const updatedDeliveryOrder = await deliveryOrder.save();
+    res.json({
+      updatedDeliveryOrder
+    });
+  } else {
+    res.status(404);
+    throw new Error("Not Found");
   }
 });

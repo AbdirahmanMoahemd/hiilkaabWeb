@@ -11,6 +11,9 @@ import {
   DELIVERY_LIST_FAIL,
   DELIVERY_LIST_REQUEST,
   DELIVERY_LIST_SUCCESS,
+  DELIVERY_UPDATE_FAIL,
+  DELIVERY_UPDATE_REQUEST,
+  DELIVERY_UPDATE_SUCCESS,
 } from "../constants/deliveryConstants";
 import axios from "axios";
 export const listDeliveryOrders = () => async (dispatch, getState) => {
@@ -103,6 +106,45 @@ export const createDeliveryOrders =
     } catch (error) {
       dispatch({
         type: DELIVERY_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const updateDeliveryOrders =
+  (id, isDelivered, comment) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: DELIVERY_UPDATE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/deliveryOrders/update/${id}`,
+        { isDelivered, comment },
+        config
+      );
+
+      dispatch({
+        type: DELIVERY_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELIVERY_UPDATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
