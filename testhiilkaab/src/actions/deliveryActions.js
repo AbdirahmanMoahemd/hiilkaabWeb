@@ -115,7 +115,7 @@ export const createDeliveryOrders =
   };
 
 export const updateDeliveryOrders =
-  (id, isDelivered, comment) => async (dispatch, getState) => {
+  (id, status, comment) => async (dispatch, getState) => {
     try {
       dispatch({
         type: DELIVERY_UPDATE_REQUEST,
@@ -134,7 +134,7 @@ export const updateDeliveryOrders =
 
       const { data } = await axios.put(
         `/api/deliveryOrders/update/${id}`,
-        { isDelivered, comment },
+        { status, comment },
         config
       );
 

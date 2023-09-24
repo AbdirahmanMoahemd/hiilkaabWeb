@@ -12,7 +12,7 @@ import {
 } from "../../../actions/deliveryActions";
 import moment from "moment";
 import Header2 from "../../components/Header2";
-import { Checkbox } from "primereact/checkbox";
+import { RadioButton } from "primereact/radiobutton";
 import { DELIVERY_UPDATE_RESET } from "../../../constants/deliveryConstants";
 
 const DeliveryPage = () => {
@@ -20,7 +20,7 @@ const DeliveryPage = () => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [visible, setVisible] = useState(false);
-  const [isDelivered, setIsDelivered] = useState(false);
+  const [status, setStatus] = useState("");
   const [comment, setComment] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -49,7 +49,7 @@ const DeliveryPage = () => {
       dispatch({ type: DELIVERY_UPDATE_RESET });
       setVisible(false);
       setComment("");
-      setIsDelivered(false);
+      setStatus('');
     }
     dispatch(listDeliveryOrders());
   }, [dispatch, userInfo, success]);
@@ -61,7 +61,7 @@ const DeliveryPage = () => {
   };
 
   const submitHandler = (e) => {
-    dispatch(updateDeliveryOrders(id, isDelivered, comment));
+    dispatch(updateDeliveryOrders(id, status, comment));
     e.preventDefault();
   };
 
@@ -102,7 +102,7 @@ const DeliveryPage = () => {
                     <td>Price</td>
                     <td>ItemType</td>
                     <td>Date</td>
-                    <td>IsDelivered</td>
+                    <td>Order Status</td>
                     <td>Comment</td>
                   </tr>
                 </thead>
@@ -119,13 +119,8 @@ const DeliveryPage = () => {
                         {order &&
                           moment(order.createdAt).toString().substring(0, 21)}
                       </td>
-                      <td
-                        
-                      >
-                        <p className={`${
-                          order.isDelivered ? "text-green-500 " : "text-red-500"
-                        }`}> {order.isDelivered ? "YES" : "NO"}</p>
-                       
+                      <td>
+                        <p> {order.status}</p>
                       </td>
                       <td>{order.comment}</td>
                       <td>
@@ -135,7 +130,7 @@ const DeliveryPage = () => {
                             setVisible(true);
                             setId(order.id);
                             setComment(order.comment);
-                            setIsDelivered(order.isDelivered ? true : false);
+                            setStatus(order.status);
                           }}
                         >
                           <MdModeEdit />
@@ -156,7 +151,7 @@ const DeliveryPage = () => {
         onHide={() => {
           setVisible(false);
           setComment("");
-          setIsDelivered(false);
+          setStatus('');
         }}
         style={{ width: "50vw" }}
         breakpoints={{ "960px": "75vw", "641px": "100vw" }}
@@ -175,12 +170,94 @@ const DeliveryPage = () => {
             <div className="space-y-4">
               <div>
                 <label className="text-gray-600 mb-2 block">
-                  IsDelivered <span className="text-primary">*</span>
+                  Order Status <span className="text-primary">*</span>
                 </label>
-                <Checkbox
-                  onChange={(e) => setIsDelivered(e.checked)}
-                  checked={isDelivered}
-                ></Checkbox>
+                <div className="flex flex-wrap gap-3">
+                  <div className="flex align-items-center">
+                    <RadioButton
+                      inputId="ingredient1"
+                      name="status"
+                      value="New"
+                      onChange={(e) => setStatus(e.value)}
+                      checked={status === "New"}
+                    />
+                    <label htmlFor="status1" className="ml-2">
+                      New
+                    </label>
+                  </div>
+                  <div className="flex align-items-center">
+                    <RadioButton
+                      inputId="status2"
+                      name="status"
+                      value="Confirmed"
+                      onChange={(e) => setStatus(e.value)}
+                      checked={status === "Confirmed"}
+                    />
+                    <label htmlFor="status2" className="ml-2">
+                      Confirmed
+                    </label>
+                  </div>
+                  <div className="flex align-items-center">
+                    <RadioButton
+                      inputId="status3"
+                      name="status"
+                      value="Cancelled"
+                      onChange={(e) => setStatus(e.value)}
+                      checked={status === "Cancelled"}
+                    />
+                    <label htmlFor="status3" className="ml-2">
+                      Cancelled
+                    </label>
+                  </div>
+                  <div className="flex align-items-center">
+                    <RadioButton
+                      inputId="status4"
+                      name="status"
+                      value="In Transit"
+                      onChange={(e) => setStatus(e.value)}
+                      checked={status === "In Transit"}
+                    />
+                    <label htmlFor="ingredient4" className="ml-2">
+                      In Transit
+                    </label>
+                  </div>
+                  <div className="flex align-items-center">
+                    <RadioButton
+                      inputId="status5"
+                      name="status"
+                      value="Returning"
+                      onChange={(e) => setStatus(e.value)}
+                      checked={status === "Returning"}
+                    />
+                    <label htmlFor="ingredient4" className="ml-2">
+                      Returning
+                    </label>
+                  </div>
+                  <div className="flex align-items-center">
+                    <RadioButton
+                      inputId="status6"
+                      name="status"
+                      value="Returned"
+                      onChange={(e) => setStatus(e.value)}
+                      checked={status === "Returned"}
+                    />
+                    <label htmlFor="ingredient4" className="ml-2">
+                      Returned
+                    </label>
+                  </div>
+                  <div className="flex align-items-center">
+                    <RadioButton
+                      inputId="status7"
+                      name="status"
+                      value="Delivered"
+                      onChange={(e) => setStatus(e.value)}
+                      checked={status === "Delivered"}
+                    />
+                    <label htmlFor="ingredient4" className="ml-2">
+                      Delivered
+                    </label>
+                  </div>
+                </div>
               </div>
               <div>
                 <label className="text-gray-600 mb-2 block">

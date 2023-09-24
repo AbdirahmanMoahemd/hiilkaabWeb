@@ -69,7 +69,6 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
     itemType: req.body.itemType,
     price: req.body.price,
     orderedAt: new Date().getTime(),
-    isDelivered: req.body.isDelivered,
   });
   deliveryOrder = await deliveryOrder.save();
 
@@ -144,12 +143,12 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
 
 
 export const updateDeliveryOrderByStatus = asyncHandler(async (req, res) => {
-  const { isDelivered, comment } = req.body;
+  const { status, comment } = req.body;
 
   const deliveryOrder = await DeliveryOrders.findById(req.params.id);
 
   if (deliveryOrder) {
-    deliveryOrder.isDelivered = isDelivered;
+    deliveryOrder.status = status;
     deliveryOrder.comment = comment;
 
     const updatedDeliveryOrder = await deliveryOrder.save();
