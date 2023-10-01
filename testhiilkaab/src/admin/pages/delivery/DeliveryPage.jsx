@@ -114,7 +114,7 @@ const DeliveryPage = () => {
                       <td>{order.senderPhone}</td>
                       <td>{order.recipientName}</td>
                       <td>{order.recipientPhone}</td>
-                      <td>{order.source}</td>
+                      <td>{order.source & order.destination}</td>
                       <td>${order.price}</td>
                       <td>{order.itemType}</td>
                       <td>
