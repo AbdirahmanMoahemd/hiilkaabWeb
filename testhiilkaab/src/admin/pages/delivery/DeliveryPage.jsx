@@ -99,6 +99,7 @@ const DeliveryPage = () => {
                     <td>S.Phone</td>
                     <td>R.Name</td>
                     <td>R.Phone</td>
+                    <td>Source & Destination</td>
                     <td>Price</td>
                     <td>ItemType</td>
                     <td>Date</td>
@@ -113,6 +114,7 @@ const DeliveryPage = () => {
                       <td>{order.senderPhone}</td>
                       <td>{order.recipientName}</td>
                       <td>{order.recipientPhone}</td>
+                      <td>{order.source}</td>
                       <td>${order.price}</td>
                       <td>{order.itemType}</td>
                       <td>
