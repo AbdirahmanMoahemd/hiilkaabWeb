@@ -66,6 +66,8 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
     senderPhone: req.body.senderPhone,
     recipientName: req.body.recipientName,
     recipientPhone: req.body.recipientPhone,
+    source: req.body.source,
+    destination: req.body.destination,
     itemType: req.body.itemType,
     price: req.body.price,
     orderedAt: new Date().getTime(),
@@ -75,7 +77,7 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
   if (!deliveryOrder) {
     return res
       .status(400)
-      .json({ error: "the deliveryOrder cannot be created!" });
+      .json({ error: "Something went wrong try again please!" });
   } else {
     const config = {
       service: "gmail",
@@ -109,6 +111,8 @@ export const createDeliveryOrders = asyncHandler(async (req, res) => {
               SenderPhone: req.body.senderPhone,
               RecipientName: req.body.recipientName,
               RecipientPhone: req.body.recipientPhone,
+              source: req.body.source,
+              destination: req.body.destination,
               ItemType: req.body.itemType,
             },
           ],

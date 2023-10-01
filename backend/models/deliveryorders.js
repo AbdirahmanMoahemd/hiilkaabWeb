@@ -23,6 +23,14 @@ const deliverySchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    source:{
+      type: String,
+      required: true,
+    },
+    destination:{
+      type: String,
+      required: true,
+    },
     itemType: {
       type: String,
       required: true,
