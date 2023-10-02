@@ -52,13 +52,13 @@ const DeliveryPage = () => {
       setStatus('');
     }
     dispatch(listDeliveryOrders());
-  }, [dispatch, userInfo, success]);
+  }, [dispatch,navigate, userInfo, success]);
 
-  const deleteHandler = (id) => {
-    if (window.confirm("Are you sure to delete this district")) {
-      //   dispatch(deleteDistrict(id));
-    }
-  };
+  // const deleteHandler = (id) => {
+  //   if (window.confirm("Are you sure to delete this district")) {
+  //     //   dispatch(deleteDistrict(id));
+  //   }
+  // };
 
   const submitHandler = (e) => {
     dispatch(updateDeliveryOrders(id, status, comment));
@@ -99,7 +99,8 @@ const DeliveryPage = () => {
                     <td>S.Phone</td>
                     <td>R.Name</td>
                     <td>R.Phone</td>
-                    <td>Source & Destination</td>
+                    <td>Source</td>
+                    <td>Destination</td>
                     <td>Price</td>
                     <td>ItemType</td>
                     <td>Date</td>
@@ -114,7 +115,8 @@ const DeliveryPage = () => {
                       <td>{order.senderPhone}</td>
                       <td>{order.recipientName}</td>
                       <td>{order.recipientPhone}</td>
-                      <td>{order.source & order.destination}</td>
+                      <td>{order.source}</td>
+                      <td>{order.destination}</td>
                       <td>${order.price}</td>
                       <td>{order.itemType}</td>
                       <td>
@@ -189,30 +191,6 @@ const DeliveryPage = () => {
                   </div>
                   <div className="flex align-items-center">
                     <RadioButton
-                      inputId="status2"
-                      name="status"
-                      value="Confirmed"
-                      onChange={(e) => setStatus(e.value)}
-                      checked={status === "Confirmed"}
-                    />
-                    <label htmlFor="status2" className="ml-2">
-                      Confirmed
-                    </label>
-                  </div>
-                  <div className="flex align-items-center">
-                    <RadioButton
-                      inputId="status3"
-                      name="status"
-                      value="Cancelled"
-                      onChange={(e) => setStatus(e.value)}
-                      checked={status === "Cancelled"}
-                    />
-                    <label htmlFor="status3" className="ml-2">
-                      Cancelled
-                    </label>
-                  </div>
-                  <div className="flex align-items-center">
-                    <RadioButton
                       inputId="status4"
                       name="status"
                       value="In Transit"
@@ -225,14 +203,14 @@ const DeliveryPage = () => {
                   </div>
                   <div className="flex align-items-center">
                     <RadioButton
-                      inputId="status5"
+                      inputId="status7"
                       name="status"
-                      value="Returning"
+                      value="Delivered"
                       onChange={(e) => setStatus(e.value)}
-                      checked={status === "Returning"}
+                      checked={status === "Delivered"}
                     />
                     <label htmlFor="ingredient4" className="ml-2">
-                      Returning
+                      Delivered
                     </label>
                   </div>
                   <div className="flex align-items-center">
@@ -249,16 +227,17 @@ const DeliveryPage = () => {
                   </div>
                   <div className="flex align-items-center">
                     <RadioButton
-                      inputId="status7"
+                      inputId="status3"
                       name="status"
-                      value="Delivered"
+                      value="Cancelled"
                       onChange={(e) => setStatus(e.value)}
-                      checked={status === "Delivered"}
+                      checked={status === "Cancelled"}
                     />
-                    <label htmlFor="ingredient4" className="ml-2">
-                      Delivered
+                    <label htmlFor="status3" className="ml-2">
+                      Cancelled
                     </label>
                   </div>
+                  
                 </div>
               </div>
               <div>
